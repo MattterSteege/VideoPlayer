@@ -8,17 +8,23 @@
         <LangVersion>10</LangVersion>
         <ApplicationIcon>wwwroot\favicon.ico</ApplicationIcon>
         <Version>1</Version>
+        <OutputType>Library</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Models\" />
+      <Content Update="BetterPages-framework.js">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Razor.Runtime" Version="2.2.0" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\test.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="appsettings.json" />
+      <None Include="wwwroot\js\BetterPages-framework.js" />
     </ItemGroup>
 </Project>
