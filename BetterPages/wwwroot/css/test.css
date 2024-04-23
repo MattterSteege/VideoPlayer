@@ -1,0 +1,9 @@
+/*This file can be delete*/
+h1 {
+    color: red;
+}
+
+a:hover {
+    color: blue;
+    font-weight: 700;
+}
