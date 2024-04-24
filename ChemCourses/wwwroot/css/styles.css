@@ -21,6 +21,12 @@ a {
     --border-radius: 10px;
     --transition: 0.3s;
     --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+
+
+
+
+    --flask-fluid-color: #35b3e7;
 }
 
 .dark-theme {
@@ -144,13 +150,14 @@ main#main, .loading-screen {
     width: var(--flask-size);
     height: var(--flask-size);
 
-    animation: shake 2s ease-in-out infinite;
+    animation: spinNshakeInfinate 1s ease-in-out infinite;
+    /*time between animations*/
 }
 
 .water{
     width: var(--flask-size);
     height: var(--flask-size);
-    background-color: #35b3e7;
+    background-color: var(--flask-fluid-color);
     position: absolute;
     overflow: hidden;
     -webkit-mask-image: url(/images/flask-inside.svg);
@@ -207,24 +214,27 @@ main#main, .loading-screen {
     }
 }
 
-@keyframes shake{
-    0%{
-        transform: rotate(0);
+@keyframes spinNshakeInfinate {
+    0% {
+        transform: rotate(0deg);
     }
-    12.5%{
-        transform: rotate(5deg);
+    10% {
+        transform: rotate(10deg);
     }
-    37.5%{
-        transform: rotate(-5deg);
+    20% {
+        transform: rotate(-10deg);
     }
-    62.5%{
-        transform: rotate(5deg);
+    30% {
+        transform: rotate(10deg);
     }
-    87.5%{
-        transform: rotate(-5deg);
+    40% {
+        transform: rotate(-10deg);
     }
-    100%{
-        transform: rotate(0);
+    50% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(0deg);
     }
 }
 

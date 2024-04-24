@@ -11,7 +11,7 @@ namespace BetterPages.Controllers
 {
     public class BetterPagesController : Controller
     {
-        public static string fallback = "/Main";
+        public static string fallback = "/Dashboard";
         
         public IActionResult Index(string url = null)
         {

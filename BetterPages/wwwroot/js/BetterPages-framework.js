@@ -2,7 +2,7 @@
     mainBeforeLoad: function(callback) {},
     mainAfterLoad: function(callback) {},
     mainBeforeUnload: function(callback) {},
-    loadingScreenDelay: 0
+    loadingScreenDelay: 250
 };
 
 let main;
@@ -12,13 +12,12 @@ let isRunning = false;
 function InitBetterPages() {
     waitForObject(BetterPages, function () {
         main = document.getElementById("main");
-        content = document.getElementById("content");
+        content = document.getElementById("loading-screen");
 
         history.replaceState(null, null, "/");
         ReplacePage((document.cookie.split(';').find(c => c.includes("page_to_load")).split('=')[1]));
-    }, 500);
+    }, 100);
 }
-
 
 function ReplacePage(url) {
     if (isRunning) {
@@ -76,6 +75,8 @@ function ReplacePage(url) {
     //urldecode the url
     url = decodeURIComponent(url);
 
+    content.style.opacity = 1;
+    
     // Make an HTTP request
     isRunning = true;
     fetch(url, {
@@ -163,6 +164,8 @@ function ReplacePage(url) {
 
                 isRunning = false;
 
+                content.style.opacity = 0;
+                
                 setTimeout(() => {
                     //add an delay arround here if you want to show a loading screen
                     BetterPages.mainAfterLoad();

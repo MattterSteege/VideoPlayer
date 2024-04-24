@@ -1,4 +1,9 @@
 ﻿@using ChemCourses.Utils
+
+@{
+    string fluidColor = ColorUtils.GenerateRandomColorHex();
+}
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -15,21 +20,21 @@
 
 <div class="sidebar">
     <div class="top">
-        <i onclick="SpinShakeAndColorate()" class="fa-duotone fa-flask" style="--fa-primary-color: @ColorUtils.GenerateRandomColorHex(); --fa-secondary-color: #000000; --fa-secondary-opacity: 1;"></i>
+        <i onclick="SpinShakeAndColorate()" class="fa-duotone fa-flask" style="--fa-primary-color: var(--flask-fluid-color); --fa-secondary-color: #000000; --fa-secondary-opacity: 1;"></i>
         <h1>CHEM Courses</h1>
     </div>
     <ul>
         <div class="divider"></div>
         <li>
-            <a href="#"><i class="far fa-chart-tree-map"></i>Dashboard</a>
+            <a onclick="ReplacePage('@Url.Action("Dashboard", "Home")')"><i class="far fa-chart-tree-map"></i>Dashboard</a>
         </li>
         <div class="divider"></div>
         <li>
-            <a href="#"><i class="far fa-video"></i>Videos</a>
+            <a onclick="ReplacePage('@Url.Action("Videos", "Home")')"><i class="far fa-video"></i>Videos</a>
         </li>
         <div class="divider"></div>
         <li>
-            <a href="#"><i class="far fa-chart-line"></i>Toetsen</a>
+            <a onclick="ReplacePage('@Url.Action("Toetsen", "Home")')"><i class="far fa-chart-line"></i>Toetsen</a>
         </li>
     </ul>
     
@@ -38,7 +43,7 @@
     </div>
 </div>
 
-<div class="loading-screen">
+<div class="loading-screen" id="loading-screen">
     <div class="container">
         <div class="water"></div>
         <div class="flask"></div>
@@ -51,11 +56,14 @@
 
 <script>
 
+document.body.style.setProperty('--flask-fluid-color', '@fluidColor');
+
 function SpinShakeAndColorate() {
     var flask = document.querySelector('.fa-flask');
     flask.classList.add('spinNshake');
     setTimeout(() => {
-        flask.style.setProperty('--fa-primary-color', getRandomColor());
+        //set body variable --flask-fluid-color to a random color
+        document.body.style.setProperty('--flask-fluid-color', getRandomColor());        
         setTimeout(() => {
             flask.classList.remove('spinNshake');
         }, 125);

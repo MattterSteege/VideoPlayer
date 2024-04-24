@@ -15,12 +15,29 @@ public class HomeController : Controller
     }
 
     [BetterPages]
-    [Route("/Main")]
-    public IActionResult Privacy()
+    [Route("/Dashboard")]
+    public IActionResult Dashboard()
     {
+        Thread.Sleep(1000);
         return PartialView();
     }
 
+    [BetterPages]
+    [Route("/Videos")]
+    public IActionResult Videos()
+    {
+        Thread.Sleep(1000);
+        return PartialView();
+    }
+    
+    [BetterPages]
+    [Route("/Toetsen")]
+    public IActionResult Toetsen()
+    {
+        Thread.Sleep(1000);
+        return PartialView();
+    }
+    
     [BetterPages]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
