@@ -10,15 +10,16 @@ a {
 }
 
 :root, .light-theme {
-    --background-color: #f5f6f8;
+    --background-color: #f5f3fe;
     --overlay-color: #fcfcfc;
     --overlay-overlay-color: #ffffff;
     --text-color: #161616;
     --font-size-heading: 18px;
     --font-size-text: 12px;
 
-    --padding: 10px;
-    --border-radius: 10px;
+    --padding: 12px;
+    --border-radius: 24px;
+    --border-radius-small: 12px;
     --transition: 0.3s;
     --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
@@ -33,41 +34,53 @@ a {
 
 }
 
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+    pointer-events: none;
+}
+
 body {
     font-family: "Varela Round", sans-serif;
-    background: #f5f6f8;
     color: var(--text-color);
     overflow: hidden;
 
-    --sidebar-width: 128px
+    --sidebar-width: 256px
 }
 
 
 main#main, .loading-screen {
     left: calc(var(--sidebar-width) + var(--padding) * 2);
     top: 0;
-    width: calc(100% - var(--sidebar-width) - var(--padding) * 2);
-    height: 100%;
-    padding: var(--padding);
+    width: calc(100% - var(--sidebar-width) - var(--padding) * 4);
+    height: calc(100% - var(--padding) * 2);
+    margin: var(--padding);
     position: fixed;
     overflow: hidden;
     background: var(--background-color);
     color: var(--text-color);
+    border-radius: var(--border-radius);
+    padding: var(--padding);
 }
 
 .sidebar {
     width: var(--sidebar-width);
     height: calc(100% - var(--padding) * 2);
-    background-color: var(--overlay-color);
+    /* background-color: var(--overlay-color); */
     position: fixed;
     top: var(--padding);
     left: var(--padding);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
+    /* border-radius: var(--border-radius); */
+    /* box-shadow: var(--box-shadow); */
 }
 
 .sidebar .top {
-    height: var(--sidebar-width);
+    height: calc(var(--sidebar-width) / 2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +100,7 @@ main#main, .loading-screen {
 
 .sidebar ul li {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    height: var(--sidebar-width);
+    height: calc(var(--sidebar-width) / 2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,6 +151,66 @@ main#main, .loading-screen {
         transform: rotate(0deg);
     }
 }
+
+/*    
+<div class="bottom">
+        <div class="background">
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/rocket-8084689-6437619.png?f=webp">
+            <div class="button">
+                Premium
+            </div>
+        </div>
+    </div>
+    */
+
+.sidebar .bottom {
+    position: fixed;
+    width: var(--sidebar-width);
+    height: calc(1.5 * var(--sidebar-width));
+    bottom: calc(-1.5 * var(--padding));
+    left: var(--padding);
+}
+
+.sidebar .bottom .background {
+    width: 100%;
+    height: 75%;
+    margin-top: 25%;
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+}
+
+.sidebar .bottom .background img {
+    width: 100%;
+    position: absolute;
+    bottom: calc(128px + 2 * var(--padding));
+}
+
+.sidebar .bottom .background span {
+    position: absolute;
+    bottom: calc(128px);
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+
+}
+
+.sidebar .bottom .button {
+    width: calc(100% - 2 * var(--padding));
+    height: 48px;
+    background: #755af1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-small);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    position: absolute;
+    bottom: calc(4 * var(--padding));
+    left: var(--padding);
+    color: white;
+    font-weight: 600;
+}
+
 
 /* LOADING SCREEN */
 .container{

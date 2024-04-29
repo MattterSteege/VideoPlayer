@@ -1,0 +1,369 @@
+﻿/* Styles for question container */
+.question-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding);
+    
+    user-select: none;
+}
+
+/* Styles for individual questions */
+.question {
+    flex: 1 1 100%;
+    padding: var(--padding);
+    background-color: var(--overlay-color);
+    border-radius: var(--border-radius-small);
+    box-shadow: var(--box-shadow);
+}
+
+/* Styles for headings */
+.question h2 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: var(--font-size-heading);
+    color: var(--text-color);
+}
+
+/* Styles for subheadings */
+.question h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: var(--font-size-heading);
+    color: var(--text-color);
+}
+
+/* Styles for paragraphs */
+.question p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+/* Styles for inputs */
+.question input[type="text"],
+.question select,
+.question input[type="range"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+}
+
+/* Styles for radio buttons and checkboxes */
+.question input[type="radio"],
+.question input[type="checkbox"] {
+    margin-right: 5px;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* Styles for labels */
+.question label {
+    vertical-align: middle;
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+/* Styles for inputs */
+.question input[type="text"],
+.question select,
+.question input[type="range"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+/*Styles for sliders*/
+.question input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: var(--background-color);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+/*Styles for sliders*/
+.question input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--text-color);
+    cursor: pointer;
+}
+
+/*NEW CSS*/
+/*TEXT FIELDS*/
+.forms-text_field {
+    margin-bottom: 10px;
+}
+
+.forms-text_field_label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.forms-text_field div[contenteditable="true"] {
+    border: 1px solid #ccc;
+    padding: var(--padding);
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+    border-radius: var(--border-radius-small);
+    margin-top: 5px;
+}
+
+/*SECTIONS*/
+.forms-section {
+    margin-bottom: 20px;
+}
+
+.forms-section_title {
+    font-size: var(--font-size-heading);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.forms-section_desc {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+/*DROPDOWNS*/
+.forms-dropdown_question_title {
+    font-size: var(--font-size-heading);
+    font-weight: bold;
+}
+
+.forms-dropdown_question_desc {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+.forms-dropdown_question_options {
+    display: none;
+}
+
+.forms-dropdown_question.active .forms-dropdown_question_options {
+    display: block;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-small);
+    margin-bottom: 5px;
+    cursor: pointer;
+    padding: 5px;
+    margin-top: var(--padding);
+}
+
+.forms-dropdown_question_option {
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
+
+.forms-dropdown_question_option:last-child {
+    border-bottom: none;
+}
+
+/*SLIDER*/
+.forms-slider_question {
+    margin-bottom: 20px;
+}
+
+.forms-slider_question_title {
+    font-size: var(--font-size-heading);
+    font-weight: bold;
+}
+
+.forms-slider_question_desc {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+.slider-container {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    margin-top: var(--padding);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-track {
+    width: 100%;
+    height: 10px;
+    background: var(--background-color);
+    border-radius: 5px;
+}
+
+.slider-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--border-radius);
+    background: var(--text-color);
+    cursor: pointer;
+    position: relative;
+    top: -5px;
+}
+
+.slider-value {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+    margin-left: calc(2 * var(--padding));
+}
+
+/*MULTIPLE CHOICE*/
+/*
+<div class="forms-multiple_choice_question" id="interests">
+  <div class="forms-multiple_choice_question_title">Select Your Interests</div>
+  <div class="forms-multiple_choice_question_desc"></div>
+  <div class="forms-multiple_choice_question_options">
+      <div class="forms-multiple_choice_question_option" data-value="Lab Work">
+        <div class="forms-multiple_choice_question_option_radio"></div>
+        <div class="forms-multiple_choice_question_option_label">Lab Work</div>
+      </div>
+      <div class="forms-multiple_choice_question_option" data-value="Research">
+        <div class="forms-multiple_choice_question_option_radio"></div>
+        <div class="forms-multiple_choice_question_option_label">Research</div>
+      </div>
+      <div class="forms-multiple_choice_question_option" data-value="Teaching">
+        <div class="forms-multiple_choice_question_option_radio"></div>
+        <div class="forms-multiple_choice_question_option_label">Teaching</div>
+      </div>
+  </div>
+</div>
+*/
+
+.forms-multiple_choice_question_title {
+    font-size: var(--font-size-heading);
+    font-weight: bold;
+}
+
+.forms-multiple_choice_question_desc {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+.forms-multiple_choice_question_options {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--padding);
+}
+
+.forms-multiple_choice_question_option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: var(--border-radius-small);
+    margin-bottom: 5px;
+}
+
+.forms-multiple_choice_question_option:hover {
+    background-color: var(--background-color);
+}
+
+.forms-multiple_choice_question_option_radio {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.forms-multiple_choice_question_option_label {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+.forms-multiple_choice_question_option_radio {
+    width: 15px;
+    height: 15px;
+    border: 1px solid;
+    border-radius: 50%;
+    margin-right: var(--padding);
+}
+
+.forms-multiple_choice_question_option_checkbox {
+    width: 15px;
+    height: 15px;
+    border: 1px solid;
+    margin-right: var(--padding);
+}
+
+.forms-multiple_choice_question_option.selected .forms-multiple_choice_question_option_radio, .forms-multiple_choice_question_option.selected .forms-multiple_choice_question_option_checkbox {
+    background-color: var(--text-color);
+}
+
+/*CHECKBOX*/
+/*
+        return $"<div class='forms-checkbox_question' id='{Id}'>\n" + 
+               $"  <div class='forms-checkbox_question_title'>{title}</div>\n" +
+               $"  <div class='forms-checkbox_question_desc'>{description}</div>\n" +
+               $"  <div class='forms-checkbox_question_option'>\n" +
+               $"    <div class='forms-checkbox_question_option_checkbox {(defaultValue ? "selected" : "")}'></div>\n" +
+               $"    <div class='forms-checkbox_question_option_label'>{option}</div>\n" +
+               $"  </div>\n" +
+               $"</div>";
+ */
+
+.forms-checkbox_question_title {
+    font-size: var(--font-size-heading);
+    font-weight: bold;
+}
+
+.forms-checkbox_question_desc {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+.forms-checkbox_question_option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: var(--border-radius-small);
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.forms-checkbox_question_option:hover {
+    background-color: var(--background-color);
+}
+
+.forms-checkbox_question_option_checkbox {
+    width: 15px;
+    height: 15px;
+    border: 1px solid;
+    margin-right: var(--padding);
+}
+
+.forms-checkbox_question_option_label {
+    font-size: var(--font-size-text);
+    color: var(--text-color);
+}
+
+.forms-checkbox_question_option_checkbox {
+    width: 15px;
+    height: 15px;
+    border: 1px solid;
+    margin-right: var(--padding);
+}
+
+.forms-checkbox_question_option.selected .forms-checkbox_question_option_checkbox {
+    background-color: var(--text-color);
+}

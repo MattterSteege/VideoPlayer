@@ -1,0 +1,8 @@
+﻿@model ChemCourses.Utils.Form
+
+<link rel="stylesheet" href="/css/toets.css">
+<script src="/js/Forms.js"></script>
+
+<div class="question-container">
+    @Html.Raw(Model.RenderToHTML())
+</div>

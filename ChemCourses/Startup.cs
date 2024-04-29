@@ -37,7 +37,7 @@ namespace ChemCourses
             else
                 app.UseExceptionHandler("/Error");
 
-            app.UseBetterPagesMiddleware(); //MAKE SURE THIS IS ADDED!
+            app.UseBetterPagesMiddleware("/Dashboard"); //MAKE SURE THIS IS ADDED!
             
             app.UseForwardedHeaders();
 
