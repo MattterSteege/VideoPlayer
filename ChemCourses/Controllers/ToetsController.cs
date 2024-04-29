@@ -42,9 +42,9 @@ public class ToetsController : Controller
         Question satisfactionQuestion = new SliderQuestion()
             .SetId("satisfaction")
             .SetLabel("Overall Satisfaction")
-            .SetSliderRange(5, 11)
-            .SetSliderStep(2)
-            .SetSliderDefaultValue(8);
+            .SetSliderRange(0, 10)
+            .SetSliderStep(0.1f)
+            .SetSliderDefaultValue(7.5f);
 
         Question interestsQuestion = new MultipleChoiceQuestion()
             .SetId("interests")

@@ -146,11 +146,10 @@ public class DropdownQuestion : Question {
 #region SliderQuestion
 public class SliderQuestion : Question {
     
-    public int minValue;
-    public int maxValue;
-    public int step;
-    public int defaultValue;
-    public int value;
+    public float minValue;
+    public float maxValue;
+    public float step;
+    public float defaultValue;
 
     public SliderQuestion SetLabel(string label) {
         this.title = label;
@@ -162,18 +161,18 @@ public class SliderQuestion : Question {
         return this;
     }
     
-    public SliderQuestion SetSliderRange(int minValue, int maxValue) {
+    public SliderQuestion SetSliderRange(float minValue, float maxValue) {
         this.minValue = minValue;
         this.maxValue = maxValue;
         return this;
     }
 
-    public SliderQuestion SetSliderStep(int step) {
+    public SliderQuestion SetSliderStep(float step) {
         this.step = step;
         return this;
     }
     
-    public SliderQuestion SetSliderDefaultValue(int defaultValue) {
+    public SliderQuestion SetSliderDefaultValue(float defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }

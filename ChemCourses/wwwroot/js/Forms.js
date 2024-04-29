@@ -64,63 +64,55 @@ DropdownQuestions.forEach((DropdownQuestion) => {
 // JavaScript code for custom slider functionality
 const slider = Array.from(document.getElementsByClassName("forms-slider_question"));
 slider.forEach((Slider) => {
+    const sliderContainer = Slider.querySelector('.slider-container');
     const sliderTrack = Slider.querySelector('.slider-track');
     const sliderThumb = Slider.querySelector('.slider-thumb');
     const sliderValue = Slider.querySelector('.slider-value');
-    
-    console.log(Slider.dataset)
-    
-    const minValue = Number(Slider.dataset.min);
-    const maxValue = Number(Slider.dataset.max);
-    const step = Number(Slider.dataset.step);
-    const defaultValue = Number(Slider.dataset.default_value);
-    
-    sliderValue.textContent = defaultValue;
-    
-    // Calculate initial thumb position
-    const percentage = ((defaultValue - minValue) / (maxValue - minValue)) * 100;
-    sliderThumb.style.left = `${percentage}%`;
-    
-    let isDragging = false;
 
-    // Get initial position of slider thumb
-    let initialX = 0;
+    const min = Number(Slider.getAttribute('data-min').replace(",", "."));
+    const max = Number(Slider.getAttribute('data-max').replace(",", "."));
+    const step = Number(Slider.getAttribute('data-step').replace(",", "."));
+    let value = Number(Slider.getAttribute('data-default_value').replace(",", "."));
 
-    sliderThumb.addEventListener('mousedown', function (e) {
-        isDragging = true;
-        initialX = e.clientX - sliderThumb.getBoundingClientRect().left;
+    const trackWidth = sliderTrack.offsetWidth;
+    const thumbWidth = sliderThumb.offsetWidth;
+
+    const setValue = (newValue) => {
+        value = Math.min(Math.max(min, newValue), max);
+        const numbersAfterComma = step.toString().split(".")[1] ? step.toString().split(".")[1].length : 0;
+        value = Number(value.toFixed(numbersAfterComma));
+        const position = ((value - min) / (max - min)) * (trackWidth - thumbWidth)
+        sliderThumb.style.left = `${position}px`;
+        sliderValue.textContent = value;
+    };
+
+    setValue(value);
+
+    const getPosition = (event) => {
+        const rect = sliderTrack.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        return Math.min(Math.max(0, x), trackWidth - thumbWidth);
+    };
+
+    const moveThumb = (event) => {
+        const position = getPosition(event);
+        const percentage = position / (trackWidth - thumbWidth);
+        const newValue = Math.round(percentage * (max - min) / step) * step + min;
+        setValue(newValue);
+    };
+
+    sliderThumb.addEventListener('mousedown', (event) => {
+        moveThumb(event);
+        const moveHandler = (moveEvent) => {
+            moveThumb(moveEvent);
+        };
+        const upHandler = () => {
+            document.removeEventListener('mousemove', moveHandler);
+            document.removeEventListener('mouseup', upHandler);
+        };
+        document.addEventListener('mousemove', moveHandler);
+        document.addEventListener('mouseup', upHandler);
     });
-
-    document.addEventListener('mousemove', function (e) {
-        if (isDragging) {
-            console.log(maxValue - minValue);
-            setSliderValue(e.clientX, maxValue - minValue);
-        }
-    });
-
-    document.addEventListener('mouseup', function () {
-        isDragging = false;
-    });
-
-    function setSliderValue(number, maxSteps) {
-        const stepSize = sliderTrack.offsetWidth / maxSteps;
-
-        let newX = number - initialX - sliderTrack.getBoundingClientRect().left;
-        const maxPosition = sliderTrack.offsetWidth - sliderThumb.offsetWidth;
-
-        // Keep thumb within track bounds
-        newX = Math.min(Math.max(newX, 0), maxPosition);
-
-        // Calculate the closest step
-        const closestStep = Math.round(newX / stepSize) * stepSize;
-
-        // Update thumb position
-        sliderThumb.style.left = `${closestStep}px`;
-
-        // Calculate slider value based on thumb position
-        const percentage = (closestStep / maxPosition) * 100;
-        sliderValue.textContent = Math.round((percentage / 100) * (maxValue - minValue) + minValue);
-    }
 });
 
 //MULTIPLE CHOICE
@@ -138,8 +130,6 @@ MultipleChoiceQuestions.forEach((MultipleChoiceQuestion) => {
                 });
             }
             
-            console.log(MultipleChoiceQuestion.dataset, option.classList.contains("selected"));
-
             if (option.classList.contains("selected") && MultipleChoiceQuestion.dataset.allow_multiple_selection === 'True') {
                 option.classList.remove("selected");
             } else {
