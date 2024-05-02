@@ -1,52 +1,57 @@
-﻿namespace ChemCourses.Utils;
+﻿using System.Text.Json.Serialization;
+
+namespace ChemCourses.Utils;
 
 // Question class
+[JsonDerivedType(typeof(TextQuestion))]
+[JsonDerivedType(typeof(Section))]
+[JsonDerivedType(typeof(DropdownQuestion))]
+[JsonDerivedType(typeof(SliderQuestion))]
+[JsonDerivedType(typeof(MultipleChoiceQuestion))]
+[JsonDerivedType(typeof(CheckboxQuestion))]
+
 public abstract class Question {
-    public string title;
-    public string description;
-    public string Id = Guid.NewGuid().ToString();
-    
-    public abstract string RenderToHTML();
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public int Id { get; set; }
+
+    public abstract string RenderToHTML(int id = 0);
 }
 
 //TextQuestion class
 #region TextQuestion
 public class TextQuestion : Question {
     
-    public string defaultValue = "Vul hier uw antwoord in";
-    public int maxLength = 50;
+    public string DefaultValue { get; set; } = "Vul hier uw antwoord in";
+    public int MaxLength { get; set; } = 50;
 
-    public TextQuestion SetTitle(string title) {
-        this.title = title;
+    public TextQuestion SetTitle(string Title) {
+        this.Title = Title;
+        return this;
+    }
+
+    public TextQuestion SetDescription(string Description) {
+        this.Description = Description;
         return this;
     }
     
-    public TextQuestion SetId(string Id) {
-        this.Id = Id;
-        return this;
-    }
-    
-    public TextQuestion SetDescription(string description) {
-        this.description = description;
-        return this;
-    }
-    
-    public TextQuestion SetPlaceholder(string defaultValue) {
-        this.defaultValue = defaultValue;
+    public TextQuestion SetPlaceholder(string DefaultValue) {
+        this.DefaultValue = DefaultValue;
         return this;
     }
     
     public TextQuestion SetMaxLength(int maxLength) {
-        this.maxLength = maxLength;
+        this.MaxLength = maxLength;
         return this;
     }
     
-    public override string  RenderToHTML() {
+    public override string  RenderToHTML(int Id = 0) {
+        this.Id = Id;
         //render the HTML for the text question
         //return
-        return $"<div class='forms-text_field' id='{Id}' name='{Id}' data-max_length='{maxLength}' data-default_text='{defaultValue}'>\n" + 
-               $"  <div class='forms-text_field_label'>{title}</div>\n" +
-               $"  <div class='forms-text_field_desc'>{description}</div>\n" +
+        return $"<div class='forms-text_field' id='{Id}' name='{Id}' data-max_length='{MaxLength}' data-default_text='{DefaultValue}'>\n" + 
+               $"  <div class='forms-text_field_label'>{Title}</div>\n" +
+               $"  <div class='forms-text_field_desc'>{Description}</div>\n" +
                $"  <div contenteditable='true'></div>\n" +
                $"</div>";
     }
@@ -56,34 +61,36 @@ public class TextQuestion : Question {
 //Section class
 #region Section
 public class Section : Question {
-    public string title;
-    public string description;
+    
+    public List<Question> Questions { get; set; } = new List<Question>();
 
-    public Section SetLabel(string label) {
-        base.title = label;
+    public Section SetTitle(string label) {
+        Title = label;
+        return this;
+    }
+
+    public Section SetDescription(string Description) {
+        this.Description = Description;
         return this;
     }
     
-    public Section SetId(string Id) {
+    public void AddQuestions(params Question[] questions)
+    {
+        this.Questions.AddRange(questions);
+    }
+
+    public override string  RenderToHTML(int Id = 0) {
         this.Id = Id;
-        return this;
-    }
-    
-    public Section SetTitle(string title) {
-        this.title = title;
-        return this;
-    }
-    
-    public Section AddDescription(string description) {
-        this.description = description;
-        return this;
-    }
-    
-    public override string  RenderToHTML() {
+        
         //render the HTML for the section
         return $"<div class='forms-section' id='{Id}'>\n" + 
-               $"  <div class='forms-section_title'>{title}</div>\n" +
-               $"  <div class='forms-section_desc'>{description}</div>\n" +
+               $"  <div class='forms-section_Title'>{Title}</div>\n" +
+               $"  <div class='forms-section_desc'>{Description}</div>\n" +
+                $"  <div class='forms-section_questions'>\n" +
+               
+                string.Join("\n", Questions.Select(q => q.RenderToHTML())) +
+               
+                $"  </div>\n" +
                $"</div>";
     }
 }
@@ -93,47 +100,57 @@ public class Section : Question {
 #region DropdownQuestion
 public class DropdownQuestion : Question {
     
-    public List<string> options = new();
-    public string defaultValue;
-    public string value;
+    public List<string> Options { get; set; } = new List<string>();
+    public string DefaultValue { get; set; }
+    public string Value { get; set; }
 
-    public DropdownQuestion SetLabel(string label) {
-        this.title = label;
+    public DropdownQuestion SetTitle(string label) {
+        this.Title = label;
         return this;
     }
     
-    public DropdownQuestion SetId(string Id) {
-        this.Id = Id;
+    public DropdownQuestion SetDescription(string Description) {
+        this.Description = Description;
         return this;
     }
-    
+
     public DropdownQuestion AddOption(string option) {
-        options.Add(option);
+        Options.Add(option);
+        return this;
+    }
+    
+    public DropdownQuestion SetOptions(List<string> options) {
+        this.Options = options;
         return this;
     }
 
-    public DropdownQuestion SetDefaultValue(string defaultValue) {
-        this.defaultValue = defaultValue;
+    public DropdownQuestion SetDefaultValue(string DefaultValue) {
+        this.DefaultValue = DefaultValue;
         return this;
     }
     
     public DropdownQuestion SetValue(string value) {
-        this.value = value;
+        this.Value = value;
         return this;
     }
     
-    public override string  RenderToHTML() {
+    public override string  RenderToHTML(int Id = 0) {
+        this.Id = Id;
+        
         var html = $"<div class='forms-dropdown_question' id='{Id}'>\n" + 
-                   $"  <div class='forms-dropdown_question_title'>{title}</div>\n" +
-                   $"  <div class='forms-dropdown_question_desc'>{description}</div>\n" +
-                   $"  <div class='forms-dropdown_question_options'>\n";
+                   $"  <div class='forms-dropdown_question_title'>▼ {Title}</div>\n" +
+                   $"  <div class='forms-dropdown_question_desc'>{Description}</div>\n" +
+                   $"  <div class='forms-dropdown_question_selected' style='display: none;'></div>\n" +
+                   $"  <div class='forms-dropdown_question_options'>\n" +
+                   $"      <div class='forms-dropdown_question_option_container'>\n";
 
-        foreach (var option in options)
+        foreach (var option in Options)
         {
-            html += $"      <div class='forms-dropdown_question_option' data-value='{option}'>{option}</div>\n";
+            html += $"          <div class='forms-dropdown_question_option' data-value='{option}'>{option}</div>\n";
         }
         
-        html += $"  </div>\n" +
+        html += $"      </div>\n" +
+                $"  </div>\n" +
                 $"</div>";
         
         return html;
@@ -146,43 +163,45 @@ public class DropdownQuestion : Question {
 #region SliderQuestion
 public class SliderQuestion : Question {
     
-    public float minValue;
-    public float maxValue;
-    public float step;
-    public float defaultValue;
+    public float MinValue { get; set; }
+    public float MaxValue { get; set; }
+    public float Step { get; set; }
+    public float DefaultValue { get; set; }
 
-    public SliderQuestion SetLabel(string label) {
-        this.title = label;
-        return this;
-    }
-    
-    public SliderQuestion SetId(string Id) {
-        this.Id = Id;
-        return this;
-    }
-    
-    public SliderQuestion SetSliderRange(float minValue, float maxValue) {
-        this.minValue = minValue;
-        this.maxValue = maxValue;
+    public SliderQuestion SetTitle(string label) {
+        this.Title = label;
         return this;
     }
 
-    public SliderQuestion SetSliderStep(float step) {
-        this.step = step;
-        return this;
-    }
-    
-    public SliderQuestion SetSliderDefaultValue(float defaultValue) {
-        this.defaultValue = defaultValue;
-        return this;
-    }
-
-    public override string RenderToHTML()
+    public SliderQuestion SetDescription(string Description)
     {
+        this.Description = Description;
+        return this;
+    }
+
+    public SliderQuestion SetSliderRange(float minValue, float maxValue) {
+        this.MinValue = minValue;
+        this.MaxValue = maxValue;
+        return this;
+    }
+
+    public SliderQuestion SetStep(float step) {
+        this.Step = step;
+        return this;
+    }
+    
+    public SliderQuestion SetDefaultValue(float DefaultValue) {
+        this.DefaultValue = DefaultValue;
+        return this;
+    }
+
+    public override string  RenderToHTML(int Id = 0) {
+        this.Id = Id;
+        
         //render the HTML for the slider question
-        return $"<div class='forms-slider_question' id='{Id}' data-min='{minValue}' data-max='{maxValue}' data-step='{step}' data-default_value='{defaultValue}'>\n" +
-               $"  <div class='forms-slider_question_title'>{title}</div>\n" +
-               $"  <div class='forms-slider_question_desc'>{description}</div>\n" +
+        return $"<div class='forms-slider_question' id='{Id}' data-min='{MinValue}' data-max='{MaxValue}' data-step='{Step}' data-default_value='{DefaultValue}'>\n" +
+               $"  <div class='forms-slider_question_Title'>{Title}</div>\n" +
+               $"  <div class='forms-slider_question_desc'>{Description}</div>\n" +
                $"  <div class='slider-container'>\n" +
                $"   <div class='slider-track'>\n" +
                $"   <div class='slider-thumb''></div>\n" +
@@ -198,47 +217,54 @@ public class SliderQuestion : Question {
 #region MultipleChoiceQuestion
 public class MultipleChoiceQuestion : Question {
     
-    public List<string> options = new();
-    public string defaultValue;
-    public bool allowMultipleSelection = false;
+    public List<string> Options { get; set; } = new List<string>();
+    public string DefaultValue { get; set; }
+    public bool AllowMultiple { get; set; }
 
-    public MultipleChoiceQuestion SetLabel(string label) {
-        this.title = label;
+    public MultipleChoiceQuestion SetTitle(string label) {
+        this.Title = label;
         return this;
     }
     
-    public MultipleChoiceQuestion SetId(string Id) {
-        this.Id = Id;
+    public MultipleChoiceQuestion SetDescription(string Description) {
+        this.Description = Description;
         return this;
     }
-    
+
     public MultipleChoiceQuestion AddOption(string option) {
-        options.Add(option);
+        Options.Add(option);
+        return this;
+    }
+    
+    public MultipleChoiceQuestion SetOptions(List<string> options) {
+        this.Options = options;
         return this;
     }
 
-    public MultipleChoiceQuestion SetDefaultValue(string defaultValue) {
-        this.defaultValue = defaultValue;
+    public MultipleChoiceQuestion SetDefaultValue(string DefaultValue) {
+        this.DefaultValue = DefaultValue;
         return this;
     }
 
     public MultipleChoiceQuestion AllowMultipleSelections() {
-        allowMultipleSelection = true;
+        AllowMultiple = true;
         return this;
     }
     
-    public override string  RenderToHTML() {
+    public override string  RenderToHTML(int Id = 0) {
+        this.Id = Id;
+        
         //render the HTML for the multiple choice question
-        var html = $"<div class='forms-multiple_choice_question' id='{Id}' data-allow_multiple_selection='{allowMultipleSelection}'>\n" + 
-                   $"  <div class='forms-multiple_choice_question_title'>{title}</div>\n" +
-                   $"  <div class='forms-multiple_choice_question_desc'>{description}</div>\n" +
+        var html = $"<div class='forms-multiple_choice_question' id='{Id}' data-allow_multiple_selection='{AllowMultiple}'>\n" + 
+                   $"  <div class='forms-multiple_choice_question_Title'>{Title}</div>\n" +
+                   $"  <div class='forms-multiple_choice_question_desc'>{Description}</div>\n" +
                    $"  <div class='forms-multiple_choice_question_options'>\n";
 
-        if (allowMultipleSelection)
+        if (AllowMultiple)
         {
-            foreach (var option in options)
+            foreach (var option in Options)
             {
-                html += $"      <div class='forms-multiple_choice_question_option {(option == defaultValue ? "selected" : "")}' data-value='{option}'>\n" +
+                html += $"      <div class='forms-multiple_choice_question_option {(option == DefaultValue ? "selected" : "")}' data-value='{option}'>\n" +
                         $"        <div class='forms-multiple_choice_question_option_checkbox'></div>\n" +
                         $"        <div class='forms-multiple_choice_question_option_label'>{option}</div>\n" +
                         $"      </div>\n";
@@ -246,7 +272,7 @@ public class MultipleChoiceQuestion : Question {
         }
         else
         {
-            foreach (var option in options)
+            foreach (var option in Options)
             {
                 html += $"      <div class='forms-multiple_choice_question_option' data-value='{option}'>\n" +
                         $"        <div class='forms-multiple_choice_question_option_radio'></div>\n" +
@@ -267,37 +293,39 @@ public class MultipleChoiceQuestion : Question {
 #region CheckboxQuestion
 public class CheckboxQuestion : Question {
 
-    public string option;
-    public bool defaultValue;
+    public string Option { get; set; }
+    public bool DefaultValue { get; set; }
     
-    public CheckboxQuestion SetLabel(string label) {
-        this.title = label;
+    public CheckboxQuestion SetTitle(string label) {
+        this.Title = label;
         return this;
     }
     
-    public CheckboxQuestion SetId(string Id) {
-        this.Id = Id;
+    public CheckboxQuestion SetDescription(string Description) {
+        this.Description = Description;
         return this;
     }
-    
+
     public CheckboxQuestion SetOption(string option) {
-        this.option = option;
+        this.Option = option;
         return this;
     }
     
-    public CheckboxQuestion SetDefaultValue(bool defaultValue) {
-        this.defaultValue = defaultValue;
+    public CheckboxQuestion SetDefaultValue(bool DefaultValue) {
+        this.DefaultValue = DefaultValue;
         return this;
     }
     
-    public override string  RenderToHTML() {
+    public override string  RenderToHTML(int Id = 0) {
+        this.Id = Id;
+        
         //render the HTML for the checkbox question
         return $"<div class='forms-checkbox_question' id='{Id}'>\n" + 
-               $"  <div class='forms-checkbox_question_title'>{title}</div>\n" +
-               $"  <div class='forms-checkbox_question_desc'>{description}</div>\n" +
+               $"  <div class='forms-checkbox_question_Title'>{Title}</div>\n" +
+               $"  <div class='forms-checkbox_question_desc'>{Description}</div>\n" +
                $"  <div class='forms-checkbox_question_option'>\n" +
-               $"    <div class='forms-checkbox_question_option_checkbox {(defaultValue ? "selected" : "")}'></div>\n" +
-               $"    <div class='forms-checkbox_question_option_label'>{option}</div>\n" +
+               $"    <div class='forms-checkbox_question_option_checkbox {(DefaultValue ? "selected" : "")}'></div>\n" +
+               $"    <div class='forms-checkbox_question_option_label'>{Option}</div>\n" +
                $"  </div>\n" +
                $"</div>";
     }

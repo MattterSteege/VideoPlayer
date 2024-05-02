@@ -37,31 +37,39 @@ TextFields.forEach((TextField) => {
 //DROPDOWN
 const DropdownQuestions = Array.from(document.getElementsByClassName("forms-dropdown_question"));
 DropdownQuestions.forEach((DropdownQuestion) => {
-
     const title = DropdownQuestion.querySelector('.forms-dropdown_question_title');
-    const options = Array.from(DropdownQuestion.querySelectorAll('.forms-dropdown_question_option'));
-    const selectedOption = DropdownQuestion.querySelector('.forms-dropdown_question_option[data-selected=true]');
+    const optionsContainer = DropdownQuestion.querySelector('.forms-dropdown_question_options');
+    const selectedContainer = DropdownQuestion.querySelector('.forms-dropdown_question_selected');
+    const options = Array.from(optionsContainer.children[0].children);
 
-    // Add event listener for click
-    title.addEventListener('click', function () {
-        DropdownQuestion.classList.toggle('active');
+    // Hide options initially
+    optionsContainer.style.display = 'none';
+
+    // Toggle dropdown menu when title is clicked
+    title.addEventListener('click', () => {
+        const isExpanded = optionsContainer.style.display === 'block';
+        optionsContainer.style.display = isExpanded ? 'none' : 'block';
+        selectedContainer.style.display = (isExpanded && selectedContainer.textContent != "") ? 'block' : 'none';
+        title.textContent = isExpanded ? '▼' + title.textContent.substring(1) : '▲' + title.textContent.substring(1);
     });
 
-    // Add event listener for options
+    // Handle option selection
     options.forEach((option) => {
-        option.addEventListener('click', function () {
-            title.innerText = option.dataset.value;
-            options.forEach((option) => {
-                option.dataset.selected = false;
-            });
-            option.dataset.selected = true;
-            DropdownQuestion.classList.remove('active');
+        option.addEventListener('click', () => {
+            const selectedValue = option.getAttribute('data-value');
+            const selectedOption = DropdownQuestion.querySelector(`[data-selected="true"]`);
+            if (selectedOption) selectedOption.setAttribute('data-selected', 'false');
+            option.setAttribute('data-selected', 'true');
+            selectedContainer.textContent = selectedValue;
+            selectedContainer.style.display = 'block';
+            optionsContainer.style.display = 'none';
+            title.textContent = '▼' + title.textContent.substring(1);
         });
     });
 });
 
+
 //SLIDER
-// JavaScript code for custom slider functionality
 const slider = Array.from(document.getElementsByClassName("forms-slider_question"));
 slider.forEach((Slider) => {
     const sliderContainer = Slider.querySelector('.slider-container');

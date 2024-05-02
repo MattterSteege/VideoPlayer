@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 
 namespace ChemCourses.Utils;
 
@@ -27,10 +28,22 @@ public class Form
         Description = description;
         return this;
     }
+    
+    public Form AddSection(Section section)
+    {
+        Questions.Add(section);
+        return this;
+    }
 
-    public Form AddSection(Question question)
+    public Form AddQuetion(Question question)
     {
         Questions.Add(question);
+        return this;
+    }
+    
+    public Form AddSections(List<Question> questions)
+    {
+        Questions.AddRange(questions);
         return this;
     }
     
@@ -52,5 +65,10 @@ public class Form
         }
 
         return htmlBuilder.ToString();
+    }
+
+    public string RenderToJSON()
+    {
+        return JsonSerializer.Serialize(this);
     }
 }

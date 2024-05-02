@@ -1,64 +1,19 @@
 ﻿@model dynamic
 
-<h1>Videos</h1>
+<script src="/js/hls.js"></script>
 
-<canvas width="1280" height="720" id="videoPlayer"></canvas>
+<video id="video" controls width="1024" height="576"></video>
 
 <script>
-    var videoIndex = 0;
-    var Duration = 10;
-    var videoCount = 100; //1000s = 16.6 minutes
-    var firstRun = true;
-    var videoBlob = null;
-    var BlobURL = null;
-
-    BetterPages.mainBeforeLoad = () => {
-        videoIndex = 0;
-        start();
-    }
-    
-    BetterPages.mainBeforeUnload = () => {
-        video[0].pause();
-        video[1].pause();
-    }
-    
-    function start() {
-        videoIndex++;
-        fetch("/Video/StreamVideo/" + videoIndex * Duration + "/" + Duration)
-       .then(response => response.blob())
-       .then(blob => {
-          videoBlob = new Blob([blob], { type: 'video/mp4' });
-          BlobURL = URL.createObjectURL(videoBlob);
-            video.push(document.createElement("video"));
-            video[video.length - 1].src = BlobURL;
-       });
-    }
-    let video = [];
-    video.push(document.createElement("video"));
-    let canvas = document.getElementById("videoPlayer");
-    let ctx = canvas.getContext("2d");
-    
-    function run() {        
-      
-        video[video.length - 1].play();   
-        video[video.length - 1].addEventListener('ended', function() {
-            if (videoIndex < videoCount) {
-                run();
-            }
-        });
-        
-        var currentVideo = video.length;
-        
-        start();
-        
-        // Create a function to draw frames on the canvas
-        let draw = function () {
-          ctx.drawImage(video[currentVideo - 1], 0, 0, canvas.width, canvas.height);
-          // Repeat the draw loop
-          requestAnimationFrame(draw);
-        };
-        
-        // Call the draw loop
-        draw();
-    }
+BetterPages.mainAfterLoad = () => {
+  var video = document.getElementById('video');
+  var videoSrc = 'https://localhost:7023/api/video/test_2';
+  if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = videoSrc;
+  } else if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+  }
+}
 </script>

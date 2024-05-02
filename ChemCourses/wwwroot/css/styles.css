@@ -66,6 +66,7 @@ main#main, .loading-screen {
     color: var(--text-color);
     border-radius: var(--border-radius);
     padding: var(--padding);
+    overflow-y: scroll;
 }
 
 .sidebar {

@@ -69,15 +69,12 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
       <_ContentIncludedByDefault Remove="Views\Video\Upload.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\test_1.mp4" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MediaToolkit" Version="1.1.0.1" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\uploads\" />
     </ItemGroup>
 
 </Project>

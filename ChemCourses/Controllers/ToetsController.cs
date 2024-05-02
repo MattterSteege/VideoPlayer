@@ -6,73 +6,69 @@ namespace ChemCourses.Controllers;
 
 public class ToetsController : Controller
 {
-    [BetterPages]
+    //[BetterPages]
     [Route("/Toets/CreateForm")]
     public IActionResult CreateForm()
     {
-        // Creating form sections
-        Question personalInfoSection = new Section()
-            .SetTitle("Personal Information")
-            .AddDescription("We need your personal information to better serve you.");
+        /*
+         Possible Options:
+            section
+            text
+            dropdown
+            slider
+            multiple choice
+            checkbox
+         */
 
-        Question courseInfoSection = new Section()
-            .SetTitle("Course Information")
-            .AddDescription("Choose the courses you are interested in attending.");
+        List<Question> questions = new List<Question>();
 
-        // Creating individual questions
-        Question nameQuestion = new TextQuestion()
-            .SetDescription("Please input your name here")
-            .SetPlaceholder("John Doe")
-            .SetTitle("Name");
+        Section Intro = new Section()
+            .SetTitle("Introductie")
+            .SetDescription("Deze vragen gaan over de introductie van de cursus. Vul de vragen zo goed mogelijk in.");
+        
+        Question Q1 = new TextQuestion()
+            .SetTitle("Wat vond je van de introductie?")
+            .SetDescription("Geef een cijfer van 1 tot 10.")
+            .SetMaxLength(2);
 
-        Question emailQuestion = new TextQuestion()
-            .SetDescription("Please enter your email address. E.g. example@gmail.com")
-            .SetPlaceholder("example@gmail.com")
-            .SetTitle("Email");
+        Question Q2 = new SliderQuestion()
+            .SetTitle("Hoe duidelijk was de introductie?")
+            .SetDescription("Geef een cijfer van 1 tot 10.")
+            .SetSliderRange(1, 10)
+            .SetDefaultValue(5)
+            .SetStep(1);
+        
+        Question Q3 = new DropdownQuestion()
+            .SetTitle("Hoe duidelijk was de introductie?")
+            .SetDescription("Kies een van de opties.")
+            .SetOptions(new List<string> { "Heel duidelijk", "Duidelijk", "Niet duidelijk" });
 
-        Question courseSelectionQuestion = new DropdownQuestion()
-            .SetId("courses")
-            .SetLabel("Select Courses")
-            .AddOption("Chemistry 101")
-            .AddOption("Organic Chemistry")
-            .AddOption("Chemical Engineering")
-            .SetDefaultValue("")
-            .SetValue("");
-
-        Question satisfactionQuestion = new SliderQuestion()
-            .SetId("satisfaction")
-            .SetLabel("Overall Satisfaction")
-            .SetSliderRange(0, 10)
-            .SetSliderStep(0.1f)
-            .SetSliderDefaultValue(7.5f);
-
-        Question interestsQuestion = new MultipleChoiceQuestion()
-            .SetId("interests")
-            .SetLabel("Select Your Interests")
-            .AddOption("Lab Work")
-            .AddOption("Research")
-            .AddOption("Teaching")
-            //.AllowMultipleSelections()
-            .SetDefaultValue("Lab Work");
-
-        Question subscriptionQuestion = new CheckboxQuestion()
-            .SetId("subscription")
-            .SetLabel("Subscribe to Newsletter")
-            .SetOption("Yes, subscribe me to the newsletter");
+        Question Q4 = new MultipleChoiceQuestion()
+            .SetTitle("Wat vond je van de introductie?")
+            .SetDescription("Kies een van de opties.")
+            .SetOptions(new List<string> {"Heel goed", "Goed", "Matig", "Slecht", "Heel slecht"});
+        
+        Question Q5 = new CheckboxQuestion()
+            .SetTitle("Wil je vaker een introductie zoals deze?")
+            .SetDescription("Klik op de checkbox als je vaker een introductie zoals deze wilt.")
+            .SetOption("Ja");
+        
+        Intro.AddQuestions(Q1, Q2, Q3, Q4, Q5);
+        
+        Question Q6 = new TextQuestion()
+            .SetTitle("Wat vond je van de eerste les?")
+            .SetDescription("Geef een cijfer van 1 tot 10.")
+            .SetMaxLength(2);
+        
 
         // Creating the form
         Form form = new Form()
             .SetTitle("Chemistry Courses Survey", "Please fill out the survey below.")
             .AddDescription("Your feedback is important to us.")
-            .AddSection(personalInfoSection)
-            .AddSection(courseInfoSection)
-            .AddSection(nameQuestion)
-            .AddSection(emailQuestion)
-            .AddSection(courseSelectionQuestion)
-            .AddSection(satisfactionQuestion)
-            .AddSection(interestsQuestion)
-            .AddSection(subscriptionQuestion);
-        
+            .AddSection(Intro)
+            .AddQuetion(Q6)
+            .AddSection(Intro);
+
         return PartialView(form);
     }
 }
