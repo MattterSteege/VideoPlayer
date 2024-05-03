@@ -164,6 +164,121 @@ CheckboxQuestions.forEach((CheckboxQuestion) => {
     });
 });
 
+//TRUE/FALSE
+const TrueFalseQuestions = Array.from(document.getElementsByClassName("forms-true_false_question"));
+TrueFalseQuestions.forEach((TrueFalseQuestion) => {
+    const options = Array.from(TrueFalseQuestion.querySelectorAll('.forms-true_false_question_option'));
+
+    // Add event listener for options
+    options.forEach((option) => {
+        option.addEventListener('click', function () {
+            options.forEach(opt => {
+                opt.classList.remove("selected");
+            });
+            option.classList.add("selected");
+        });
+    });
+});
+
+//Fill in the blank
+//no code needed
+
+//Matching
+/*
+
+<div class="forms-matching_question" id="0">
+  <div class="forms-matching_question_Title">Match</div>
+  <div class="forms-matching_question_desc">Match the words on the left with the words on the right.</div>
+  <div class="forms-matching_question_grid">
+    <div class="forms-matching_question_grid_inner">
+      <div class="forms-matching_question_option" data-answer="1">1</div>
+      <div class="forms-matching_question_option" data-answer="2">2</div>
+      <div class="forms-matching_question_option" data-answer="3">3</div>
+    </div>
+    <div class="forms-matching_question_grid_inner sortable-list">
+      <div class="forms-matching_question_option item" draggable="true" data-answer="2">B</div>
+      <div class="forms-matching_question_option item" draggable="true" data-answer="1">A</div>
+      <div class="forms-matching_question_option item" draggable="true" data-answer="3">C</div>
+    </div>
+  </div>
+</div>
+
+*/
+
+const MatchingQuestions = Array.from(document.getElementsByClassName("forms-matching_question"));
+MatchingQuestions.forEach((MatchingQuestion) => {
+    function Sortable(parentElement) {
+        var draggingElement = null;
+
+        // Function to handle the drag start event
+        function handleDragStart(event) {
+            draggingElement = event.target;
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/html', draggingElement.innerHTML);
+            draggingElement.classList.add('dragging');
+        }
+
+        // Function to handle the drag over event
+        function handleDragOver(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+            event.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        // Function to handle the drag enter event
+        function handleDragEnter(event) {
+            event.target.classList.add('over');
+        }
+
+        // Function to handle the drag leave event
+        function handleDragLeave(event) {
+            event.target.classList.remove('over');
+        }
+
+        // Function to handle the drop event
+        function handleDrop(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            }
+            if (draggingElement !== event.target) {
+                draggingElement.innerHTML = event.target.innerHTML;
+                event.target.innerHTML = event.dataTransfer.getData('text/html');
+            }
+            return false;
+        }
+
+        // Function to handle the drag end event
+        function handleDragEnd(event) {
+            draggingElement.classList.remove('dragging');
+            var elements = parentElement.querySelectorAll('.over');
+            elements.forEach(function(element) {
+                element.classList.remove('over');
+            });
+        }
+
+        // Initialize the sortable
+        function init() {
+            var elements = parentElement.children;
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].setAttribute('draggable', 'true');
+                elements[i].addEventListener('dragstart', handleDragStart, false);
+                elements[i].addEventListener('dragenter', handleDragEnter, false);
+                elements[i].addEventListener('dragover', handleDragOver, false);
+                elements[i].addEventListener('dragleave', handleDragLeave, false);
+                elements[i].addEventListener('drop', handleDrop, false);
+                elements[i].addEventListener('dragend', handleDragEnd, false);
+            }
+        }
+
+        // Call the init function
+        init();
+    }
+
+    Sortable(MatchingQuestion.querySelector('.sortable-list'));
+});
+
 //All the form question types that still need to be implemented
 // - Date
 // - Time

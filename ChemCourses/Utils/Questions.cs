@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace ChemCourses.Utils;
 
@@ -18,7 +19,6 @@ public abstract class Question {
     public abstract string RenderToHTML(int id = 0);
 }
 
-//TextQuestion class
 #region TextQuestion
 public class TextQuestion : Question {
     
@@ -58,7 +58,6 @@ public class TextQuestion : Question {
 }
 #endregion
 
-//Section class
 #region Section
 public class Section : Question {
     
@@ -96,7 +95,6 @@ public class Section : Question {
 }
 #endregion
 
-//DropdownQuestion class
 #region DropdownQuestion
 public class DropdownQuestion : Question {
     
@@ -158,8 +156,6 @@ public class DropdownQuestion : Question {
 }
 #endregion
 
-
-// SliderQuestion class
 #region SliderQuestion
 public class SliderQuestion : Question {
     
@@ -213,7 +209,6 @@ public class SliderQuestion : Question {
 }
 #endregion
 
-// MultipleChoiceQuestion class
 #region MultipleChoiceQuestion
 public class MultipleChoiceQuestion : Question {
     
@@ -289,7 +284,6 @@ public class MultipleChoiceQuestion : Question {
 }
 #endregion
 
-//CheckboxQuestion class
 #region CheckboxQuestion
 public class CheckboxQuestion : Question {
 
@@ -330,5 +324,172 @@ public class CheckboxQuestion : Question {
                $"</div>";
     }
 
+}
+#endregion
+
+#region TrueFalseQuestion
+public class TrueFalseQuestion : Question {
+    
+    public bool DefaultValue { get; set; }
+
+    public TrueFalseQuestion SetTitle(string label) {
+        this.Title = label;
+        return this;
+    }
+    
+    public TrueFalseQuestion SetDescription(string Description) {
+        this.Description = Description;
+        return this;
+    }
+
+    public TrueFalseQuestion SetDefaultValue(bool DefaultValue) {
+        this.DefaultValue = DefaultValue;
+        return this;
+    }
+    
+    public override string  RenderToHTML(int Id = 0) {
+        this.Id = Id;
+        
+        //render the HTML for the true/false question
+        return $"<div class='forms-true_false_question' id='{Id}'>\n" + 
+               $"  <div class='forms-true_false_question_Title'>{Title}</div>\n" +
+               $"  <div class='forms-true_false_question_desc'>{Description}</div>\n" +
+               $"  <div class='forms-true_false_question_options'>\n" +
+               $"    <div class='forms-true_false_question_option {(DefaultValue ? "selected" : "")}' data-value='true'>True</div>\n" +
+               $"    <div class='forms-true_false_question_option {(DefaultValue ? "" : "selected")}' data-value='false'>False</div>\n" +
+               $"  </div>\n" +
+               $"</div>";
+    }
+}
+#endregion
+
+#region FillInTheBlankQuestion
+public class FillInTheBlankQuestion : Question
+{
+    public List<string> Parts { get; set; }
+    public List<string> Answers { get; set; } = new List<string>();
+
+    public FillInTheBlankQuestion SetTitle(string label)
+    {
+        this.Title = label;
+        return this;
+    }
+
+    public FillInTheBlankQuestion SetDescription(string Description)
+    {
+        this.Description = Description;
+        return this;
+    }
+
+    /// <summary>
+    /// Input a string with the blanks in the text. The blanks should be surrounded by {{ and }} while containing the anwser.
+    /// </summary>
+    /// <example>
+    /// SetText("The capital of the Netherlands is {{Amsterdam}}. It is a very beautiful city. It's most famous for its {{canals}}.");
+    /// </example>
+    public FillInTheBlankQuestion SetText(string text)
+    {
+        Parts = Regex.Split(text, "{{.*?}}").ToList();
+        Answers = Regex.Matches(text, "{{(.*?)}}").Select(m => m.Groups[1].Value).ToList();
+        return this;
+    }
+
+    public override string RenderToHTML(int Id = 0)
+    {
+        this.Id = Id;
+
+        //render the HTML for the fill in the blank question
+        var html = $"<div class='forms-fill_in_the_blank_question' id='{Id}'>\n" +
+                   $"  <div class='forms-fill_in_the_blank_question_Title'>{Title}</div>\n" +
+                   $"  <div class='forms-fill_in_the_blank_question_desc'>{Description}</div>\n" +
+                   $"  <div class='forms-fill_in_the_blank_question_text'>\n";
+
+        for (int i = 0; i < Parts.Count; i++)
+        {
+            html += $"{Parts[i]}\n";
+
+            if (i < Answers.Count)
+            {
+                html += $"<div contenteditable='true' type='text' class='forms-fill_in_the_blank_question_text_input' data-answer='{Answers[i]}'></div>\n";
+            }
+        }
+
+        html += $"</div>\n" +
+                $"</div>";
+
+        return html;
+    }
+}
+#endregion
+
+#region MatchingQuestion
+public class MatchingQuestion : Question
+{
+    public List<string> Options { get; set; } = new List<string>();
+    public List<string> Answers { get; set; } = new List<string>();
+
+    public MatchingQuestion SetTitle(string label)
+    {
+        this.Title = label;
+        return this;
+    }
+
+    public MatchingQuestion SetDescription(string Description)
+    {
+        this.Description = Description;
+        return this;
+    }
+
+    public MatchingQuestion AddQuestionAndAnswer(string question, string answer)
+    {
+        Options.Add(question);
+        Answers.Add(answer);
+        return this;
+    }
+
+    public MatchingQuestion SetQuestionAndAnswer(List<string> questions, List<string> answers)
+    {
+        Options = questions;
+        Answers = answers;
+        return this;
+    }
+
+    //the rendering should be a grid (when possible) that is randomly shuffled, then the user can click and the answer and question should be matched
+    public override string RenderToHTML(int Id = 0)
+    {
+        this.Id = Id;
+
+        //render the HTML for the matching question
+        var html = $"<div class='forms-matching_question' id='{Id}'>\n" +
+                   $"  <div class='forms-matching_question_Title'>{Title}</div>\n" +
+                   $"  <div class='forms-matching_question_desc'>{Description}</div>\n" +
+                   $"  <div class='forms-matching_question_grid'>\n" +
+                   $"    <div class='forms-matching_question_grid_inner'>\n";
+
+        foreach (var answer in Answers)
+        {
+            html += $"      <div class='forms-matching_question_option' data-answer='{answer}'>{answer}</div>\n";
+        }
+        
+        html += $"    </div>\n" +
+                $"    <div class='forms-matching_question_grid_inner sortable-list'>\n";
+        
+        List<string> shuffledOptions = new List<string>();
+        for (int i = 0; i < Options.Count; i++)
+        {
+            shuffledOptions.Add($"      <div class='forms-matching_question_option draggable' draggable='true' data-answer='{Answers[i]}'>{Options[i]}</div>");
+        }
+
+        shuffledOptions.Shuffle();
+        
+        html += string.Join("\n", shuffledOptions);
+        
+        
+        html += $"    </div>\n" +
+                $"  </div>\n" +
+                $"</div>";
+
+        return html;
+    }
 }
 #endregion

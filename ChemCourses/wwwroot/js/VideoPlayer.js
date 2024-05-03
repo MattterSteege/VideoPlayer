@@ -1,4 +1,8 @@
-﻿var videoId;
+﻿//need to implement the following functions
+// - First fetch the amount of segments (video and audio) from the server /api/Video/{videoId}
+// - turn into a 'VideoPlayer' class
+
+var videoId;
 
 var mimeType_video = "video/mp4";
 var codecs_video = "avc1.4D401F";

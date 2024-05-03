@@ -5,15 +5,8 @@
 <video id="video" controls width="auto" height="100%" style="width: 100%; height: auto; overflow: hidden; border-radius: var(--border-radius-small);"></video>
 
 <script>
-//time out 3.. 2.. 1.. startup();
 setTimeout(function() {
-    console.log("Starting video player (3)");
-    setTimeout(function() {
-        console.log("Starting video player (2)");
-        setTimeout(function() {
-            console.log("Starting video player (1)");
-            startup('0F15B5E8-89F4-4211-875B-5EF3082A294C');
-        }, 1000);
-    }, 1000);
+    console.log("[VideoPlayer.js] Starting video player");
+    startup('0F15B5E8-89F4-4211-875B-5EF3082A294C');
 }, 1000);
 </script>

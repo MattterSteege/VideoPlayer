@@ -6,7 +6,7 @@ namespace ChemCourses.Controllers;
 
 public class ToetsController : Controller
 {
-    //[BetterPages]
+    [BetterPages]
     [Route("/Toets/CreateForm")]
     public IActionResult CreateForm()
     {
@@ -18,6 +18,9 @@ public class ToetsController : Controller
             slider
             multiple choice
             checkbox
+            true/false
+            fill in the blank
+            matching
          */
 
         List<Question> questions = new List<Question>();
@@ -52,21 +55,30 @@ public class ToetsController : Controller
             .SetTitle("Wil je vaker een introductie zoals deze?")
             .SetDescription("Klik op de checkbox als je vaker een introductie zoals deze wilt.")
             .SetOption("Ja");
+
+        Question Q6 = new TrueFalseQuestion()
+            .SetTitle("Was de introductie duidelijk?")
+            .SetDescription("Klik op de checkbox als de introductie duidelijk was.")
+            .SetDefaultValue(true);
         
-        Intro.AddQuestions(Q1, Q2, Q3, Q4, Q5);
+        Question Q7 = new FillInTheBlankQuestion()
+            .SetTitle("Vul in")
+            .SetDescription("Vul in wat je van de introductie vond.")
+            .SetText("The capital of the Netherlands is {{Amsterdam}}. It is a very beautiful city. It's most famous for its {{canals}}.");
         
-        Question Q6 = new TextQuestion()
-            .SetTitle("Wat vond je van de eerste les?")
-            .SetDescription("Geef een cijfer van 1 tot 10.")
-            .SetMaxLength(2);
+        Question Q8 = new MatchingQuestion()
+            .SetTitle("Match")
+            .SetDescription("Match the words on the left with the words on the right.")
+            .SetQuestionAndAnswer(new List<string> { "A", "B", "C" }, new List<string> { "1", "2", "3" });
+        
+        Intro.AddQuestions(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8);
+        
         
 
         // Creating the form
         Form form = new Form()
             .SetTitle("Chemistry Courses Survey", "Please fill out the survey below.")
             .AddDescription("Your feedback is important to us.")
-            .AddSection(Intro)
-            .AddQuetion(Q6)
             .AddSection(Intro);
 
         return PartialView(form);
