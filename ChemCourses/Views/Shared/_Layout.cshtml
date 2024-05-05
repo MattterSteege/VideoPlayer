@@ -1,10 +1,4 @@
-﻿@using ChemCourses.Utils
-
-@{
-    string fluidColor = ColorUtils.GenerateRandomColorHex();
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
@@ -13,79 +7,42 @@
     <link href="https://fa.kronk.tech" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    @* <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet"> *@
+    <link href="css/euclid-circulara.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css" asp-append-version="true">
 </head>
 <body onload="InitBetterPages()">
 
 <div class="sidebar">
-    <div class="top">
-        <i onclick="SpinShakeAndColorate()" class="fa-duotone fa-flask" style="--fa-primary-color: var(--flask-fluid-color); --fa-secondary-color: #000000; --fa-secondary-opacity: 1;"></i>
-        <h1>CHEM Courses</h1>
-    </div>
-    <ul>
-        <div class="divider"></div>
-        <li>
-            <a onclick="ReplacePage('@Url.Action("Dashboard", "Home")')"><i class="far fa-chart-tree-map"></i>Dashboard</a>
-        </li>
-        <div class="divider"></div>
-        <li>
-            <a onclick="ReplacePage('@Url.Action("Videos", "Home")')"><i class="far fa-video"></i>Videos</a>
-        </li>
-        <div class="divider"></div>
-        <li>
-            <a onclick="ReplacePage('@Url.Action("CreateForm", "Toets")')"><i class="far fa-chart-line"></i>Toetsen</a>
-        </li>
-    </ul>
-    
-    <div class="bottom">
-        <div class="background">
-            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/rocket-8084689-6437619.png?f=webp">
-            <span>Nog niet uitgeleerd?</span>
-            <div class="button">
-                Ga premium!
-            </div>
+    <div class="content">
+        <div class="title">
+            <h6>Welkom, <span>Megan</span></h6>
         </div>
+        <nav class="menu">
+            <ul class="list">
+                <li><a onclick="@Url.Action("Dashboard", "Home")" class="active"><i class="far fa-home"></i><span>Dashboard</span></a></li>
+                <li><a href="student-profile.html"><i class="far fa-user"></i><span>Mijn Profiel</span></a></li>
+                <li><a href="student-enrolled-courses.html"><i class="far fa-book"></i><span>Lesmateriaal</span></a></li>
+                <li><a href="student-wishlist.html"><i class="far fa-bookmark"></i><span>Toetsen</span></a></li>
+                <li><a href="student-order-history.html"><i class="far fa-history"></i><span>Bestelgeschiedenis</span></a></li>
+            </ul>
+        </nav>
+        <div class="title">
+            <h6>Gebruiker</h6>
+        </div>
+        <nav class="menu">
+            <ul class="list">
+                <li><a href="student-settings.html"><i class="far fa-cogs"></i><span>Instellingen</span></a></li>
+                <li><a href="index.html"><i class="far fa-sign-out-alt"></i><span>Uitloggen</span></a></li>
+            </ul>
+        </nav>
     </div>
 </div>
 
-<div class="loading-screen noselect" id="loading-screen">
-    <div class="container">
-        <div class="water"></div>
-        <div class="flask"></div>
-    </div>
-</div>
+<div id="loading-screen"></div>
 
 <main id="main">
     @RenderBody()
 </main>
-
-<script>
-
-document.body.style.setProperty('--flask-fluid-color', '@fluidColor');
-
-function SpinShakeAndColorate() {
-    var flask = document.querySelector('.fa-flask');
-    flask.classList.add('spinNshake');
-    setTimeout(() => {
-        //set body variable --flask-fluid-color to a random color
-        document.body.style.setProperty('--flask-fluid-color', getRandomColor());        
-        setTimeout(() => {
-            flask.classList.remove('spinNshake');
-        }, 125);
-    }, 125);
-}
-
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
-</script>
-
 </body>
 </html>
