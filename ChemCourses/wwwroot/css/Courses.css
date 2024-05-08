@@ -1,0 +1,45 @@
+﻿.courses-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(355px, 100% / 3)), 1fr));
+    grid-gap: var(--padding);
+    margin-bottom: var(--padding);
+}
+
+.course {
+    display: flex;
+    cursor: pointer;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.course:hover {
+    background-color: #f9f9f9;
+}
+
+.course .left {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.course .right {
+    flex: 0 0 auto;
+}
+
+.course h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.course p {
+    margin-top: 0;
+    color: #666;
+}
+
+.course img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-inner);
+    border: 1px solid;
+}

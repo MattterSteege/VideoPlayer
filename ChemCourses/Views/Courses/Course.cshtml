@@ -1,5 +1,6 @@
-﻿@model string
+﻿@model ChemCourses.Controllers.Course
 
+<link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
 <script src="js/VideoPlayer.js"></script> 
 
 <video id="video" controls width="auto" height="100%" style="width: 100%; height: auto; overflow: hidden; border-radius: var(--radius-inner);"></video>
@@ -7,6 +8,6 @@
 <script>
 setTimeout(function() {
     console.log("[VideoPlayer.js] Starting video player");
-    startup('@Model');
+    startup('@Model.Id');
 }, 1000);
 </script>

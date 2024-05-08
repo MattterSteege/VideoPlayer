@@ -78,4 +78,10 @@
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\videos\4CB65001-2973-4E7A-A519-6BD7A5207B75\" />
+      <Folder Include="wwwroot\videos\64E7CD25-7DDD-4262-B02D-019ED563957F\" />
+      <Folder Include="wwwroot\videos\E2CCF22C-8FA9-45E3-BBC3-38773861E759\" />
+    </ItemGroup>
+
 </Project>

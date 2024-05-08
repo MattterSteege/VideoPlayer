@@ -23,14 +23,6 @@ public class HomeController : Controller
     }
 
     [BetterPages]
-    [Route("/Videos")]
-    public IActionResult Videos()
-    {
-        Thread.Sleep(1000);
-        return PartialView();
-    }
-    
-    [BetterPages]
     [Route("/Toetsen")]
     public IActionResult Toetsen()
     {
