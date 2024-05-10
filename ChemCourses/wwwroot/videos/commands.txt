@@ -1,2 +1,2 @@
-mp4fragment test.mp4 test_fragment.mp4
-mp4dash test_fragment.mp4 --min-buffer-time 10
+mp4fragment test.mp4 test_fragment.mp4 --fragment-duration 10000
+mp4dash test_fragment.mp4 --min-buffer-time 10 --use-segment-timeline
