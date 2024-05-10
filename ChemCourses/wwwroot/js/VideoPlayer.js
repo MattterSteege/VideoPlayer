@@ -24,17 +24,28 @@ class VideoPlayer {
         this.mediaSource;
         this.sourceBuffer_video;
         this.sourceBuffer_audio;
-        this.maxSegNum_audio = 1;
+        this.maxSegNum_audio = 0;
         this.segNum_audio = 1;
-        this.maxSegNum_video = 1;
+        this.maxSegNum_video = 0;
         this.segNum_video = 1;
+        
+        this.manifest = null;
 
         fetch("api/Video/" + this.videoId + "/manifest")
         .then(response => response.json())
         .then(data => {
 
-            this.maxSegNum_audio = data.audio.Files;
-            this.maxSegNum_video = data.video.Files;
+            this.manifest = this.parseManifest(data);
+            
+            //calc the amount of video segments
+            this.manifest.period.adaptationSet[0].segmentTemplate.segmentTimeline.forEach(segment => {
+                this.maxSegNum_video += segment.repeatAfter + 1;
+            });
+            
+            //calc the amount of audio segments
+            this.manifest.period.adaptationSet[1].segmentTemplate.segmentTimeline.forEach(segment => {
+                this.maxSegNum_audio += segment.repeatAfter + 1;
+            });
 
             VideoLog("Loaded manifest file:", data);
             this.canPlay = true;
@@ -195,8 +206,60 @@ class VideoPlayer {
 
     durationChange(event) {
         //check if the current time is inside the buffer
-        
-        
+        for (var i = 0; i < this.sourceBuffer_video.buffered.length; i++) {
+            if (this.video.currentTime >= this.sourceBuffer_video.buffered.start(i) && this.video.currentTime <= this.sourceBuffer_video.buffered.end(i)) {
+                VideoLog("Current time is inside the buffer");
+                return;
+            }
+            else {
+                VideoLog("Current time is outside the buffer");
+                //fetch the needed segment
+                this.loadSpecificSegment(i + 1);
+            }
+        }
+    }
+
+    parseManifest(jsonObj) {
+        return {
+            type: jsonObj.Type,
+            profiles: jsonObj.Profiles,
+            minBufferTime: jsonObj.MinBufferTime,
+            mediaPresentationDuration: jsonObj.MediaPresentationDuration,
+            period: {
+                adaptationSet: jsonObj.Period.AdaptationSet.map(adaptationSet => {
+                    return {
+                        mimeType: adaptationSet.MimeType,
+                        maxWidth: adaptationSet.MaxWidth,
+                        maxHeight: adaptationSet.MaxHeight,
+                        segmentAlignment: adaptationSet.SegmentAlignment,
+                        startWithSAP: adaptationSet.StartWithSAP,
+                        representation: {
+                            audioChannelConfiguration: adaptationSet.Representation.AudioChannelConfiguration,
+                            bandwidth: adaptationSet.Representation.Bandwidth,
+                            codecs: adaptationSet.Representation.Codecs,
+                            frameRate: adaptationSet.Representation.FrameRate,
+                            height: adaptationSet.Representation.Height,
+                            id: adaptationSet.Representation.Id,
+                            scanType: adaptationSet.Representation.ScanType,
+                            width: adaptationSet.Representation.Width,
+                            audioSamplingRate: adaptationSet.Representation.AudioSamplingRate
+                        },
+                        segmentTemplate: {
+                            initialization: adaptationSet.SegmentTemplate.Initialization,
+                            media: adaptationSet.SegmentTemplate.Media,
+                            startNumber: adaptationSet.SegmentTemplate.StartNumber,
+                            timescale: adaptationSet.SegmentTemplate.Timescale,
+                            segmentTimeline: adaptationSet.SegmentTemplate.SegmentTimeline.map(segment => {
+                                return {
+                                    duration: segment.Duration,
+                                    repeatAfter: segment.RepeatAfter
+                                };
+                            })
+                        }
+                    };
+                })
+            }
+        };
     }
 }
 
