@@ -5,9 +5,8 @@
 //      - keep_classnames, keep_fnames, toplevel, safari10
 
 //need to implement the following functions
-// - First fetch the amount of segments (video and audio) from the server /api/Video/{videoId} (done)
-// - When user adjusts the video time and the time is outside the buffer, fetch needed segment (in progress) need the /{guid}/mpd endpoint for segment lengths
-
+// - When user adjusts the video time and the time is outside the buffer, fetch needed segment (in progress) need the /{guid}/mpd endpoint for segment lengths (partial)
+// - make a queue for fetching segments 
 
 class VideoPlayer {
     
@@ -15,6 +14,8 @@ class VideoPlayer {
         //set by user - shallow
         this.videoId = video_id;
         this.minBuffer = 5; //seconds
+        this.AutoBuffer = false;
+        this.triggerSeekedEnded = 250; //ms
         
         //set by user - deep
         this.mimeCodec_audio = "audio/mp4; codecs = mp4a.40.2";
@@ -22,12 +23,14 @@ class VideoPlayer {
         
         //set / changed internally
         this.mediaSource;
-        this.sourceBuffer_video;
+        
         this.sourceBuffer_audio;
         this.maxSegNum_audio = 0;
-        this.segNum_audio = 1;
+        this.loadedSegments_audio = [];
+        
+        this.sourceBuffer_video;
         this.maxSegNum_video = 0;
-        this.segNum_video = 1;
+        this.loadedSegments_video = [];
         
         this.manifest = null;
 
@@ -40,11 +43,13 @@ class VideoPlayer {
             //calc the amount of video segments
             this.manifest.period.adaptationSet[0].segmentTemplate.segmentTimeline.forEach(segment => {
                 this.maxSegNum_video += segment.repeatAfter + 1;
+                this.loadedSegments_video = new Array(this.maxSegNum_video).fill(false);
             });
             
             //calc the amount of audio segments
             this.manifest.period.adaptationSet[1].segmentTemplate.segmentTimeline.forEach(segment => {
                 this.maxSegNum_audio += segment.repeatAfter + 1;
+                this.loadedSegments_audio = new Array(this.maxSegNum_audio).fill(false);
             });
 
             VideoLog("Loaded manifest file:", data);
@@ -52,6 +57,8 @@ class VideoPlayer {
         });
         
         this.canPlay = false;
+        
+        VideoLog("VideoPlayer is created with next settings:\n                 -   videoId: " + this.videoId + ",\n                 -   minBuffer: " + this.minBuffer + ",\n                 -   AutoBuffer: " + this.AutoBuffer + ",\n                 -   mimeCodec_audio: " + this.mimeCodec_audio + ",\n                 -   mimeCodec_video: " + this.mimeCodec_video);
     }
 
     startup() {
@@ -85,7 +92,7 @@ class VideoPlayer {
             this.video = document.querySelector('video');
             this.video.src = URL.createObjectURL(this.mediaSource);
             this.video.ontimeupdate = () => this.checkBuffer();
-            this.video.oninput = (event) => this.durationChange(event);
+            this.video.onseeking  = (evt) => this.Seeking(evt);
             
         } else {
             VideoLog('Unsupported MIME type or codec: ', this.mimeCodec_video);
@@ -94,9 +101,9 @@ class VideoPlayer {
     
     sourceOpen(e) {
         this.sourceBuffer_video = this.mediaSource.addSourceBuffer(this.mimeCodec_video);
-        this.sourceBuffer_video.mode = 'sequence';
+        this.sourceBuffer_video.mode = 'segments';
         this.sourceBuffer_audio = this.mediaSource.addSourceBuffer(this.mimeCodec_audio);
-        this.sourceBuffer_audio.mode = 'sequence';
+        this.sourceBuffer_audio.mode = 'segments';
         var self = this; // Store a reference to 'this' for fetch callback
         VideoLog('Source buffers created', this.sourceBuffer_video, this.sourceBuffer_audio);
 
@@ -104,32 +111,24 @@ class VideoPlayer {
         
         this.fetch("api/Video/" + this.videoId + "/video/init.mp4", function (buf) {
             self.sourceBuffer_video.appendBuffer(buf);
+            self.loadedSegments_video[0] = true;
             init++;
+            
+            self.setBufferdInfo("init"); //DEBUG
         });
 
         this.fetch("api/Video/" + this.videoId + "/audio/init.mp4", function (buf) {
             self.sourceBuffer_audio.appendBuffer(buf);
+            self.loadedSegments_audio[0] = true;
             init++;
         });
 
         waitForObjectState(() => init === 2)
         .then(() => {
             VideoLog("Init segments loaded");
-            this.loadSegment();
+            this.loadSpecificSegment(1);
         });
     };
-    
-    loadSegment() {
-        if (this.segNum_audio <= this.maxSegNum_audio) {
-            this.getAudioSegment(this.segNum_audio);
-            this.segNum_audio++;
-        }
-        
-        if (this.segNum_video <= this.maxSegNum_video) {
-            this.getVideoSegment(this.segNum_video);
-            this.segNum_video++;
-        }
-    }
     
     loadSpecificSegment(segNum) {
         this.getAudioSegment(segNum);
@@ -139,16 +138,49 @@ class VideoPlayer {
     getVideoSegment(segNum) {
         var self = this; // Store a reference to 'this' for fetch callback
         this.fetch("api/Video/" + this.videoId + "/video/seg-" + segNum + ".m4s", function (buf) {
+            self.sourceBuffer_video.appendWindowStart = 0;
+            self.sourceBuffer_video.appendWindowEnd = self.timeBeforeSegment(segNum, "video") + self.manifest.period.adaptationSet[0].segmentTemplate.betterTimeline[segNum - 1].duration;
             self.sourceBuffer_video.appendBuffer(buf);
+            self.loadedSegments_video[segNum] = true;
+            
+            self.setBufferdInfo(segNum); //DEBUG
         });
     }
     
-    getAudioSegment(segNum) {
+    getAudioSegment(segNum) {        
         var self = this; // Store a reference to 'this' for fetch callback
         this.fetch("api/Video/" + this.videoId + "/audio/seg-" + segNum + ".m4s", function (buf) {
             self.sourceBuffer_audio.appendBuffer(buf);
+            self.loadedSegments_audio[segNum] = true;
         });
 
+    }
+    
+    timeBeforeSegment(segNum, type) {
+        var time = 0;
+        if (type === "audio") {
+            if (segNum === 1)
+                return 0;
+            
+            if (segNum > this.maxSegNum_audio)
+                return -1;
+            
+            for (var i = 1; i < segNum; i++) {
+                time += this.manifest.period.adaptationSet[1].segmentTemplate.betterTimeline[i - 1].duration;
+            }
+        }
+        else {
+            if (segNum === 1) 
+                return 0;
+            
+            if (segNum > this.maxSegNum_video) 
+                return -1;
+            
+            for (var i = 1; i < segNum; i++) {
+                time += this.manifest.period.adaptationSet[0].segmentTemplate.betterTimeline[i - 1].duration;
+            }
+        }
+        return time;
     }
     
     fetch(url, cb) {
@@ -161,31 +193,42 @@ class VideoPlayer {
         };
         xhr.send();
     }
-    
-    checkBuffer() {
+
+    checkBuffer(forced = false) {
         
-        //VideoLog("Checking buffer...");
+        if (!this.AutoBuffer && forced === false) return;
         
-        if (this.video.currentTime >= this.video.buffered.end(0) - this.minBuffer) {
-            var logMessage = "Buffer is low, loading ";
-            if (this.segNum_audio <= this.maxSegNum_audio && this.segNum_video <= this.maxSegNum_video) {
-                logMessage += "new audio and video segment";
-            } 
-            else {
-                if (this.segNum_audio <= this.maxSegNum_audio) {
-                    logMessage += "new audio segment";
-                }
-                if (this.segNum_audio > this.maxSegNum_audio && this.segNum_video > this.maxSegNum_video) {
-                    logMessage += "nothing";
-                }
-            }
-            VideoLog(logMessage);
-            this.loadSegment();
+        //AUTO BUFFER VIDEO
+        var currentTime = this.video.currentTime;
+        var currentSegment = this.calculateSegmentForTime(currentTime, "video");
+        var segmentToLoad = currentSegment + 2;
+        
+        if (segmentToLoad > this.maxSegNum_video) return;
+        if (this.loadedSegments_video[segmentToLoad] === true) return;
+        
+        if (currentTime >= this.timeBeforeSegment(segmentToLoad, "video") - this.minBuffer) {
+            this.loadSpecificSegment(segmentToLoad);
+        }      
+        
+        //AUTO BUFFER AUDIO
+        currentSegment = this.calculateSegmentForTime(currentTime, "audio");
+        segmentToLoad = currentSegment + 2;
+        
+        if (segmentToLoad > this.maxSegNum_audio) return;
+        if (this.loadedSegments_audio[segmentToLoad] === true) return;
+        
+        if (currentTime >= this.timeBeforeSegment(segmentToLoad, "audio") - this.minBuffer) {
+            this.loadSpecificSegment(segmentToLoad);
         }
     }
     
     play() {
-        this.video.play();
+        try {
+            this.video.play();
+        }
+        catch (e) {
+            VideoError("Could not play video, user probably needs to interact with the page first.");
+        }
     }
     
     pause() {
@@ -204,23 +247,81 @@ class VideoPlayer {
         return this.video.duration;
     }
 
-    durationChange(event) {
-        //check if the current time is inside the buffer
-        for (var i = 0; i < this.sourceBuffer_video.buffered.length; i++) {
-            if (this.video.currentTime >= this.sourceBuffer_video.buffered.start(i) && this.video.currentTime <= this.sourceBuffer_video.buffered.end(i)) {
-                VideoLog("Current time is inside the buffer");
-                return;
+    calculateSegmentForTime(time, type) {
+        let segNum = 0;
+        let timeSoFar = 0;
+        this.manifest.period.adaptationSet[type === "video" ? 0 : 1].segmentTemplate.betterTimeline.some(segment => {
+            timeSoFar += segment.duration;
+            if (timeSoFar > time) {
+                return true;
             }
-            else {
-                VideoLog("Current time is outside the buffer");
-                //fetch the needed segment
-                this.loadSpecificSegment(i + 1);
-            }
+            segNum++;
+            return false;
+        });
+        return segNum;
+    }
+
+    seekingTimeout;
+    
+    Seeking(event) { 
+        if (this.seekingTimeout) {
+            clearTimeout(this.seekingTimeout);
+        }
+        
+        this.seekingTimeout = setTimeout(() => {
+            this.seekingEnded();
+        }, this.triggerSeekedEnded);
+    }  
+    
+    seekingEnded() {
+
+        //AUTO BUFFER VIDEO
+        var currentTime = this.video.currentTime;
+        var currentSegment = this.calculateSegmentForTime(currentTime, "video");
+        var segmentToLoad = currentSegment + 1;
+
+        if (segmentToLoad > this.maxSegNum_video) return;
+        if (this.loadedSegments_video[segmentToLoad] === true) return;
+
+        if (currentTime >= this.timeBeforeSegment(segmentToLoad, "video") - this.minBuffer) {
+            this.loadSpecificSegment(segmentToLoad);
+        }
+
+        currentTime = this.video.currentTime;
+        currentSegment = this.calculateSegmentForTime(currentTime, "video");
+        segmentToLoad = currentSegment + 2;
+
+        if (segmentToLoad > this.maxSegNum_video) return;
+        if (this.loadedSegments_video[segmentToLoad] === true) return;
+
+        if (currentTime >= this.timeBeforeSegment(segmentToLoad, "video") - this.minBuffer) {
+            this.loadSpecificSegment(segmentToLoad);
+        }
+
+        //AUTO BUFFER AUDIO
+        currentSegment = this.calculateSegmentForTime(currentTime, "audio");
+        segmentToLoad = currentSegment + 1;
+
+        if (segmentToLoad > this.maxSegNum_audio) return;
+        if (this.loadedSegments_audio[segmentToLoad] === true) return;
+
+        if (currentTime >= this.timeBeforeSegment(segmentToLoad, "audio") - this.minBuffer) {
+            this.loadSpecificSegment(segmentToLoad);
+        }
+        
+        currentSegment = this.calculateSegmentForTime(currentTime, "audio");
+        segmentToLoad = currentSegment + 2;
+        
+        if (segmentToLoad > this.maxSegNum_audio) return;
+        if (this.loadedSegments_audio[segmentToLoad] === true) return;
+        
+        if (currentTime >= this.timeBeforeSegment(segmentToLoad, "audio") - this.minBuffer) {
+            this.loadSpecificSegment(segmentToLoad);
         }
     }
 
     parseManifest(jsonObj) {
-        return {
+        var model = {
             type: jsonObj.Type,
             profiles: jsonObj.Profiles,
             minBufferTime: jsonObj.MinBufferTime,
@@ -251,8 +352,8 @@ class VideoPlayer {
                             timescale: adaptationSet.SegmentTemplate.Timescale,
                             segmentTimeline: adaptationSet.SegmentTemplate.SegmentTimeline.map(segment => {
                                 return {
-                                    duration: segment.Duration,
-                                    repeatAfter: segment.RepeatAfter
+                                    duration: Number(segment.Duration),
+                                    repeatAfter: Number(segment.RepeatAfter)
                                 };
                             })
                         }
@@ -260,10 +361,28 @@ class VideoPlayer {
                 })
             }
         };
+
+        model.period.adaptationSet.forEach(adaptationSet => {
+            //create an array of the segment timeline (so we can easily calculate the timestamp offset)
+            adaptationSet.segmentTemplate.betterTimeline = [];
+            adaptationSet.segmentTemplate.segmentTimeline.forEach(segment => {
+                for (var i = 0; i <= segment.repeatAfter; i++) {
+                    adaptationSet.segmentTemplate.betterTimeline.push({duration: Number(segment.duration) / Number(adaptationSet.segmentTemplate.timescale)});
+                }
+            });
+        });
+
+        return model;
     }
+
+    //debug
+    setBufferdInfo(segment) {
+        document.getElementById("buffered_video_" + segment).style.backgroundColor = "green";
+    }        
 }
 
-const VideoLog = (...args) => console.log("[VideoPlayer.js]", ...args);
+const VideoLog = (...args) => console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:royalblue;', '', ...args);
+const VideoError = (...args) => console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:red;', '', ...args);
 
 function waitForObjectState(check, interval = 100) {
     return new Promise(resolve => {

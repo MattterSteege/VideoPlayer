@@ -43,3 +43,31 @@
     border-radius: var(--radius-inner);
     border: 1px solid;
 }
+
+
+/*VIDEO PLAYER*/
+video {
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: var(--radius-inner);
+}
+
+.bufferd {
+    width: calc(100% - 28px);
+    height: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-left: 14px;
+    margin-right: 14px;
+}
+
+.bufferd div {
+    background: rgba(255, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+}
