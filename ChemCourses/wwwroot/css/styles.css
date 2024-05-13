@@ -18,6 +18,8 @@ a {
     --accent-color-dark: rgb(47, 87, 239);
     --color-border: #e6e3f1;
     
+    --inactive-color: #e6e3f1;
+    
     --radius: 10px;
     --radius-inner: 7px;
     
@@ -46,6 +48,29 @@ body {
     font-family: 'Euclid Circular', sans-serif;
     color: var(--text-color);
     overflow: hidden;
+    --webkit-font-smoothing: antialiased;
+    --moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.disabled {
+    filter: grayscale(1) !important;
+    opacity: 50% !important;
+    cursor: not-allowed !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html, body, div, p, ul, li {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size);
+    color: var(--text-color);
 }
 
 /* MY COURSES DETAILS */
@@ -143,6 +168,7 @@ main#main {
     top: var(--padding);
     height: calc(100% - 2 * var(--padding));
     position: fixed;
+    overflow-y: auto;
 }
 
 /*LOADING SCREEN*/
@@ -261,4 +287,43 @@ main#main {
 #loading-screen .atom .electron:nth-child(3):before {
     transform: rotateZ(-100deg) rotateX(-60deg) rotateY(60deg);
     animation: electron3 3s linear infinite;
+}
+
+/*UTILS*/
+.horizontal-split {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: var(--padding);
+    width: calc(100% - var(--padding));
+}
+
+.horizontal-split.one_fourth {
+    grid-template-columns: 25% 75%;
+}
+
+.horizontal-split.two_third {
+    grid-template-columns: 66% 33%;
+}
+
+.horizontal-split.three_fourth {
+    grid-template-columns: 75% 25%;
+}
+
+.vertical-split {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-gap: var(--padding);
+    height: calc(100% - var(--padding));
+}
+
+.vertical-split.one_fourth {
+    grid-template-rows: 25% 75%;
+}
+
+.vertical-split.two_third {
+    grid-template-rows: 66% 33%;
+}
+
+.vertical-split.three_fourth {
+    grid-template-rows: 75% 25%;
 }

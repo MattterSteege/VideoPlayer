@@ -71,4 +71,10 @@ public class Form
     {
         return JsonSerializer.Serialize(this);
     }
+
+    public Form AddQuestions(params Question[] questions)
+    {
+        Questions.AddRange(questions);
+        return this;
+    }
 }

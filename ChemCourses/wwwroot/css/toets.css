@@ -1,19 +1,29 @@
 ﻿/* Styles for question container */
 .question-container {
+    width: 100%;
+    min-width: 100%;
+    height: calc(100% - var(--padding) - 36px);
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--padding);
-    
+    flex-direction: row;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 
 /* Styles for individual questions */
 .question {
-    flex: 1 1 100%;
-    padding: var(--padding);
-    background-color: var(--overlay-color);
-    border-radius: var(--border-radius-small);
-    box-shadow: var(--box-shadow);
+    position: relative;
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    border: 1px solid var(--inactive-color);
+    border-radius: var(--radius);
+    scroll-snap-align: start;
 }
 
 /* Styles for headings */
@@ -36,7 +46,7 @@
 .question p {
     margin-top: 0;
     margin-bottom: 10px;
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -53,9 +63,9 @@
 .forms-text_field div[contenteditable="true"] {
     border: 1px solid #ccc;
     padding: var(--padding);
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin-top: 5px;
 }
 
@@ -67,7 +77,7 @@
 }
 
 .forms-section_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
     margin-bottom: 5px;
 }
@@ -78,9 +88,9 @@
     gap: var(--padding);
     flex-direction: column;
     padding: var(--padding);
-    background: var(--overlay-overlay-color);
-    box-shadow: var(--box-shadow);
-    border-radius: var(--border-radius-small);
+    background: var(--color-border);
+    box-shadow: var(--shadow);
+    border-radius: var(--radius-inner);
     margin-top: calc(2 * var(--padding));
 }
 
@@ -91,14 +101,14 @@
 }
 
 .forms-dropdown_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
 .forms-dropdown_question_selected {
     padding: 5px;
     border: 1px solid #ccc;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin-top: var(--padding);
     cursor: pointer;
 }
@@ -107,18 +117,18 @@
     display: none;
     position: relative;
     top: var(--padding);
-    background: var(--overlay-color);
-    border-radius: var(--border-radius);
+    background: var(--color-border);
+    border-radius: var(--radius);
 }
 
 .forms-dropdown_question_option_container {
-    background: var(--overlay-color);
+    background: var(--color-border);
     z-index: 100000;
     position: relative;
     overflow: hidden;
     padding: 5px;
     border: 1px solid #ccc;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin-bottom: var(--padding);
     cursor: pointer;
 }
@@ -126,7 +136,7 @@
 .forms-dropdown_question.active .forms-dropdown_question_options {
 display: block;
 background-color: var(--background-color);
-border-radius: var(--border-radius-small);
+border-radius: var(--radius-inner);
 margin-bottom: 5px;
 cursor: pointer;
 padding: 5px;
@@ -154,7 +164,7 @@ border-bottom: none;
 }
 
 .forms-slider_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -180,7 +190,7 @@ border-bottom: none;
 .slider-thumb {
     width: 20px;
     height: 14px;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius);
     background: var(--text-color);
     border: 1px solid;
     cursor: pointer;
@@ -189,7 +199,7 @@ border-bottom: none;
 }
 
 .slider-value {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
     width: calc(3 * var(--padding));
     text-align: center;
@@ -202,7 +212,7 @@ border-bottom: none;
 }
 
 .forms-multiple_choice_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -218,7 +228,7 @@ border-bottom: none;
     align-items: center;
     cursor: pointer;
     padding: 5px;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin-bottom: 5px;
 }
 
@@ -235,7 +245,7 @@ border-bottom: none;
 }
 
 .forms-multiple_choice_question_option_label {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -265,7 +275,7 @@ border-bottom: none;
 }
 
 .forms-checkbox_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -275,7 +285,7 @@ border-bottom: none;
     align-items: center;
     cursor: pointer;
     padding: 5px;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin-bottom: 5px;
     margin-top: 5px;
 }
@@ -292,7 +302,7 @@ border-bottom: none;
 }
 
 .forms-checkbox_question_option_label {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -314,7 +324,7 @@ border-bottom: none;
 }
 
 .forms-true_false_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -324,7 +334,7 @@ border-bottom: none;
     align-items: center;
     cursor: pointer;
     padding: 5px;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin: 5px;
 }
 
@@ -354,7 +364,7 @@ border-bottom: none;
 }
 
 .forms-fill_in_the_blank_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -365,9 +375,9 @@ border-bottom: none;
 .forms-fill_in_the_blank_question_text_input {
     border: 1px solid #ccc;
     padding: var(--padding);
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     margin-top: 5px;
     letter-spacing: normal;
     word-spacing: normal;
@@ -378,26 +388,6 @@ border-bottom: none;
 }
 
 /*MATCHING*/
-
-/*
-<div class="forms-matching_question" id="0">
-  <div class="forms-matching_question_Title">Match</div>
-  <div class="forms-matching_question_desc">Match the words on the left with the words on the right.</div>
-  <div class="forms-matching_question_grid">
-  <div class="forms-matching_question_grid_inner" style="">
-<div class="forms-matching_question_option" data-answer="3">C</div>
-<div class="forms-matching_question_option" data-answer="2">B</div>
-<div class="forms-matching_question_option" data-answer="1">A</div>
-  </div>
-  <div class="forms-matching_question_grid_inner">
-    <div class="forms-matching_question_option" data-answer="1">1</div>
-    <div class="forms-matching_question_option" data-answer="2">2</div>
-    <div class="forms-matching_question_option" data-answer="3">3</div>
-  </div>
-  </div>
-</div>
-*/
-
 .forms-matching_question {
     margin-bottom: 20px;
 }
@@ -408,7 +398,7 @@ border-bottom: none;
 }
 
 .forms-matching_question_desc {
-    font-size: var(--font-size-text);
+    font-size: var(--font-size);
     color: var(--text-color);
 }
 
@@ -429,7 +419,7 @@ border-bottom: none;
 .forms-matching_question_option {
     padding: 5px;
     border: 1px solid #ccc;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-inner);
     cursor: pointer;
 }
 
@@ -439,4 +429,55 @@ border-bottom: none;
 
 .forms-matching_question_option:hover {
     background-color: var(--background-color);
+}
+
+
+/*
+
+<div class="buttons">
+    <div class="button back">
+        <i class="fas fa-arrow-left"></i>
+    </div>
+    <div class="button next">
+        <i class="fas fa-arrow-right"></i>
+    </div>
+</div>
+
+*/
+
+/*BUTTONS*/
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 36px;
+    margin-top: var(--padding);
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: var(--radius-inner);
+    cursor: pointer;
+    width: 100px;
+}
+
+.button.back {
+    background: var(--inactive-color);
+}
+
+.button.next {
+    background: var(--inactive-color);
+}
+
+.button i {
+    font-size: var(--font-size);
+    color: var(--text-color);
+}
+
+.button:hover {
+    filter: brightness(1.1);
 }

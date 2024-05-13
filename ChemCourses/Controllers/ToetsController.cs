@@ -70,16 +70,13 @@ public class ToetsController : Controller
             .SetTitle("Match")
             .SetDescription("Match the words on the left with the words on the right.")
             .SetQuestionAndAnswer(new List<string> { "A", "B", "C" }, new List<string> { "1", "2", "3" });
-        
-        Intro.AddQuestions(Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8);
-        
-        
+
 
         // Creating the form
         Form form = new Form()
             .SetTitle("Chemistry Courses Survey", "Please fill out the survey below.")
             .AddDescription("Your feedback is important to us.")
-            .AddSection(Intro);
+            .AddQuestions(Intro, Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8);
 
         return PartialView(form);
     }

@@ -14,8 +14,10 @@ class VideoPlayer {
         //set by user - shallow
         this.videoId = video_id;
         this.minBuffer = 5; //seconds
-        this.AutoBuffer = false;
+        this.AutoBuffer = true;
         this.triggerSeekedEnded = 250; //ms
+        
+        logLevel = 0b00000111; // 0b00000001 - Log, 0b00000010 - Debug, 0b00000100 - Error
         
         //set by user - deep
         this.mimeCodec_audio = "audio/mp4; codecs = mp4a.40.2";
@@ -34,6 +36,7 @@ class VideoPlayer {
         
         this.manifest = null;
 
+        //MANIFEST
         fetch("api/Video/" + this.videoId + "/manifest")
         .then(response => response.json())
         .then(data => {
@@ -52,7 +55,7 @@ class VideoPlayer {
                 this.loadedSegments_audio = new Array(this.maxSegNum_audio).fill(false);
             });
 
-            VideoLog("Loaded manifest file:", data);
+            VideoDebug("Loaded manifest file:", data);
             this.canPlay = true;
         });
         
@@ -62,16 +65,16 @@ class VideoPlayer {
     }
 
     startup() {
-        
-        VideoLog("VideoPlayer is queued...");
+
+        VideoDebug("VideoPlayer is queued...");
 
         waitForObjectState(() => this.canPlay)
         .then(() => {
-            VideoLog("VideoPlayer is starting");
+            VideoDebug("VideoPlayer is starting");
             this.startupInternal();
         })
         .catch((error) => {
-            VideoLog("An error occurred:", error);
+            VideoError("An error occurred:", error);
         });
     }
 
@@ -95,17 +98,20 @@ class VideoPlayer {
             this.video.onseeking  = (evt) => this.Seeking(evt);
             
         } else {
-            VideoLog('Unsupported MIME type or codec: ', this.mimeCodec_video);
+            VideoError('Unsupported MIME type or codec: ', this.mimeCodec_video);
         }
     }
     
     sourceOpen(e) {
         this.sourceBuffer_video = this.mediaSource.addSourceBuffer(this.mimeCodec_video);
         this.sourceBuffer_video.mode = 'segments';
+        
         this.sourceBuffer_audio = this.mediaSource.addSourceBuffer(this.mimeCodec_audio);
         this.sourceBuffer_audio.mode = 'segments';
+        
         var self = this; // Store a reference to 'this' for fetch callback
-        VideoLog('Source buffers created', this.sourceBuffer_video, this.sourceBuffer_audio);
+
+        VideoDebug('Source buffers created', this.sourceBuffer_video, this.sourceBuffer_audio);
 
         var init = 0;
         
@@ -125,35 +131,89 @@ class VideoPlayer {
 
         waitForObjectState(() => init === 2)
         .then(() => {
-            VideoLog("Init segments loaded");
+            VideoDebug("Init segments loaded");
             this.loadSpecificSegment(1);
         });
+
+        //VIDEO QUEUE
+        this.sourceBuffer_video.addEventListener('updateend', () => {
+            this.canLoadVideoSegment = true;
+            this.loadTroughVideoQueue();
+        });
+        this.loadTroughVideoQueue();
+        
+        //AUDIO QUEUE
+        this.sourceBuffer_audio.addEventListener('updateend', () => {
+            this.canLoadAudioSegment = true;
+            this.loadTroughAudioQueue();
+        });
+        this.loadTroughAudioQueue();
     };
     
     loadSpecificSegment(segNum) {
         this.getAudioSegment(segNum);
         this.getVideoSegment(segNum);
     }
+
+    
+    videoSegmentsQueued = [];
+    canLoadVideoSegment = true;
     
     getVideoSegment(segNum) {
-        var self = this; // Store a reference to 'this' for fetch callback
-        this.fetch("api/Video/" + this.videoId + "/video/seg-" + segNum + ".m4s", function (buf) {
-            self.sourceBuffer_video.appendWindowStart = 0;
-            self.sourceBuffer_video.appendWindowEnd = self.timeBeforeSegment(segNum, "video") + self.manifest.period.adaptationSet[0].segmentTemplate.betterTimeline[segNum - 1].duration;
-            self.sourceBuffer_video.appendBuffer(buf);
-            self.loadedSegments_video[segNum] = true;
-            
-            self.setBufferdInfo(segNum); //DEBUG
+        if (this.videoSegmentsQueued.includes(segNum)) return;
+
+        VideoDebug("Queuing video segment: " + segNum);
+        this.videoSegmentsQueued.push(segNum);
+    }
+    
+    loadTroughVideoQueue() {
+        VideoDebug("Waiting for queued video segments...");
+        waitForObjectState(() => this.canLoadVideoSegment && this.videoSegmentsQueued.length > 0)
+        .then(() => {
+            this.canLoadVideoSegment = false;
+            let segNum = this.videoSegmentsQueued.shift();
+
+            VideoDebug("Loading video segment: " + segNum);
+
+            var self = this; // Store a reference to 'this' for fetch callback
+            this.fetch("api/Video/" + this.videoId + "/video/seg-" + segNum + ".m4s", function (buf) {
+                self.sourceBuffer_video.appendWindowStart = 0;
+                self.sourceBuffer_video.appendWindowEnd = self.timeBeforeSegment(segNum, "video") + self.manifest.period.adaptationSet[0].segmentTemplate.betterTimeline[segNum - 1].duration;
+                self.sourceBuffer_video.appendBuffer(buf);
+                self.loadedSegments_video[segNum] = true;
+                
+                self.setBufferdInfo(segNum); //DEBUG
+            });
         });
     }
     
+    audioSegmentsQueued = [];
+    canLoadAudioSegment = true;
+    
     getAudioSegment(segNum) {        
-        var self = this; // Store a reference to 'this' for fetch callback
-        this.fetch("api/Video/" + this.videoId + "/audio/seg-" + segNum + ".m4s", function (buf) {
-            self.sourceBuffer_audio.appendBuffer(buf);
-            self.loadedSegments_audio[segNum] = true;
-        });
+        if (this.audioSegmentsQueued.includes(segNum)) return;
 
+        VideoDebug("Queuing audio segment: " + segNum);
+        this.audioSegmentsQueued.push(segNum);
+    }
+    
+    loadTroughAudioQueue() {
+        VideoDebug("Waiting for queued audio segments...");
+        waitForObjectState(() => this.canLoadAudioSegment && this.audioSegmentsQueued.length > 0)
+        .then(() => {
+            this.canLoadAudioSegment = false;
+            let segNum = this.audioSegmentsQueued.shift();
+
+            VideoDebug("Loading audio segment: " + segNum);
+
+            var self = this; // Store a reference to 'this' for fetch callback
+            this.fetch("api/Video/" + this.videoId + "/audio/seg-" + segNum + ".m4s", function (buf) {
+                self.sourceBuffer_audio.appendWindowStart = 0;
+                self.sourceBuffer_audio.appendWindowEnd = self.timeBeforeSegment(segNum, "audio") + self.manifest.period.adaptationSet[1].segmentTemplate.betterTimeline[segNum - 1].duration;
+                self.sourceBuffer_audio.appendBuffer(buf);
+                self.loadedSegments_audio[segNum] = true;
+            });
+        });
     }
     
     timeBeforeSegment(segNum, type) {
@@ -184,7 +244,7 @@ class VideoPlayer {
     }
     
     fetch(url, cb) {
-        //VideoLog(url);
+        VideoDebug("Fetching: " + url);
         var xhr = new XMLHttpRequest;
         xhr.open('get', url);
         xhr.responseType = 'arraybuffer';
@@ -381,9 +441,6 @@ class VideoPlayer {
     }        
 }
 
-const VideoLog = (...args) => console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:royalblue;', '', ...args);
-const VideoError = (...args) => console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:red;', '', ...args);
-
 function waitForObjectState(check, interval = 100) {
     return new Promise(resolve => {
         const checkInterval = setInterval(() => {
@@ -394,3 +451,13 @@ function waitForObjectState(check, interval = 100) {
         }, interval);
     });
 }
+
+
+
+
+//DEBUG
+var logLevel;
+
+const VideoLog = (...args) =>  ((logLevel & 0b00000001) !== 0) ? console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:royalblue;', '', ...args) : null;
+const VideoDebug = (...args) => (logLevel & 0b00000010) !== 0 ? console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:orange;', '', ...args) : null;
+const VideoError = (...args) => (logLevel & 0b00000100) !== 0 ? console.log(`%c[VideoPlayer.js]%c`, 'font-weight:700;color:red;', '', ...args) : null;

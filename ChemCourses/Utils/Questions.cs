@@ -61,8 +61,6 @@ public class TextQuestion : Question {
 #region Section
 public class Section : Question {
     
-    public List<Question> Questions { get; set; } = new List<Question>();
-
     public Section SetTitle(string label) {
         Title = label;
         return this;
@@ -72,11 +70,6 @@ public class Section : Question {
         this.Description = Description;
         return this;
     }
-    
-    public void AddQuestions(params Question[] questions)
-    {
-        this.Questions.AddRange(questions);
-    }
 
     public override string  RenderToHTML(int Id = 0) {
         this.Id = Id;
@@ -85,11 +78,6 @@ public class Section : Question {
         return $"<div class='forms-section' id='{Id}'>\n" + 
                $"  <div class='forms-section_Title'>{Title}</div>\n" +
                $"  <div class='forms-section_desc'>{Description}</div>\n" +
-                $"  <div class='forms-section_questions'>\n" +
-               
-                string.Join("\n", Questions.Select(q => q.RenderToHTML())) +
-               
-                $"  </div>\n" +
                $"</div>";
     }
 }
@@ -421,6 +409,7 @@ public class FillInTheBlankQuestion : Question
     }
 }
 #endregion
+
 
 #region MatchingQuestion
 public class MatchingQuestion : Question

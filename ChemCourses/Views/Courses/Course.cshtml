@@ -3,9 +3,27 @@
 <link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
 <script src="js/VideoPlayer.js"></script>
 
-<video controls id="video" width="auto" height="100%"></video>
+<div class="horizontal-split two_third">
+    <video controls id="video" width="auto" height="100%"></video>
+    <div class="video-info">
+        <h1>@Model.Name</h1>
+        <p>@Model.Description</p>
+        
+        <div class="divider"></div>
+        
+        <ul>
+            In deze video:
+            @foreach (var listItem in (Model.InThisVideo))
+            {
+                <li>@listItem</li>
+            }
+        </ul>
 
-<div class="bufferd">
+    </div>
+</div>
+
+
+<div class="bufferd" style="display: none">
     <div id="buffered_video_init" style="display: none"></div>
     <div id="buffered_video_1"></div>
     <div id="buffered_video_2"></div>
