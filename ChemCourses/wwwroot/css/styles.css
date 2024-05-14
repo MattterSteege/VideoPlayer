@@ -17,19 +17,13 @@ a {
     --accent-color-light: rgb(185, 102, 231);
     --accent-color-dark: rgb(47, 87, 239);
     --color-border: #e6e3f1;
-    
     --inactive-color: #e6e3f1;
-    
     --radius: 10px;
     --radius-inner: 7px;
-    
-    --shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
+    --shadow: 0 0 5px rgba(0, 0, 0, 0.05);
     --font-size: 16px;
     --font-size-heading: 20px;
-    
     --padding: 24px;
-    
     --transition: 0.3s;
 }
 
@@ -142,7 +136,7 @@ html, body, div, p, ul, li {
     text-decoration: none;
     padding: calc(10px + var(--padding) / 4) 10px 10px 0;
     border-top: 1px solid #e6e3f1;
-    
+
 }
 
 .sidebar .menu ul li:first-child a{

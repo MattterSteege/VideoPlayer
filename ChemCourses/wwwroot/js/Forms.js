@@ -296,39 +296,44 @@ var previousButton = document.querySelector(".button.back");
 previousButton.style.opacity = 0;
 
 var questionContainer = document.querySelector(".question-container");
+Array.from(questionContainer.children).forEach((element, index) => {
+    element.style.zIndex = questionContainer.children.length - index;
+});
 
-function getTransformPercentage(element) {
-    var percentage = Number(element.style.transform.replace("translateX(", "").replace("%)", ""));
-    if (isNaN(percentage)) {
-        percentage = 0;
-    }
-    return percentage;
-}
+var currentPanel = 0;
 
 nextButton.addEventListener("click", function () {
-    if (nextButton.style.opacity == 0) return;
+    if (nextButton.style.opacity === '0') return;
     
-    switchPanel(1);
+    nextPanel();
     previousButton.style.opacity = 1;
-    if (getTransformPercentage(questionContainer) === -100 * (questionContainer.children.length - 1)) {
+    if (currentPanel === questionContainer.children.length - 1) {
         nextButton.style.opacity = 0;
     }
 });
 
 previousButton.addEventListener("click", function () {
-    if (previousButton.style.opacity == 0) return;
+    if (previousButton.style.opacity === '0') return;
     
-    switchPanel(-1);
+    PreviousPanel();
     nextButton.style.opacity = 1;
-    if (getTransformPercentage(questionContainer) === 0) {
+    if (currentPanel === 0) {
         previousButton.style.opacity = 0;
     }
 });
 
 ///switchPanel(1) will move the panel one to the right
 ///switchPanel(-1) will move the panel one to the left
-function switchPanel(offset) {
-    var percentage = getTransformPercentage(questionContainer);
-    percentage += offset * -100;
-    questionContainer.style.transform = "translateX(" + percentage + "%)";
+function nextPanel() {
+    var panels = Array.from(questionContainer.children);
+    //random -1 or 1
+    var random = Math.floor(Math.random() * 2) * 2 - 1;
+    panels[currentPanel].style.transform = `translateX(${random * 200}%)`;
+    currentPanel++;
+}
+
+function PreviousPanel() {
+    currentPanel--;
+    var panels = Array.from(questionContainer.children);
+    panels[currentPanel].style.transform = `translateX(0%)`;
 }

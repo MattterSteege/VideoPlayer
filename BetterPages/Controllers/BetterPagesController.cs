@@ -29,13 +29,7 @@ namespace BetterPages.Controllers
         [Route("/BetterPages-framework.js")]
         public IActionResult BetterPagesFramework()
         {
-            //get wwwroot/js/BetterPages-framework.js (this is a class library) problem is that this is called from the root of the project (BetterPages.example)
-            // Get the directory where the current assembly (BetterPages) is located
-            string assemblyDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            // Construct the path to the file relative to the assembly directory
-            string filePath = Path.Combine(assemblyDirectory, "..", "..", "..", "..", "BetterPages", "wwwroot", "js", "BetterPages-framework.js");
-            // Return the file
-            return PhysicalFile(filePath, "application/javascript");
+            return Redirect("/js/BetterPages-framework.js");
         }
     }
 }

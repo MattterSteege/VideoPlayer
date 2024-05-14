@@ -23,8 +23,4 @@
       <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
       <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
     </ItemGroup>
-
-    <ItemGroup>
-      <None Include="wwwroot\js\BetterPages-framework.js" />
-    </ItemGroup>
 </Project>

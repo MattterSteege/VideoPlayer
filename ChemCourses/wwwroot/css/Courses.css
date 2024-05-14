@@ -51,6 +51,7 @@ video {
     height: auto;
     overflow: hidden;
     border-radius: var(--radius-inner);
+    border: 1px solid #ddd;
 }
 
 .bufferd {

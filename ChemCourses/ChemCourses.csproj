@@ -79,9 +79,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="wwwroot\videos\4CB65001-2973-4E7A-A519-6BD7A5207B75\" />
-      <Folder Include="wwwroot\videos\64E7CD25-7DDD-4262-B02D-019ED563957F\" />
-      <Folder Include="wwwroot\videos\E2CCF22C-8FA9-45E3-BBC3-38773861E759\" />
+      <Folder Include="wwwroot\videos\4cb65001-2973-4e7a-a519-6bd7a5207b75\" />
+      <Folder Include="wwwroot\videos\64e7cd25-7ddd-4262-b02d-019ed563957f\" />
+      <Folder Include="wwwroot\videos\e2ccf22c-8fa9-45e3-bbc3-38773861e759\" />
     </ItemGroup>
 
 </Project>
