@@ -449,9 +449,10 @@ border-bottom: none;
 .buttons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     height: 36px;
     margin-top: var(--padding);
+    gap: var(--padding);
 }
 
 .button {
