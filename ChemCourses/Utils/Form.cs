@@ -59,12 +59,23 @@ public class Form
 
         foreach (var question in Questions)
         {
-            htmlBuilder.Append("<div class='question'>");
+            htmlBuilder.Append("<div class='question colorful-border'>");
             htmlBuilder.Append(question.RenderToHTML());
             htmlBuilder.Append("</div>");
         }
 
         return htmlBuilder.ToString();
+    }
+    
+    public List<string> QuestionSummary()
+    {
+        List<string> summary = new List<string>();
+        foreach (var question in Questions)
+        {
+            summary.Add(question.Summary);
+        }
+
+        return summary;
     }
 
     public string RenderToJSON()

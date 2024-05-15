@@ -295,10 +295,17 @@ nextButton.style.opacity = 1;
 var previousButton = document.querySelector(".button.back");
 previousButton.style.opacity = 0;
 
-var questionContainer = document.querySelector(".question-container");
-Array.from(questionContainer.children).forEach((element, index) => {
-    element.style.zIndex = questionContainer.children.length - index;
+var questionContainer = Array.from(document.querySelector(".question-container").children);
+questionContainer.forEach((element, index) => {
+    element.style.zIndex = questionContainer.length - index;
 });
+
+//.question-legend > children (p)
+var questionLegendChildren = Array.from(document.querySelector(".question-legend").children);
+questionLegendChildren.forEach((element) => {
+    element.style.fontWeight = "";
+});
+questionLegendChildren[0].style.fontWeight = "bold";
 
 var currentPanel = 0;
 
@@ -307,7 +314,7 @@ nextButton.addEventListener("click", function () {
     
     nextPanel();
     previousButton.style.opacity = 1;
-    if (currentPanel === questionContainer.children.length - 1) {
+    if (currentPanel === questionContainer.length - 1) {
         nextButton.style.opacity = 0;
     }
 });
@@ -325,15 +332,23 @@ previousButton.addEventListener("click", function () {
 ///switchPanel(1) will move the panel one to the right
 ///switchPanel(-1) will move the panel one to the left
 function nextPanel() {
-    var panels = Array.from(questionContainer.children);
     //random -1 or 1
     var random = Math.floor(Math.random() * 2) * 2 - 1;
-    panels[currentPanel].style.transform = `translateX(${random * 200}%)`;
+    questionContainer[currentPanel].style.transform = `translateX(${random * 110}%)`;
     currentPanel++;
+    
+    questionLegendChildren.forEach((element) => {
+        element.style.fontWeight = "";
+    });    
+    questionLegendChildren[currentPanel].style.fontWeight = "bold";
 }
 
 function PreviousPanel() {
     currentPanel--;
-    var panels = Array.from(questionContainer.children);
-    panels[currentPanel].style.transform = `translateX(0%)`;
+    questionContainer[currentPanel].style.transform = `translateX(0%)`;
+    
+    questionLegendChildren.forEach((element) => {
+        element.style.fontWeight = "";
+    });
+    questionLegendChildren[currentPanel].style.fontWeight = "bold";
 }

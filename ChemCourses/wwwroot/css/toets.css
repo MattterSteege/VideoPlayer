@@ -1,39 +1,56 @@
 ﻿/* Styles for question container */
 .question-container {
-    position: absolute;
+    position: sticky;
     width: 100%;
-    height: calc(100% - var(--padding) - 48px);
-    display: flex;
-    flex-direction: column;
+    height: 100%;
     white-space: nowrap;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    outline: 1000px solid white;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
+    display: grid;
+    /*background: linear-gradient(145deg, var(--accent-color-light), var(--accent-color)) !important;*/
+    /*border-radius: var(--radius);*/
+    /*color: var(--text-color-light);*/
+    /*padding: 6px;*/
 }
+
+/*.question-container::before {*/
+/*    content: "";*/
+/*    z-index: -1;*/
+/*    top: 3px;*/
+/*    left: 3px;*/
+/*    position: absolute;*/
+/*    background: #fff;*/
+/*    width: calc(100% - 6px);*/
+/*    height: calc(100% - 6px);*/
+/*    border-radius: var(--radius-inner);*/
+/*}*/
 
 /* Styles for individual questions */
 .question {
-    position: absolute;
-    max-width: 900px;
-    width: 100%;
-    top: 0;
-    height: calc(100% - 12px);
+    position: sticky;
     overflow: hidden;
-    display: flex;
-    /* border: 1px solid var(--inactive-color); */
-    border-radius: var(--radius);
-    scroll-snap-align: start;
-    background: var(--background-color);
     transition: transform 0.5s ease-in;
     padding: var(--padding);
-    box-shadow: var(--shadow);
-    margin-top: 6px;
-    /* margin-bottom: 6px; */
+    background: white;
+    /* border-radius: var(--radius); */
+    /* color: var(--text-color-light); */
+    grid-area: 1 / 1 / 1 / 1;
+}
+
+.question::before {
+    /* content: ""; */
+    z-index: -1;
+    top: 3px;
+    left: 3px;
+    position: absolute;
+    background: #fff;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    border-radius: var(--radius-inner);
+    grid-area: 1 / 1 / 1 / 1;
 }
 
 /* Styles for headings */
@@ -60,6 +77,10 @@
     color: var(--text-color);
 }
 
+.question-legend p::before {
+    content: "⌬ ";
+}
+
 /*TEXT FIELDS*/
 .forms-text_field {
     margin-bottom: 10px;
@@ -70,6 +91,13 @@
     font-weight: bold;
 }
 
+.forms-text_field_desc {
+    font-size: var(--font-size);
+    color: var(--text-color);
+    margin-bottom: 5px;
+    word-break: break-word;
+}
+
 .forms-text_field div[contenteditable="true"] {
     border: 1px solid #ccc;
     padding: var(--padding);
@@ -77,6 +105,22 @@
     color: var(--text-color);
     border-radius: var(--radius-inner);
     margin-top: 5px;
+}
+
+.question-legend {
+    font-size: var(--font-size);
+    color: var(--text-color);
+    margin-bottom: 5px;
+    overflow-y: scroll;
+    padding: var(--padding);
+    height: 100%;
+}
+
+.question-legend p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: var(--font-size);
+    color: var(--text-color);
 }
 
 /*SECTIONS*/
@@ -442,32 +486,18 @@
     background-color: var(--background-color);
 }
 
-
-/*
-
-<div class="buttons">
-    <div class="button back">
-        <i class="fas fa-arrow-left"></i>
-    </div>
-    <div class="button next">
-        <i class="fas fa-arrow-right"></i>
-    </div>
-</div>
-
-*/
-
 /*BUTTONS*/
 .buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;
     height: 36px;
-    margin-top: var(--padding);
+    /* margin-top: var(--padding); */
     gap: var(--padding);
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    /* position: absolute; */
+    /* bottom: 0; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
 }
 
 .button {
@@ -476,24 +506,34 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
-    border-radius: var(--radius-inner);
     cursor: pointer;
     width: 100px;
-}
-
-.button.back {
-    background: var(--inactive-color);
-}
-
-.button.next {
-    background: var(--inactive-color);
+    background: linear-gradient(145deg, var(--accent-color-light), var(--accent-color)) !important;
+    border-radius: var(--radius);
+    color: var(--text-color-light);
 }
 
 .button i {
     font-size: var(--font-size);
-    color: var(--text-color);
+    color: white;
 }
 
 .button:hover {
     filter: brightness(1.1);
+}
+
+.button:hover i {
+    color: var(--text-color);
+}
+
+.button::before {
+    content: "";
+    z-index: -1;
+    top: 3px;
+    left: 3px;
+    position: absolute;
+    background: #fff;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    border-radius: var(--radius-inner);
 }

@@ -14,6 +14,7 @@ namespace ChemCourses.Utils;
 public abstract class Question {
     public string Title { get; set; }
     public string Description { get; set; }
+    public string Summary { get; set; }
     public int Id { get; set; }
 
     public abstract string RenderToHTML(int id = 0);
@@ -35,6 +36,11 @@ public class TextQuestion : Question {
         return this;
     }
     
+    public TextQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
+        return this;
+    }
+    
     public TextQuestion SetPlaceholder(string DefaultValue) {
         this.DefaultValue = DefaultValue;
         return this;
@@ -51,7 +57,7 @@ public class TextQuestion : Question {
         //return
         return $"<div class='forms-text_field' id='{Id}' name='{Id}' data-max_length='{MaxLength}' data-default_text='{DefaultValue}'>\n" + 
                $"  <div class='forms-text_field_label'>{Title}</div>\n" +
-               $"  <div class='forms-text_field_desc'>{Description}</div>\n" +
+               $"  <p class='forms-text_field_desc'>{Description}</p>\n" +
                $"  <div contenteditable='true'></div>\n" +
                $"</div>";
     }
@@ -77,7 +83,7 @@ public class Section : Question {
         //render the HTML for the section
         return $"<div class='forms-section' id='{Id}'>\n" + 
                $"  <div class='forms-section_Title'>{Title}</div>\n" +
-               $"  <div class='forms-section_desc'>{Description}</div>\n" +
+               $"  <p class='forms-section_desc'>{Description}</p>\n" +
                $"</div>";
     }
 }
@@ -97,6 +103,11 @@ public class DropdownQuestion : Question {
     
     public DropdownQuestion SetDescription(string Description) {
         this.Description = Description;
+        return this;
+    }
+    
+    public DropdownQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
         return this;
     }
 
@@ -125,7 +136,7 @@ public class DropdownQuestion : Question {
         
         var html = $"<div class='forms-dropdown_question' id='{Id}'>\n" + 
                    $"  <div class='forms-dropdown_question_title'>▼ {Title}</div>\n" +
-                   $"  <div class='forms-dropdown_question_desc'>{Description}</div>\n" +
+                   $"  <p class='forms-dropdown_question_desc'>{Description}</p>\n" +
                    $"  <div class='forms-dropdown_question_selected' style='display: none;'></div>\n" +
                    $"  <div class='forms-dropdown_question_options'>\n" +
                    $"      <div class='forms-dropdown_question_option_container'>\n";
@@ -162,6 +173,11 @@ public class SliderQuestion : Question {
         this.Description = Description;
         return this;
     }
+    
+    public SliderQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
+        return this;
+    }
 
     public SliderQuestion SetSliderRange(float minValue, float maxValue) {
         this.MinValue = minValue;
@@ -185,7 +201,7 @@ public class SliderQuestion : Question {
         //render the HTML for the slider question
         return $"<div class='forms-slider_question' id='{Id}' data-min='{MinValue}' data-max='{MaxValue}' data-step='{Step}' data-default_value='{DefaultValue}'>\n" +
                $"  <div class='forms-slider_question_Title'>{Title}</div>\n" +
-               $"  <div class='forms-slider_question_desc'>{Description}</div>\n" +
+               $"  <p class='forms-slider_question_desc'>{Description}</p>\n" +
                $"  <div class='slider-container'>\n" +
                $"   <div class='slider-track'>\n" +
                $"   <div class='slider-thumb''></div>\n" +
@@ -211,6 +227,11 @@ public class MultipleChoiceQuestion : Question {
     
     public MultipleChoiceQuestion SetDescription(string Description) {
         this.Description = Description;
+        return this;
+    }
+    
+    public MultipleChoiceQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
         return this;
     }
 
@@ -240,7 +261,7 @@ public class MultipleChoiceQuestion : Question {
         //render the HTML for the multiple choice question
         var html = $"<div class='forms-multiple_choice_question' id='{Id}' data-allow_multiple_selection='{AllowMultiple}'>\n" + 
                    $"  <div class='forms-multiple_choice_question_Title'>{Title}</div>\n" +
-                   $"  <div class='forms-multiple_choice_question_desc'>{Description}</div>\n" +
+                   $"  <p class='forms-multiple_choice_question_desc'>{Description}</p>\n" +
                    $"  <div class='forms-multiple_choice_question_options'>\n";
 
         if (AllowMultiple)
@@ -287,6 +308,11 @@ public class CheckboxQuestion : Question {
         this.Description = Description;
         return this;
     }
+    
+    public CheckboxQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
+        return this;
+    }
 
     public CheckboxQuestion SetOption(string option) {
         this.Option = option;
@@ -304,7 +330,7 @@ public class CheckboxQuestion : Question {
         //render the HTML for the checkbox question
         return $"<div class='forms-checkbox_question' id='{Id}'>\n" + 
                $"  <div class='forms-checkbox_question_Title'>{Title}</div>\n" +
-               $"  <div class='forms-checkbox_question_desc'>{Description}</div>\n" +
+               $"  <p class='forms-checkbox_question_desc'>{Description}</p>\n" +
                $"  <div class='forms-checkbox_question_option'>\n" +
                $"    <div class='forms-checkbox_question_option_checkbox {(DefaultValue ? "selected" : "")}'></div>\n" +
                $"    <div class='forms-checkbox_question_option_label'>{Option}</div>\n" +
@@ -329,6 +355,11 @@ public class TrueFalseQuestion : Question {
         this.Description = Description;
         return this;
     }
+    
+    public TrueFalseQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
+        return this;
+    }
 
     public TrueFalseQuestion SetDefaultValue(bool DefaultValue) {
         this.DefaultValue = DefaultValue;
@@ -341,7 +372,7 @@ public class TrueFalseQuestion : Question {
         //render the HTML for the true/false question
         return $"<div class='forms-true_false_question' id='{Id}'>\n" + 
                $"  <div class='forms-true_false_question_Title'>{Title}</div>\n" +
-               $"  <div class='forms-true_false_question_desc'>{Description}</div>\n" +
+               $"  <p class='forms-true_false_question_desc'>{Description}</p>\n" +
                $"  <div class='forms-true_false_question_options'>\n" +
                $"    <div class='forms-true_false_question_option {(DefaultValue ? "selected" : "")}' data-value='true'>True</div>\n" +
                $"    <div class='forms-true_false_question_option {(DefaultValue ? "" : "selected")}' data-value='false'>False</div>\n" +
@@ -368,6 +399,11 @@ public class FillInTheBlankQuestion : Question
         this.Description = Description;
         return this;
     }
+    
+    public FillInTheBlankQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
+        return this;
+    }
 
     /// <summary>
     /// Input a string with the blanks in the text. The blanks should be surrounded by {{ and }} while containing the anwser.
@@ -389,7 +425,7 @@ public class FillInTheBlankQuestion : Question
         //render the HTML for the fill in the blank question
         var html = $"<div class='forms-fill_in_the_blank_question' id='{Id}'>\n" +
                    $"  <div class='forms-fill_in_the_blank_question_Title'>{Title}</div>\n" +
-                   $"  <div class='forms-fill_in_the_blank_question_desc'>{Description}</div>\n" +
+                   $"  <p class='forms-fill_in_the_blank_question_desc'>{Description}</p>\n" +
                    $"  <div class='forms-fill_in_the_blank_question_text'>\n";
 
         for (int i = 0; i < Parts.Count; i++)
@@ -428,6 +464,11 @@ public class MatchingQuestion : Question
         this.Description = Description;
         return this;
     }
+    
+    public MatchingQuestion SetSummary(string Summary) {
+        this.Summary = Summary;
+        return this;
+    }
 
     public MatchingQuestion AddQuestionAndAnswer(string question, string answer)
     {
@@ -451,7 +492,7 @@ public class MatchingQuestion : Question
         //render the HTML for the matching question
         var html = $"<div class='forms-matching_question' id='{Id}'>\n" +
                    $"  <div class='forms-matching_question_Title'>{Title}</div>\n" +
-                   $"  <div class='forms-matching_question_desc'>{Description}</div>\n" +
+                   $"  <p class='forms-matching_question_desc'>{Description}</p>\n" +
                    $"  <div class='forms-matching_question_grid'>\n" +
                    $"    <div class='forms-matching_question_grid_inner'>\n";
 
