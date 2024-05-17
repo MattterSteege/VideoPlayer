@@ -1,17 +1,21 @@
 ﻿.courses-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(355px, 100% / 3)), 1fr));
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: var(--padding);
-    margin-bottom: var(--padding);
+    /* margin-bottom: var(--padding); */
 }
 
 .course {
     cursor: pointer;
     padding: 20px;
     transition: background-color 0.3s ease;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(275px, 100% / 3)), 1fr));
+    display: flex;
+    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(275px, 100% / 4)), 1fr));
     grid-gap: var(--padding);
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    flex-direction: column-reverse;
 }
 
 .course:hover {
@@ -83,14 +87,6 @@ video {
     align-items: flex-start;
     padding: 20px;
     border: 1px solid #ddd;
-}
-
-.video-info .divider {
-    border-top: 1px solid #e6e3f1;
-    height: 1px;
-    width: 100%;
-    margin-top: calc(var(--padding) / 2);
-    margin-bottom: calc(var(--padding) / 2);
 }
 
 .video-info ul {

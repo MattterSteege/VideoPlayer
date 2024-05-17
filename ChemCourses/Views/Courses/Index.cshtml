@@ -2,12 +2,10 @@
 
 <link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
 
-<div class="header"></div>
-
 <div class="courses-container">
     @foreach (var course in Model)
     {
-        <div class="course colorful-border" onclick="ReplacePage('/Courses/Course/@course.Id')">
+        <div class="course" onclick="ReplacePage('/Courses/Course/@course.Id')">
             <div class="left">
                 <h2>@course.Name</h2>
                 <p>@course.Description</p>

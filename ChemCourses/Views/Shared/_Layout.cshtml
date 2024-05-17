@@ -3,7 +3,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>CHEM Courses</title>
+    <title>ScheikundeSnappen.nl</title>
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <link href="https://fa.kronk.tech" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,48 +14,172 @@
 </head>
 <body onload="InitBetterPages()">
 
-<div class="sidebar">
-    <div class="content">
-        <div class="title">
-            <h6>Welkom, <span>Megan</span></h6>
+<div class="top-background"></div>
+<div class="background"></div>
+
+<div class="inside-container">
+    <div class="vertical-split">
+        <div class="top-banner colorful-border">
+            <img src="images/ChemistryBanner.png"/>
+            <div class="overlay">
+                <div class="welcome">
+                    <h1>
+                        Welkom,
+                        <p>Megan</p>
+                    </h1>
+                </div>
+            </div>
         </div>
-        <nav class="menu">
-            <ul class="list">
-                <li><a onclick="@Url.BetterPagesAction("Dashboard", "Home")" class="active"><i class="far fa-home"></i><span>Dashboard</span></a></li>
-                <li><a href="student-profile.html"><i class="far fa-user"></i><span>Mijn Profiel</span></a></li>
-                <li><a onclick="@Url.BetterPagesAction("Index", "Courses")"><i class="far fa-book"></i><span>Lesmateriaal</span></a></li>
-                <li><a onclick="@Url.BetterPagesAction("CreateForm", "Toets")"><i class="far fa-bookmark"></i><span>Toetsen</span></a></li>
-                <li><a href="student-order-history.html"><i class="far fa-history"></i><span>Bestelgeschiedenis</span></a></li>
-            </ul>
-        </nav>
-        <div class="title">
-            <h6>Gebruiker</h6>
+
+        <div class="horizontal-split one_fifth">
+
+            <div class="sidebar">
+                <div class="content">
+                    <div class="title">
+                        <h6>Welkom, <span>Megan</span></h6>
+                    </div>
+                    <nav class="menu">
+                        <ul class="list">
+                            <li>
+                                <a onclick="@Url.BetterPagesAction("Dashboard", "Home")" class="active">
+                                    <i class="far fa-home"></i><span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="student-profile.html">
+                                    <i class="far fa-user"></i><span>Mijn Profiel</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="@Url.BetterPagesAction("Index", "Courses")">
+                                    <i class="far fa-book"></i><span>Lesmateriaal</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a onclick="@Url.BetterPagesAction("CreateForm", "Toets")">
+                                    <i class="far fa-bookmark"></i><span>Toetsen</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="student-order-history.html">
+                                    <i class="far fa-history"></i><span>Bestelgeschiedenis</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="title">
+                        <h6>Gebruiker</h6>
+                    </div>
+                    <nav class="menu">
+                        <ul class="list">
+                            <li>
+                                <a href="student-settings.html">
+                                    <i class="far fa-cogs"></i><span>Instellingen</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="index.html">
+                                    <i class="far fa-sign-out-alt"></i><span>Uitloggen</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="noselect" id="loading-screen">
+                <div class="atom-container">
+                    <div class="orbit">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="orbit">
+                        <div class="electron"></div>
+                    </div>
+                    <div class="orbit">
+                        <div class="electron"></div>
+                    </div>
+                </div>
+            </div>
+
+            <main id="main">
+                @RenderBody()
+            </main>
         </div>
-        <nav class="menu">
-            <ul class="list">
-                <li><a href="student-settings.html"><i class="far fa-cogs"></i><span>Instellingen</span></a></li>
-                <li><a href="index.html"><i class="far fa-sign-out-alt"></i><span>Uitloggen</span></a></li>
-            </ul>
-        </nav>
     </div>
+
+    <footer>
+        <div class="divider"></div>
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h2>ScheikundeSnappen.nl</h2>
+                    <p>
+                        ScheikundeSnappen.nl is een online platform voor het leren van scheikunde.
+                        <br>
+                        ScheikundeSnappen.nl is een project van Megan Oskam.
+                    </p>
+                    <div class="contact">
+                        <span><i class="fas fa-phone"></i> &nbsp; 06-12345678</span>
+                        <span><i class="fas fa-envelope"></i> &nbsp; <a href="mailto:test@@gmail.com">test@@gmail.com</a></span>
+                        <span><i class="fab fa-youtube"></i> &nbsp; <a href="https://www.youtube.com/@@MeganOskam">@@Megan Oskam</a></span>
+                    </div>
+
+                </div>
+
+                <div class="footer-section links">
+                    <h2>Quick Links</h2>
+                    <br>
+                    <ul>
+                        <a href="#">
+                            <li>Evenementen</li>
+                        </a>
+                        <a href="#">
+                            <li>Team</li>
+                        </a>
+                        <a href="#">
+                            <li>Privacybeleid</li>
+                        </a>
+                        <a href="#">
+                            <li>Gebruiksvoorwaarden</li>
+                        </a>
+                    </ul>
+
+                </div>
+
+                <div class="footer-section contact-form">
+                    <h2>Contact</h2>
+                    <br>
+                    <form action="index.html" method="post">
+                        <input type="email" name="email" class="text-input contact-input" placeholder="Jouw emailadres...">
+                        <textarea rows="4" name="message" class="text-input contact-input" placeholder="Jouw bericht..."></textarea>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-envelope"></i>
+                            Verstuur
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="footer-bottom">
+                &copy; ScheikundeSnappen.nl | Gemaakt door Megan Oskam
+            </div>
+        </div>
+    </footer>
 </div>
 
-<div class="noselect" id="loading-screen">
-    <div class="atom-container">
-        <div class="orbit">
-            <div class="electron"></div>
-        </div>
-        <div class="orbit">
-            <div class="electron"></div>
-        </div>
-        <div class="orbit">
-            <div class="electron"></div>
-        </div>
-    </div>
-</div>
+<script>
 
-<main id="main">
-    @RenderBody()
-</main>
+//for every pixel that .inside-container is scrolled down, the top-banner will be scrolled up by 1.5 pixels
+document.querySelector('.inside-container').onscroll = function() {
+    document.querySelector('.top-background').style.top = -1.5 * this.scrollTop + 'px';
+}
+
+
+</script>
+
 </body>
 </html>
