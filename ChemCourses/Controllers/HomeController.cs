@@ -18,7 +18,6 @@ public class HomeController : Controller
     [Route("/Dashboard")]
     public IActionResult Dashboard()
     {
-        Thread.Sleep(1000);
         return PartialView();
     }
 
@@ -26,7 +25,6 @@ public class HomeController : Controller
     [Route("/Toetsen")]
     public IActionResult Toetsen()
     {
-        Thread.Sleep(1000);
         return PartialView();
     }
     
@@ -34,6 +32,13 @@ public class HomeController : Controller
     public IActionResult Error404()
     {
         return NotFound("You've been hit with an uno reverse card! (404)");
+    }
+    
+    [BetterPages]
+    [Route("/bestelgeschiedenis")]
+    public IActionResult BestelGeschiedenis()
+    {
+        return PartialView();
     }
     
     [BetterPages]

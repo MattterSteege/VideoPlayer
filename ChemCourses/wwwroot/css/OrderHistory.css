@@ -1,0 +1,71 @@
+﻿.dashboard-content {
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: var(--radius);
+}
+
+.section-title h4 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.dashboard-table {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--radius-inner);
+    overflow: hidden;
+}
+
+.table th, .table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.table tbody tr th {
+    background-color: white;
+}
+
+.table tbody tr:nth-child(even) th {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: var(--text-color);
+    display: inline-block;
+}
+
+.success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: rgba(40, 167, 69, 1);
+}
+.processing {
+    background-color: rgba(0, 123, 255, 0.2);
+    color: rgba(0, 123, 255, 1);
+}
+
+.on-hold {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: rgba(255, 193, 7, 1);
+}
+
+.canceled {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: rgba(220, 53, 69, 1);
+}

@@ -8,8 +8,7 @@
     <link href="https://fa.kronk.tech" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    @* <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet"> *@
-    <link href="css/euclid-circulara.css" rel="stylesheet">
+    <link href="/fonts/EuclidCircularA/EuclidCircularA.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css" asp-append-version="true">
 </head>
 <body onload="InitBetterPages()">
@@ -61,7 +60,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="student-order-history.html">
+                                <a onclick="@Url.BetterPagesAction("Index", "BestelGeschiedenis")">
                                     <i class="far fa-history"></i><span>Bestelgeschiedenis</span>
                                 </a>
                             </li>
@@ -173,10 +172,19 @@
 
 <script>
 
-//for every pixel that .inside-container is scrolled down, the top-banner will be scrolled up by 1.5 pixels
-document.querySelector('.inside-container').onscroll = function() {
-    document.querySelector('.top-background').style.top = -1.5 * this.scrollTop + 'px';
-}
+//for every scrolled pixel, add 0.5 to the opacity of the top-banner
+
+var scrollFactor = 0.5;
+
+window.addEventListener('scroll', function() {
+    var topBanner = document.querySelector('.top-banner');
+    var topBackground = document.querySelector('.top-background');
+    var scrolled = window.scrollY;
+    var height = topBanner.offsetHeight;
+    
+    topBackground.style.opacity = 1 - (scrolled / height);
+    topBackground.style.top = -(window.scrollY * scrollFactor) + 'px';
+});
 
 
 </script>

@@ -44,12 +44,12 @@
 }
 
 .course img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     max-height: 160px;
     border-radius: var(--radius-inner);
     border: 1px solid;
-    object-fit: scale-down;
+    object-fit: cover;
 }
 
 
