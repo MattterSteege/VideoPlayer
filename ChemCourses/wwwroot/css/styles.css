@@ -188,6 +188,7 @@ html, body, div, p, ul, li {
     z-index: -1;
     background: linear-gradient(white 0%, rgba(255, 255, 255, 0.1) 100%);
 }
+
 .background {
     display: block;
     position: fixed;
@@ -196,8 +197,14 @@ html, body, div, p, ul, li {
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: -10000;
+    z-index: -10000000000;
     background: #f9f9f9;
+    color: #dbdbdb;
+}
+
+.background .icon {
+    position: absolute;
+    font-size: 30px;
 }
 
 /* MY COURSES DETAILS */

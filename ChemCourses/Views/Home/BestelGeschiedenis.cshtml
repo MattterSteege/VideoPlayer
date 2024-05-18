@@ -10,43 +10,42 @@
         <div class="dashboard-table">
             <table class="table">
                 <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Naam</th>
-                        <th>Datum</th>
-                        <th>Prijs</th>
-                        <th>Status</th>
-                    </tr>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Omschrijving</th>
+                    <th>Datum</th>
+                    <th>Prijs</th>
+                    <th>Status</th>
+                </tr>
                 </thead>
                 <tbody>
+
+                @foreach (var order in Model)
+                {
                     <tr>
-                        <th>#1234</th>
-                        <td>1 Maand toegang</td>
-                        <td>1 Jan, 2024</td>
-                        <td>$10.99</td>
-                        <td><span class="badge success">Success</span></td>
+                        <th>#@order.id</th>
+                        <td>@order.omschrijving</td>
+                        <td>@order.date.ToString("d MMMM, yyyy")</td>
+                        <td>€@order.price</td>
+                        @if (order.state == "Betaald") {
+
+                            <td><span class="badge success">@order.state</span></td>
+                                                                               
+                        } else if (order.state == "Verwerkt") {
+                            
+                            <td><span class="badge processing">@order.state</span></td>
+                                                                                  
+                        }else if (order.state == "Bezig") {
+                            
+                            <td><span class="badge on-hold">@order.state</span></td>
+                                                                               
+                        }else if (order.state == "Geannuleerd") {
+                            
+                            <td><span class="badge canceled">@order.state</span></td>
+                                                                                
+                        }
                     </tr>
-                    <tr>
-                        <th>#2341</th>
-                        <td>1 Maand toegang</td>
-                        <td>1 Feb, 2024</td>
-                        <td>$10.99</td>
-                        <td><span class="badge processing">Verwerken</span></td>
-                    </tr>
-                    <tr>
-                        <th>#3412</th>
-                        <td>1 Maand toegang</td>
-                        <td>1 Mrt, 2024</td>
-                        <td>$10.99</td>
-                        <td><span class="badge on-hold">Bezig</span></td>
-                    </tr>
-                    <tr>
-                        <th>#4123</th>
-                        <td>3 Maand toegang</td>
-                        <td>1 Apr, 2024</td>
-                        <td>$40.99</td>
-                        <td><span class="badge canceled">Geannuleerd</span></td>
-                    </tr>
+                }
                 </tbody>
             </table>
         </div>

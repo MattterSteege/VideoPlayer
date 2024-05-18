@@ -38,7 +38,16 @@ public class HomeController : Controller
     [Route("/bestelgeschiedenis")]
     public IActionResult BestelGeschiedenis()
     {
-        return PartialView();
+        dynamic orders = new List<dynamic>
+        {
+            new {id = 67, date = new DateTime(2024, 1, 1), price = 10.00, state = "Betaald", omschrijving = "1 maand toegang"},
+            new {id = 53, date = new DateTime(2024, 2, 1), price = 40.00, state = "Verwerkt", omschrijving = "3 maanden toegang"},
+            new {id = 2, date = new DateTime(2024, 5, 1), price = 10.00, state = "Bezig", omschrijving = "1 maand toegang"},
+            new {id = 39, date = new DateTime(2024, 6, 1), price = 10.00, state = "Geannuleerd", omschrijving = "1 maand toegang"},
+            new {id = 8, date = new DateTime(2024, 7, 1), price = 10.00, state = "Betaald", omschrijving = "1 maand toegang"},
+            
+        };
+        return PartialView(orders);
     }
     
     [BetterPages]

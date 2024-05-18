@@ -14,7 +14,9 @@
 <body onload="InitBetterPages()">
 
 <div class="top-background"></div>
-<div class="background"></div>
+<div class="background">
+    
+</div>
 
 <div class="inside-container">
     <div class="vertical-split">
@@ -186,7 +188,54 @@ window.addEventListener('scroll', function() {
     topBackground.style.top = -(window.scrollY * scrollFactor) + 'px';
 });
 
-
+// var FontAwesomeChemistryIcons = {
+//     "atom": "<i class='fas fa-atom'></i>",
+//     "flask": "<i class='fas fa-flask'></i>",
+//     "beaker": "<i class='fas fa-beaker'></i>",
+//     "microscope": "<i class='fas fa-microscope'></i>",
+//     "dna": "<i class='fas fa-dna'></i>",
+//     "virus": "<i class='fas fa-virus'></i>",
+//     "vial": "<i class='fas fa-vial'></i>",
+//     "thermometer": "<i class='fas fa-thermometer'></i>",
+// };
+//
+// //inside .background, add x amount of icons randomly placed
+// var iconCount = 50;
+// var iconKeys = Object.keys(FontAwesomeChemistryIcons);
+//
+// for (var i = 0; i < iconCount; i++) {
+//     var icon = document.createElement('div');
+//     icon.classList.add('icon');
+//     icon.innerHTML = FontAwesomeChemistryIcons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
+//     icon.style.left = Math.random() * 100 + '%'; 
+//     icon.style.top = Math.random() * 100 + '%';
+//    
+//     var size = (Math.random() * 0.5 + 0.5);
+//     icon.setAttribute('data-top', icon.style.top);
+//     icon.setAttribute('data-scroll-speed', size);
+//     icon.style.transform = 'scale(' + size + ')';
+//     icon.style.filter = 'blur(calc((1 - ' + size + ') * 5px))';
+//    
+//     document.querySelector('.background').appendChild(icon);
+// }
+//
+// window.addEventListener('scroll', function() {
+//     for (var i = 0; i < iconCount; i++) {
+//         var icon = document.querySelectorAll('.icon')[i];
+//         var scrollSpeed = icon.dataset.scrollSpeed;
+//         var top = parseFloat(icon.dataset.top); //percentage, turn into px
+//         top = top / 100 * window.innerHeight;
+//         icon.style.top = (parseFloat(top) - window.scrollY * scrollSpeed) + 'px';
+//     }
+// });
+//
+// //DEBUG
+// function ToggleBackgroundIcons() {
+//     var icons = document.querySelectorAll('.icon');
+//     for (var i = 0; i < icons.length; i++) {
+//         icons[i].style.display = icons[i].style.display === 'none' ? 'block' : 'none';
+//     }
+// }
 </script>
 
 </body>
