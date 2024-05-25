@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace ChemCourses.Utils;
@@ -10,12 +11,16 @@ namespace ChemCourses.Utils;
 [JsonDerivedType(typeof(SliderQuestion))]
 [JsonDerivedType(typeof(MultipleChoiceQuestion))]
 [JsonDerivedType(typeof(CheckboxQuestion))]
+[JsonDerivedType(typeof(TrueFalseQuestion))]
+[JsonDerivedType(typeof(FillInTheBlankQuestion))]
+[JsonDerivedType(typeof(MatchingQuestion))]
 
 public abstract class Question {
     public string Title { get; set; }
     public string Description { get; set; }
     public string Summary { get; set; }
     public int Id { get; set; }
+    public string Type => this.GetType().Name;
 
     public abstract string RenderToHTML(int id = 0);
 }
@@ -25,6 +30,7 @@ public class TextQuestion : Question {
     
     public string DefaultValue { get; set; } = "Vul hier uw antwoord in";
     public int MaxLength { get; set; } = 50;
+    
 
     public TextQuestion SetTitle(string Title) {
         this.Title = Title;
@@ -522,4 +528,53 @@ public class MatchingQuestion : Question
         return html;
     }
 }
+#endregion
+
+#region Deserialization
+public class QuestionConverter : JsonConverter<Question>
+{
+    public override bool CanConvert(Type typeToConvert)
+    {
+        return typeToConvert.IsAssignableFrom(typeof(Question));
+    }
+
+    public override Question? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions? options)
+    {
+        if (reader.TokenType != JsonTokenType.StartObject)
+            throw new JsonException("Invalid JSON format. Expected an object.");
+
+        using var jsonDocument = JsonDocument.ParseValue(ref reader);
+        var jsonObject = jsonDocument.RootElement;
+
+        bool has_typeProperty = jsonObject.TryGetProperty("Type", out var typeProperty); //Beware of the capital T version
+        bool hasTypeProperty = jsonObject.TryGetProperty("type", out var TypeProperty); //Beware of the lowercase t version
+        
+        if (!has_typeProperty && !hasTypeProperty)
+            throw new JsonException("Could not determine the type of the Question object.");
+
+        string type = typeProperty.GetString() ?? TypeProperty.GetString() ?? throw new JsonException("Could not determine the type of the Question object.");
+        Question? question = type switch
+        {
+            "TextQuestion" => jsonObject.Deserialize<TextQuestion>(options),
+            "MatchingQuestion" => jsonObject.Deserialize<MatchingQuestion>(options),
+            "Section" => jsonObject.Deserialize<Section>(options),
+            "DropdownQuestion" => jsonObject.Deserialize<DropdownQuestion>(options),
+            "SliderQuestion" => jsonObject.Deserialize<SliderQuestion>(options),
+            "MultipleChoiceQuestion" => jsonObject.Deserialize<MultipleChoiceQuestion>(options),
+            "CheckboxQuestion" => jsonObject.Deserialize<CheckboxQuestion>(options),
+            "TrueFalseQuestion" => jsonObject.Deserialize<TrueFalseQuestion>(options),
+            "FillInTheBlankQuestion" => jsonObject.Deserialize<FillInTheBlankQuestion>(options),
+            
+            _ => throw new JsonException($"Unsupported question type: {type}")
+        };
+
+        return question;
+    }
+
+    public override void Write(Utf8JsonWriter writer, Question value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(writer, value, value.GetType(), options);
+    }
+}
+
 #endregion

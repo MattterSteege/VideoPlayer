@@ -1,4 +1,5 @@
 ﻿using BetterPages.utilities.attributes;
+using ChemCourses.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChemCourses.Controllers;
@@ -21,6 +22,8 @@ public class CoursesController : Controller
                 "Hoe gebruik je een BOE-schema?",
                 "Rekenvoorbeeld"
             },
+            length = 4 * 60 + 19, //4:19
+            Difficulty = new Random().Next(1, 6)
         });
         
         courses.Add(new Course
@@ -36,6 +39,8 @@ public class CoursesController : Controller
                 "Betekenis Kv en Ks",
                 "Waarom geen chemische reacties?"
             },
+            length = 4 * 60 + 22, //4:22
+            Difficulty = new Random().Next(1, 6)
         });
         
         courses.Add(new Course
@@ -49,6 +54,8 @@ public class CoursesController : Controller
                 "Wat is de ligging van een chemisch evenwicht?",
                 "Relatie tussen K en ligging evenwicht"
             },
+            length = 2 * 60 + 43, //2:43
+            Difficulty = new Random().Next(1, 6)
         });
         
         courses.Add(new Course
@@ -62,6 +69,8 @@ public class CoursesController : Controller
                 "Wat is chemisch evenwicht?",
                 "Kenmerken chemisch evenwicht"
             },
+            length = 6 * 60 + 47, //6:47
+            Difficulty = new Random().Next(1, 6)
         });
         
         courses.Add(new Course
@@ -75,6 +84,8 @@ public class CoursesController : Controller
                 "Wat is chemisch evenwicht?",
                 "Kenmerken chemisch evenwicht"
             },
+            length = 6 * 60 + 32, //6:32
+            Difficulty = new Random().Next(1, 6)
         });
     }
     
@@ -91,7 +102,7 @@ public class CoursesController : Controller
     }
     
     [BetterPages]
-    [Route("/Courses/Course/{courseId}")]
+    [Route("/Courses/{courseId}/video")]
     public IActionResult Course(string courseId)
     {
         if (courses.Count == 0)
@@ -107,6 +118,18 @@ public class CoursesController : Controller
         
         return NotFound("Course not found.");
     }
+    
+    private string VideoPath => Environment.GetEnvironmentVariable("VIDEO_PATH") ?? "/app/videos";
+    
+    [BetterPages]
+    [Route("/Courses/{courseId}/test")]
+    public IActionResult Test(string courseId)
+    {
+        var path = Path.Combine(VideoPath, courseId, "opdrachten.json");
+        string JSON = System.IO.File.ReadAllText(path);
+        Form form = new Form().DeserializeFromJSON(JSON);
+        return PartialView(form);
+    }
 }
 
 public class Course
@@ -116,4 +139,7 @@ public class Course
     public string Banner { get; set; }
     public Guid Id { get; set; }
     public List<string> InThisVideo { get; set; }
+    public int length { get; set; }
+    public string Duration => TimeUtils.SecondsToTime(length);
+    public int Difficulty { get; set; }
 }

@@ -1,0 +1,32 @@
+﻿@model ChemCourses.Utils.Form
+
+<link rel="stylesheet" href="/css/toets.css">
+<script src="/js/Forms.js"></script>
+
+<div class="horizontal-split two_third" style="height: calc(100% - var(--padding) - 32px);">
+    <div class="question-container">
+        @Html.Raw(Model.RenderToHTML())
+    </div>
+    
+    <div class="question-legend colorful-border">
+        @foreach (string summary in Model.QuestionSummary())
+        {
+            if (string.IsNullOrEmpty(summary)) continue;
+
+            <p>@summary</p>
+        }
+    </div>
+</div>
+
+
+<div class="horizontal-split two_third" style="height: 36px; margin-top: 19px;">
+    <div class="buttons">
+        <div class="button back">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="button next">
+            <i class="fas fa-arrow-right"></i>
+        </div>
+    </div>
+    <div></div>
+</div>

@@ -1,5 +1,5 @@
 ﻿//TEXT FIELD
-const TextFields = Array.from(document.getElementsByClassName("forms-text_field"));
+var TextFields = Array.from(document.getElementsByClassName("forms-text_field"));
 TextFields.forEach((TextField) => {
 
     const maxLength = Number(TextField.dataset.max_length);
@@ -35,7 +35,7 @@ TextFields.forEach((TextField) => {
 });
 
 //DROPDOWN
-const DropdownQuestions = Array.from(document.getElementsByClassName("forms-dropdown_question"));
+var DropdownQuestions = Array.from(document.getElementsByClassName("forms-dropdown_question"));
 DropdownQuestions.forEach((DropdownQuestion) => {
     const title = DropdownQuestion.querySelector('.forms-dropdown_question_title');
     const optionsContainer = DropdownQuestion.querySelector('.forms-dropdown_question_options');
@@ -70,7 +70,7 @@ DropdownQuestions.forEach((DropdownQuestion) => {
 
 
 //SLIDER
-const slider = Array.from(document.getElementsByClassName("forms-slider_question"));
+var slider = Array.from(document.getElementsByClassName("forms-slider_question"));
 slider.forEach((Slider) => {
     const sliderContainer = Slider.querySelector('.slider-container');
     const sliderTrack = Slider.querySelector('.slider-track');
@@ -124,7 +124,7 @@ slider.forEach((Slider) => {
 });
 
 //MULTIPLE CHOICE
-const MultipleChoiceQuestions = Array.from(document.getElementsByClassName("forms-multiple_choice_question"));
+var MultipleChoiceQuestions = Array.from(document.getElementsByClassName("forms-multiple_choice_question"));
 MultipleChoiceQuestions.forEach((MultipleChoiceQuestion) => {
     const options = Array.from(MultipleChoiceQuestion.querySelectorAll('.forms-multiple_choice_question_option'));
 
@@ -148,7 +148,7 @@ MultipleChoiceQuestions.forEach((MultipleChoiceQuestion) => {
 });
 
 //CHECKBOX
-const CheckboxQuestions = Array.from(document.getElementsByClassName("forms-checkbox_question"));
+var CheckboxQuestions = Array.from(document.getElementsByClassName("forms-checkbox_question"));
 CheckboxQuestions.forEach((CheckboxQuestion) => {
     const options = Array.from(CheckboxQuestion.querySelectorAll('.forms-checkbox_question_option'));
 
@@ -165,7 +165,7 @@ CheckboxQuestions.forEach((CheckboxQuestion) => {
 });
 
 //TRUE/FALSE
-const TrueFalseQuestions = Array.from(document.getElementsByClassName("forms-true_false_question"));
+var TrueFalseQuestions = Array.from(document.getElementsByClassName("forms-true_false_question"));
 TrueFalseQuestions.forEach((TrueFalseQuestion) => {
     const options = Array.from(TrueFalseQuestion.querySelectorAll('.forms-true_false_question_option'));
 
@@ -184,28 +184,7 @@ TrueFalseQuestions.forEach((TrueFalseQuestion) => {
 //no code needed
 
 //Matching
-/*
-
-<div class="forms-matching_question" id="0">
-  <div class="forms-matching_question_Title">Match</div>
-  <div class="forms-matching_question_desc">Match the words on the left with the words on the right.</div>
-  <div class="forms-matching_question_grid">
-    <div class="forms-matching_question_grid_inner">
-      <div class="forms-matching_question_option" data-answer="1">1</div>
-      <div class="forms-matching_question_option" data-answer="2">2</div>
-      <div class="forms-matching_question_option" data-answer="3">3</div>
-    </div>
-    <div class="forms-matching_question_grid_inner sortable-list">
-      <div class="forms-matching_question_option item" draggable="true" data-answer="2">B</div>
-      <div class="forms-matching_question_option item" draggable="true" data-answer="1">A</div>
-      <div class="forms-matching_question_option item" draggable="true" data-answer="3">C</div>
-    </div>
-  </div>
-</div>
-
-*/
-
-const MatchingQuestions = Array.from(document.getElementsByClassName("forms-matching_question"));
+var MatchingQuestions = Array.from(document.getElementsByClassName("forms-matching_question"));
 MatchingQuestions.forEach((MatchingQuestion) => {
     function Sortable(parentElement) {
         var draggingElement = null;

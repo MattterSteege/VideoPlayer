@@ -14,12 +14,12 @@
     grid-gap: var(--padding);
     background: white;
     border-radius: var(--radius);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+    box-shadow: var(--shadow);
     flex-direction: column-reverse;
 }
 
 .course:hover {
-    background-color: #f9f9f9;
+    background-color: var(--overlay-color);
 }
 
 .course .left {
@@ -40,7 +40,7 @@
 
 .course p {
     margin-top: 0;
-    color: #666;
+    color: var(--color-text);
 }
 
 .course img {
@@ -59,7 +59,7 @@ video {
     height: auto;
     overflow: hidden;
     border-radius: var(--radius-inner);
-    border: 1px solid #ddd;
+    border: 1px solid var(--color-border)
 }
 
 .bufferd {
@@ -85,8 +85,10 @@ video {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px;
-    border: 1px solid #ddd;
+    padding: var(--padding);
+    border-radius: var(--radius-inner);
+    background: var(--overlay-color);
+    box-shadow: var(--shadow);
 }
 
 .video-info ul {
@@ -96,4 +98,15 @@ video {
 
 .video-info ul li::before {
     content: "⌬ ";
+}
+
+.goto-questions-button {
+    padding: var(--padding);
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: var(--shadow);
 }

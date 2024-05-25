@@ -88,4 +88,16 @@ public class Form
         Questions.AddRange(questions);
         return this;
     }
+    
+    public Form DeserializeFromJSON(string json)
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        options.Converters.Add(new QuestionConverter());
+
+        var form = JsonSerializer.Deserialize<Form>(json, options);
+        return form;
+    }
 }

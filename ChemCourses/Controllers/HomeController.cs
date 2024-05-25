@@ -28,14 +28,8 @@ public class HomeController : Controller
         return PartialView();
     }
     
-    [Route("/404")]
-    public IActionResult Error404()
-    {
-        return NotFound("You've been hit with an uno reverse card! (404)");
-    }
-    
     [BetterPages]
-    [Route("/bestelgeschiedenis")]
+    [Route("/Bestelgeschiedenis")]
     public IActionResult BestelGeschiedenis()
     {
         dynamic orders = new List<dynamic>
@@ -50,6 +44,12 @@ public class HomeController : Controller
         return PartialView(orders);
     }
     
+    [Route("/404")]
+    public IActionResult Error404()
+    {
+        return NotFound("You've been hit with an uno reverse card! (404)");
+    }
+
     [BetterPages]
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

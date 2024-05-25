@@ -1,57 +1,33 @@
-﻿@model ChemCourses.Controllers.Course
+﻿@using ChemCourses.Utils
+@model ChemCourses.Controllers.Course
 
 <link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
 <script src="js/VideoPlayer.js"></script>
 
-<div class="horizontal-split two_third">
-    <video controls id="video" width="auto" height="100%"></video>
-    <div class="video-info">
-        <h1>@Model.Name</h1>
-        <p>@Model.Description</p>
+<div class="vertical-split">
+    <div class="horizontal-split two_third">
+        <video controls id="video" width="auto" height="100%"></video>
+        <div class="video-info">
+            <h1>@Model.Name</h1>
+            <p>@Model.Description</p>
         
-        <div class="divider"></div>
+            <div class="divider"></div>
         
-        <ul>
-            In deze video:
-            @foreach (var listItem in (Model.InThisVideo))
-            {
-                <li>@listItem</li>
-            }
-        </ul>
+            <ul>
+                In deze video:
+                @foreach (var listItem in (Model.InThisVideo))
+                {
+                    <li>@listItem</li>
+                }
+            </ul>
 
+        </div>
     </div>
-</div>
-
-
-<div class="bufferd" style="display: none">
-    <div id="buffered_video_init" style="display: none"></div>
-    <div id="buffered_video_1"></div>
-    <div id="buffered_video_2"></div>
-    <div id="buffered_video_3"></div>
-    <div id="buffered_video_4"></div>
-    <div id="buffered_video_5"></div>
-    <div id="buffered_video_6"></div>
-    <div id="buffered_video_7"></div>
-    <div id="buffered_video_8"></div>
-    <div id="buffered_video_9"></div>
-    <div id="buffered_video_10"></div>
-    <div id="buffered_video_11"></div>
-    <div id="buffered_video_12"></div>
-    <div id="buffered_video_13"></div>
-    <div id="buffered_video_14"></div>
-    <div id="buffered_video_15"></div>
-    <div id="buffered_video_16"></div>
-    <div id="buffered_video_17"></div>
-    <div id="buffered_video_18"></div>
-    <div id="buffered_video_19"></div>
-    <div id="buffered_video_20"></div>
-    <div id="buffered_video_21"></div>
-    <div id="buffered_video_22"></div>
-    <div id="buffered_video_23"></div>
-    <div id="buffered_video_24"></div>
-    <div id="buffered_video_25"></div>
-    <div id="buffered_video_26"></div>
-
+    
+    <div class="horizontal-split two_third">
+        <div></div>
+        <div class="goto-questions-button" onclick="ReplacePage('/Courses/@Model.Id/test')">Naar de vragen </div>
+    </div>
 </div>
 
 <script>

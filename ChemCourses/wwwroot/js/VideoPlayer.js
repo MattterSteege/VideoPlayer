@@ -119,8 +119,6 @@ class VideoPlayer {
             self.sourceBuffer_video.appendBuffer(buf);
             self.loadedSegments_video[0] = true;
             init++;
-            
-            self.setBufferdInfo("init"); //DEBUG
         });
 
         this.fetch("api/Video/" + this.videoId + "/audio/init.mp4", function (buf) {
@@ -181,8 +179,6 @@ class VideoPlayer {
                 self.sourceBuffer_video.appendWindowEnd = self.timeBeforeSegment(segNum, "video") + self.manifest.period.adaptationSet[0].segmentTemplate.betterTimeline[segNum - 1].duration;
                 self.sourceBuffer_video.appendBuffer(buf);
                 self.loadedSegments_video[segNum] = true;
-                
-                self.setBufferdInfo(segNum); //DEBUG
             });
         });
     }
@@ -433,12 +429,7 @@ class VideoPlayer {
         });
 
         return model;
-    }
-
-    //debug
-    setBufferdInfo(segment) {
-        document.getElementById("buffered_video_" + segment).style.backgroundColor = "green";
-    }        
+    }     
 }
 
 function waitForObjectState(check, interval = 100) {

@@ -1,19 +1,31 @@
-﻿@model List<ChemCourses.Controllers.Course>
+﻿@using ChemCourses.Utils
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<ChemCourses.Controllers.Course>
 
 <link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
 
 <div class="courses-container">
     @foreach (var course in Model)
     {
-        <div class="course" onclick="ReplacePage('/Courses/Course/@course.Id')">
+        <div class="course" onclick="ReplacePage('/Courses/@course.Id/video')">
             <div class="left">
+                @if (course.Difficulty == 1 || course.Difficulty == 2)
+                {
+                    <p><i class="far fa-clock"></i> @course.Duration - <i class="far fa-star"></i> @course.Difficulty</p>
+                }
+                else if (course.Difficulty == 3 || course.Difficulty == 4)
+                {
+                    <p><i class="far fa-clock"></i> @course.Duration - <i class="far fa-star-half-stroke"></i> @course.Difficulty</p>
+                }
+                else if (course.Difficulty == 5 || course.Difficulty == 6)
+                {
+                    <p><i class="far fa-clock"></i> @course.Duration - <i class="fas fa-star"></i> @course.Difficulty</p>
+                }
                 <h2>@course.Name</h2>
-                <p>@course.Description</p>
             </div>
             <div class="right">
                 <img src="@course.Banner" alt="Course Banner">
             </div>
-
         </div>
     }
 </div>
