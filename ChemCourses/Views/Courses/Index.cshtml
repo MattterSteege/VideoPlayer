@@ -1,31 +1,82 @@
 ﻿@using ChemCourses.Utils
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model List<ChemCourses.Controllers.Course>
+@model List<ChemCourses.Controllers.Capital>
 
 <link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
 
-<div class="courses-container">
-    @foreach (var course in Model)
-    {
-        <div class="course" onclick="ReplacePage('/Courses/@course.Id/video')">
-            <div class="left">
-                @if (course.Difficulty == 1 || course.Difficulty == 2)
-                {
-                    <p><i class="far fa-clock"></i> @course.Duration - <i class="far fa-star"></i> @course.Difficulty</p>
-                }
-                else if (course.Difficulty == 3 || course.Difficulty == 4)
-                {
-                    <p><i class="far fa-clock"></i> @course.Duration - <i class="far fa-star-half-stroke"></i> @course.Difficulty</p>
-                }
-                else if (course.Difficulty == 5 || course.Difficulty == 6)
-                {
-                    <p><i class="far fa-clock"></i> @course.Duration - <i class="fas fa-star"></i> @course.Difficulty</p>
-                }
-                <h2>@course.Name</h2>
+<div class="horizontal-split" style="grid-template-columns: 400px 1fr;">
+    <div class="search">
+        <div class="filter-search-container">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Zoek voor lessen...">
             </div>
-            <div class="right">
-                <img src="@course.Banner" alt="Course Banner">
+            <div class="filters">
+                <div class="filter">
+                    <label for="date-filter">Datum:</label>
+                    <input type="date" id="date-filter">
+                </div>
+                <div class="filter">
+                    <label for="difficulty-filter">moeilijkheid:</label>
+                    <select id="difficulty-filter">
+                        <option value="">All</option>
+                        <option value="beginner">laag niveau</option>
+                        <option value="intermediate">middel niveau</option>
+                        <option value="advanced">hoog niveau</option>
+                    </select>
+                </div>
+                <div class="filter">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter">
+                        <option value="">All</option>
+                        <option value="development">Moleculair</option>
+                        <option value="design">Zuren en Basen</option>
+                        <option value="marketing">nog meer scheikundige termen</option>
+                    </select>
+                </div>
             </div>
         </div>
-    }
+    </div>
+
+    <div class="capital-container">
+        @foreach (var capital in Model)
+        {
+            <div class="course" onclick="ReplacePage('/Capital/@capital.Id/')">
+                <div class="left">
+                    <h2>@capital.Name</h2>
+                </div>
+                <div class="right">
+                    <img src="@capital.Banner" alt="Course Banner">
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
+<script minimize>
+
+document.getElementById('search-input').addEventListener('input', function() {
+    const searchQuery = this.value.toLowerCase();
+    // Add your search logic here
+    console.log('Search query:', searchQuery);
+});
+
+document.getElementById('date-filter').addEventListener('change', function() {
+    const selectedDate = this.value;
+    // Add your date filter logic here
+    console.log('Selected date:', selectedDate);
+});
+
+document.getElementById('difficulty-filter').addEventListener('change', function() {
+    const selectedDifficulty = this.value;
+    // Add your difficulty filter logic here
+    console.log('Selected difficulty:', selectedDifficulty);
+});
+
+document.getElementById('category-filter').addEventListener('change', function() {
+    const selectedCategory = this.value;
+    // Add your category filter logic here
+    console.log('Selected category:', selectedCategory);
+});
+
+
+</script>

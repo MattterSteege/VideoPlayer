@@ -1,6 +1,6 @@
 ﻿.courses-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(275px, 100% / 6)), 1fr));
     grid-gap: var(--padding);
     /* margin-bottom: var(--padding); */
 }
@@ -10,7 +10,7 @@
     padding: 20px;
     transition: background-color 0.3s ease;
     display: flex;
-    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(275px, 100% / 4)), 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(275px, 100% / 6)), 1fr));
     grid-gap: var(--padding);
     background: white;
     border-radius: var(--radius);
@@ -40,7 +40,7 @@
 
 .course p {
     margin-top: 0;
-    color: var(--color-text);
+    color: var(--text-color);
 }
 
 .course img {
@@ -87,7 +87,7 @@ video {
     align-items: flex-start;
     padding: var(--padding);
     border-radius: var(--radius-inner);
-    background: var(--overlay-color);
+    background: white;
     box-shadow: var(--shadow);
 }
 
@@ -109,4 +109,60 @@ video {
     cursor: pointer;
     transition: background 0.3s ease;
     box-shadow: var(--shadow);
+}
+
+/*SEARCH*/
+.capital-container {
+    display: grid;
+    grid-gap: var(--padding);
+    grid-template-columns: repeat(auto-fit, minmax(min(100% / 1, max(400px, 100% / 3)), 1fr));
+}
+
+.filter-search-container {
+    display: flex;
+    flex-direction: column;
+    background: var(--overlay-color);
+    padding: var(--padding);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: var(--padding);
+    position: sticky;
+    top: calc(80px + 2 * var(--padding));
+}
+
+.search-bar {
+    margin-bottom: var(--padding);
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: var(--padding);
+    border-radius: var(--radius-inner);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size);
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--padding);
+    flex-direction: column;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter label {
+    font-size: var(--font-size);
+    margin-bottom: 5px;
+}
+
+.filter input[type="date"],
+.filter select {
+    padding: var(--padding);
+    border-radius: var(--radius-inner);
+    border: 1px solid var(--color-border);
+    font-size: var(--font-size);
 }

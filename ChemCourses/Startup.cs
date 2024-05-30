@@ -52,6 +52,21 @@ namespace ChemCourses
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=BetterPages}/{action=Index}/{id?}");
             });
+            
+            Console.WriteLine(" ▄▄▄▄▄▄▄  ▄        ▄▄▄▄▄▄▄");
+            Console.WriteLine(" █ ▄▄▄ █ ▀█▄█▀▄ ▀▀ █ ▄▄▄ █");
+            Console.WriteLine(" █ ███ █ ▀▀▄▀▄   █ █ ███ █");
+            Console.WriteLine(" █▄▄▄▄▄█ █ █ ▄▀█ ▄ █▄▄▄▄▄█");
+            Console.WriteLine(" ▄▄▄▄▄ ▄▄▄▄▄ █  █▄▄ ▄ ▄ ▄ ");
+            Console.WriteLine(" ▀█    ▄▄██ ▄▄▀██▀▄█ ▄▄ █▄");
+            Console.WriteLine(" ▀▄▄▄▄ ▄▀▀█▀█ ▄ ▄▀▄▄▄▄ ▄▄█");
+            Console.WriteLine(" █ █▀ █▄▀ █▀ ▀  ▀▀█▀███ █▄");
+            Console.WriteLine(" █  ▀ ▄▄ ▀ ▄ █   ██▄█▄ ▄ ▀");
+            Console.WriteLine(" ▄▄▄▄▄▄▄ ███▄▄ ▄▀█ ▄ █▀▄▄▄");
+            Console.WriteLine(" █ ▄▄▄ █ ▄▄▄█   ▄█▄▄▄██▄██");
+            Console.WriteLine(" █ ███ █ █ ▀ ▀█▄▄ ▄ ▄██  █");
+            Console.WriteLine(" █▄▄▄▄▄█ █ ▄ █▀▄▄▄▄██▀▀█▄█");
+            Console.WriteLine("");
         }
     }
 }

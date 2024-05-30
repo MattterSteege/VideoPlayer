@@ -14,229 +14,140 @@
 </head>
 <body onload="InitBetterPages()">
 
-<div class="top-background"></div>
-<div class="background">
-    
+<div class="hider"></div>
+<div class="sidebar colorful-border">
+    <div class="content">
+        <div class="title">
+            <h6>Welkom<span class="colorful-letters">&nbsp;Megan</span></h6>
+        </div>
+        <div class="spacer"></div>
+        <nav class="menu">
+            <ul class="list">
+                <li>
+                    <a onclick="@Url.BetterPagesAction("Dashboard", "Home")" class="active">
+                        <i class="far fa-home"></i><span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-profile.html">
+                        <i class="far fa-user"></i><span>Mijn Profiel</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="@Url.BetterPagesAction("Index", "Courses")">
+                        <i class="far fa-book"></i><span>Lesmateriaal</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="@Url.BetterPagesAction("CreateForm", "Toets")">
+                        <i class="far fa-bookmark"></i><span>Toetsen</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="@Url.BetterPagesAction("Index", "BestelGeschiedenis")">
+                        <i class="far fa-history"></i><span>Bestelgeschiedenis</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="spacer">
+        </div>
+        <nav class="menu">
+            <ul class="list">
+                <li>
+                    <a href="student-settings.html">
+                        <i class="far fa-cogs"></i><span>Instellingen</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="far fa-sign-out-alt"></i><span>Uitloggen</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
 
-<div class="inside-container">
-    <div class="vertical-split">
-        <div class="top-banner colorful-border">
-            <img src="images/ChemistryBanner.png"/>
-            <div class="overlay">
-                <div class="welcome">
-                    <h1>
-                        Welkom,&nbsp;<p>Megan</p>
-                    </h1>
-                </div>
-            </div>
+<main id="main">
+    @RenderBody()
+</main>
+
+<div class="noselect" id="loading-screen">
+    <div class="atom-container">
+        <div class="orbit">
+            <div class="electron"></div>
         </div>
-
-        <div class="horizontal-split one_fifth">
-
-            <div class="sidebar">
-                <div class="content">
-                    <div class="title">
-                        <h6>Welkom,<span>Megan</span></h6>
-                    </div>
-                    <nav class="menu">
-                        <ul class="list">
-                            <li>
-                                <a onclick="@Url.BetterPagesAction("Dashboard", "Home")" class="active">
-                                    <i class="far fa-home"></i><span>Dashboard</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="student-profile.html">
-                                    <i class="far fa-user"></i><span>Mijn Profiel</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="@Url.BetterPagesAction("Index", "Courses")">
-                                    <i class="far fa-book"></i><span>Lesmateriaal</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="@Url.BetterPagesAction("CreateForm", "Toets")">
-                                    <i class="far fa-bookmark"></i><span>Toetsen</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a onclick="@Url.BetterPagesAction("Index", "BestelGeschiedenis")">
-                                    <i class="far fa-history"></i><span>Bestelgeschiedenis</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="title">
-                        <h6>Gebruiker</h6>
-                    </div>
-                    <nav class="menu">
-                        <ul class="list">
-                            <li>
-                                <a href="student-settings.html">
-                                    <i class="far fa-cogs"></i><span>Instellingen</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html">
-                                    <i class="far fa-sign-out-alt"></i><span>Uitloggen</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-
-            <div class="noselect" id="loading-screen">
-                <div class="atom-container">
-                    <div class="orbit">
-                        <div class="electron"></div>
-                    </div>
-                    <div class="orbit">
-                        <div class="electron"></div>
-                    </div>
-                    <div class="orbit">
-                        <div class="electron"></div>
-                    </div>
-                </div>
-            </div>
-
-            <main id="main">
-                @RenderBody()
-            </main>
+        <div class="orbit">
+            <div class="electron"></div>
+        </div>
+        <div class="orbit">
+            <div class="electron"></div>
         </div>
     </div>
-
-    <footer>
-        <div class="divider"></div>
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-section about">
-                    <h2>ScheikundeSnappen.nl</h2>
-                    <p>
-                        ScheikundeSnappen.nl is een online platform voor het leren van scheikunde.
-                        <br>
-                        ScheikundeSnappen.nl is een project van Megan Oskam.
-                    </p>
-                    <div class="contact">
-                        <span><i class="fas fa-phone"></i> &nbsp; 06-12345678</span>
-                        <span><i class="fas fa-envelope"></i> &nbsp; <a href="mailto:test@@gmail.com">test@@gmail.com</a></span>
-                        <span><i class="fab fa-youtube"></i> &nbsp; <a href="https://www.youtube.com/@@MeganOskam">@@Megan Oskam</a></span>
-                    </div>
-
-                </div>
-
-                <div class="footer-section links">
-                    <h2>Quick Links</h2>
-                    <br>
-                    <ul>
-                        <a href="#">
-                            <li>Evenementen</li>
-                        </a>
-                        <a href="#">
-                            <li>Team</li>
-                        </a>
-                        <a href="#">
-                            <li>Privacybeleid</li>
-                        </a>
-                        <a href="#">
-                            <li>Gebruiksvoorwaarden</li>
-                        </a>
-                    </ul>
-
-                </div>
-
-                <div class="footer-section contact-form">
-                    <h2>Contact</h2>
-                    <br>
-                    <form action="index.html" method="post">
-                        <input type="email" name="email" class="text-input contact-input" placeholder="Jouw emailadres...">
-                        <textarea rows="4" name="message" class="text-input contact-input" placeholder="Jouw bericht..."></textarea>
-                        <button type="submit" class="btn">
-                            <i class="fas fa-envelope"></i>
-                            Verstuur
-                        </button>
-                    </form>
-
-                </div>
-
-            </div>
-
-            <div class="divider"></div>
-            
-            <div class="footer-bottom">
-                &copy; ScheikundeSnappen.nl | Gemaakt door Megan Oskam
-            </div>
-        </div>
-    </footer>
 </div>
 
-<script>
+<footer>
+    <div class="divider"></div>
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h2>ScheikundeSnappen.nl</h2>
+                <p>
+                    ScheikundeSnappen.nl is een online platform voor het leren van scheikunde.
+                    <br>
+                    ScheikundeSnappen.nl is een project van Megan Oskam.
+                </p>
+                <div class="contact">
+                    <span><i class="fas fa-phone"></i> &nbsp; 06-12345678</span>
+                    <span><i class="fas fa-envelope"></i> &nbsp; <a href="mailto:test@@gmail.com">test@@gmail.com</a></span>
+                    <span><i class="fab fa-youtube"></i> &nbsp; <a href="https://www.youtube.com/@@MeganOskam">@@Megan Oskam</a></span>
+                </div>
 
-//for every scrolled pixel, add 0.5 to the opacity of the top-banner
+            </div>
 
-var scrollFactor = 0.5;
+            <div class="footer-section links">
+                <h2>Quick Links</h2>
+                <br>
+                <ul>
+                    <a href="#">
+                        <li>Evenementen</li>
+                    </a>
+                    <a href="#">
+                        <li>Team</li>
+                    </a>
+                    <a href="#">
+                        <li>Privacybeleid</li>
+                    </a>
+                    <a href="#">
+                        <li>Gebruiksvoorwaarden</li>
+                    </a>
+                </ul>
 
-window.addEventListener('scroll', function() {
-    var topBanner = document.querySelector('.top-banner');
-    var topBackground = document.querySelector('.top-background');
-    var scrolled = window.scrollY;
-    var height = topBanner.offsetHeight;
-    
-    topBackground.style.opacity = 1 - (scrolled / height);
-    topBackground.style.top = -(window.scrollY * scrollFactor) + 'px';
-});
+            </div>
 
-// var FontAwesomeChemistryIcons = {
-//     "atom": "<i class='fas fa-atom'></i>",
-//     "flask": "<i class='fas fa-flask'></i>",
-//     "beaker": "<i class='fas fa-beaker'></i>",
-//     "microscope": "<i class='fas fa-microscope'></i>",
-//     "dna": "<i class='fas fa-dna'></i>",
-//     "virus": "<i class='fas fa-virus'></i>",
-//     "vial": "<i class='fas fa-vial'></i>",
-//     "thermometer": "<i class='fas fa-thermometer'></i>",
-// };
-//
-// //inside .background, add x amount of icons randomly placed
-// var iconCount = 50;
-// var iconKeys = Object.keys(FontAwesomeChemistryIcons);
-//
-// for (var i = 0; i < iconCount; i++) {
-//     var icon = document.createElement('div');
-//     icon.classList.add('icon');
-//     icon.innerHTML = FontAwesomeChemistryIcons[iconKeys[Math.floor(Math.random() * iconKeys.length)]];
-//     icon.style.left = Math.random() * 100 + '%'; 
-//     icon.style.top = Math.random() * 100 + '%';
-//    
-//     var size = (Math.random() * 0.5 + 0.5);
-//     icon.setAttribute('data-top', icon.style.top);
-//     icon.setAttribute('data-scroll-speed', size);
-//     icon.style.transform = 'scale(' + size + ')';
-//     icon.style.filter = 'blur(calc((1 - ' + size + ') * 5px))';
-//    
-//     document.querySelector('.background').appendChild(icon);
-// }
-//
-// window.addEventListener('scroll', function() {
-//     for (var i = 0; i < iconCount; i++) {
-//         var icon = document.querySelectorAll('.icon')[i];
-//         var scrollSpeed = icon.dataset.scrollSpeed;
-//         var top = parseFloat(icon.dataset.top); //percentage, turn into px
-//         top = top / 100 * window.innerHeight;
-//         icon.style.top = (parseFloat(top) - window.scrollY * scrollSpeed) + 'px';
-//     }
-// });
-//
-// //DEBUG
-// function ToggleBackgroundIcons() {
-//     var icons = document.querySelectorAll('.icon');
-//     for (var i = 0; i < icons.length; i++) {
-//         icons[i].style.display = icons[i].style.display === 'none' ? 'block' : 'none';
-//     }
-// }
-</script>
+            <div class="footer-section contact-form">
+                <h2>Contact</h2>
+                <br>
+                <form action="index.html" method="post">
+                    <input type="email" name="email" class="text-input contact-input" placeholder="Jouw emailadres...">
+                    <textarea rows="4" name="message" class="text-input contact-input" placeholder="Jouw bericht..."></textarea>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-envelope"></i>
+                        Verstuur
+                    </button>
+                </form>
 
+            </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="footer-bottom">
+            &copy; ScheikundeSnappen.nl | Gemaakt door Megan Oskam
+        </div>
+    </div>
+</footer>
 </body>
 </html>
