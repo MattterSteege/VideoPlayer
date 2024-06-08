@@ -1,4 +1,7 @@
 ﻿@using ChemCourses.Utils
+@* <!-- https://demo.themeum.com/tutor/courses/ --> *@
+
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -12,142 +15,47 @@
     <link rel="stylesheet" href="/css/styles.css" asp-append-version="true">
     <script src="js/Script.js" asp-append-version="true"></script>
 </head>
+
 <body onload="InitBetterPages()">
 
-<div class="hider"></div>
-<div class="sidebar colorful-border">
-    <div class="content">
-        <div class="title">
-            <h6>Welkom<span class="colorful-letters">&nbsp;Megan</span></h6>
+<header class="header-default">
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <a href="https://demo.themeum.com/tutor/">
+                <span>Scheikunde</span>
+                <span>Snappen</span>
+                <span>.nl</span>
+            </a>
         </div>
-        <div class="spacer"></div>
-        <nav class="menu">
-            <ul class="list">
-                <li>
-                    <a onclick="@Url.BetterPagesAction("Dashboard", "Home")" class="active">
-                        <i class="far fa-home"></i><span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="student-profile.html">
-                        <i class="far fa-user"></i><span>Mijn Profiel</span>
-                    </a>
-                </li>
-                <li>
-                    <a onclick="@Url.BetterPagesAction("Index", "Courses")">
-                        <i class="far fa-book"></i><span>Lesmateriaal</span>
-                    </a>
-                </li>
-                <li>
-                    <a onclick="@Url.BetterPagesAction("CreateForm", "Toets")">
-                        <i class="far fa-bookmark"></i><span>Toetsen</span>
-                    </a>
-                </li>
-                <li>
-                    <a onclick="@Url.BetterPagesAction("Index", "BestelGeschiedenis")">
-                        <i class="far fa-history"></i><span>Bestelgeschiedenis</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <div class="spacer">
-        </div>
-        <nav class="menu">
-            <ul class="list">
-                <li>
-                    <a href="student-settings.html">
-                        <i class="far fa-cogs"></i><span>Instellingen</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.html">
-                        <i class="far fa-sign-out-alt"></i><span>Uitloggen</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
+        <button class="navbar-toggler">
+            <span class="toggle-icon"></span>
+        </button>
+        <ul class="navbar-nav">
+            <li><a href="https://demo.themeum.com/tutor/overview/">Dashboard</a></li>
+            <li><a onclick="@Url.BetterPagesAction("Index", "Courses")">Lesmateriaal</a></li>
+            <li><a href="https://demo.themeum.com/tutor/courses/lights-camera-action/lesson/get-started/">Toetsen</a></li>
+            <li><a href="https://demo.themeum.com/tutor/dashboard/settings/">Instellingen</a></li>
+            <li><a href="https://demo.themeum.com/tutor/dashboard/">Profiel</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="https://demo.themeum.com/tutor/admin/">Admin</a></li>
+            }
+            @if ((bool) User.Identity?.IsAuthenticated)
+            {
+                <li><a href="https://demo.themeum.com/tutor/logout/">Uitloggen</a></li>
+            }
+            else
+            {
+                <li><a href="https://demo.themeum.com/tutor/login/">Inloggen</a></li>
+            }
+        </ul>
+    </nav>
+</header>
 
 <main id="main">
-    @RenderBody()
+    @{
+        IgnoreBody();
+    }
 </main>
-
-<div class="noselect" id="loading-screen">
-    <div class="atom-container">
-        <div class="orbit">
-            <div class="electron"></div>
-        </div>
-        <div class="orbit">
-            <div class="electron"></div>
-        </div>
-        <div class="orbit">
-            <div class="electron"></div>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <div class="divider"></div>
-    <div class="footer">
-        <div class="footer-content">
-            <div class="footer-section about">
-                <h2>ScheikundeSnappen.nl</h2>
-                <p>
-                    ScheikundeSnappen.nl is een online platform voor het leren van scheikunde.
-                    <br>
-                    ScheikundeSnappen.nl is een project van Megan Oskam.
-                </p>
-                <div class="contact">
-                    <span><i class="fas fa-phone"></i> &nbsp; 06-12345678</span>
-                    <span><i class="fas fa-envelope"></i> &nbsp; <a href="mailto:test@@gmail.com">test@@gmail.com</a></span>
-                    <span><i class="fab fa-youtube"></i> &nbsp; <a href="https://www.youtube.com/@@MeganOskam">@@Megan Oskam</a></span>
-                </div>
-
-            </div>
-
-            <div class="footer-section links">
-                <h2>Quick Links</h2>
-                <br>
-                <ul>
-                    <a href="#">
-                        <li>Evenementen</li>
-                    </a>
-                    <a href="#">
-                        <li>Team</li>
-                    </a>
-                    <a href="#">
-                        <li>Privacybeleid</li>
-                    </a>
-                    <a href="#">
-                        <li>Gebruiksvoorwaarden</li>
-                    </a>
-                </ul>
-
-            </div>
-
-            <div class="footer-section contact-form">
-                <h2>Contact</h2>
-                <br>
-                <form action="index.html" method="post">
-                    <input type="email" name="email" class="text-input contact-input" placeholder="Jouw emailadres...">
-                    <textarea rows="4" name="message" class="text-input contact-input" placeholder="Jouw bericht..."></textarea>
-                    <button type="submit" class="btn">
-                        <i class="fas fa-envelope"></i>
-                        Verstuur
-                    </button>
-                </form>
-
-            </div>
-
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="footer-bottom">
-            &copy; ScheikundeSnappen.nl | Gemaakt door Megan Oskam
-        </div>
-    </div>
-</footer>
 </body>
 </html>

@@ -7,7 +7,6 @@ namespace ChemCourses.Controllers;
 public class CoursesController : Controller
 {
     List<Course> courses = new();
-    List<Capital> capitals = new();
 
     private void init()
     {
@@ -88,100 +87,21 @@ public class CoursesController : Controller
             length = 6 * 60 + 32, //6:32
             Difficulty = new Random().Next(1, 6)
         });
-        
-        capitals.Add(new Capital
-        {
-            Name = "H10",
-            Description = "Evenwichten",
-            Banner = "https://img.youtube.com/vi/MT0ByfN3tKw/mqdefault.jpg",
-            Id = new Guid("F47C6E6E-C230-4F55-835B-D3802F334D08"),
-            Courses = new List<Course>
-            {
-                courses[0],
-                courses[1],
-                courses[2],
-                courses[3],
-                courses[4]
-            }
-        });
-        
-        capitals.Add(new Capital
-        {
-            Name = "H11",
-            Description = "Zuren en basen",
-            Banner = "https://img.youtube.com/vi/patvB12X7X4/mqdefault.jpg",
-            Id = new Guid("F47C6E6E-C230-4F55-835B-D3802F334D08"),
-            Courses = new List<Course>
-            {
-                courses[0],
-                courses[1],
-                courses[2],
-                courses[3],
-                courses[4]
-            }
-        });
-        
-        capitals.Add(new Capital
-        {
-            Name = "H12",
-            Description = "Redoxreacties",
-            Banner = "https://img.youtube.com/vi/ahAVS9PhVrI/mqdefault.jpg",
-            Id = new Guid("F47C6E6E-C230-4F55-835B-D3802F334D08"),
-            Courses = new List<Course>
-            {
-                courses[0],
-                courses[1],
-                courses[2],
-                courses[3],
-                courses[4]
-            }
-        });
-        
-        capitals.Add(new Capital
-        {
-            Name = "H13",
-            Description = "Chemisch rekenen",
-            Banner = "https://img.youtube.com/vi/My6poj9uZQU/mqdefault.jpg",
-            Id = new Guid("F47C6E6E-C230-4F55-835B-D3802F334D08"),
-            Courses = new List<Course>
-            {
-                courses[0],
-                courses[1],
-                courses[2],
-                courses[3],
-                courses[4]
-            }
-        });
-        
-        capitals.Add(new Capital
-        {
-            Name = "H14",
-            Description = "Chemische binding",
-            Banner = "https://img.youtube.com/vi/ZbhCQh3lS-A/mqdefault.jpg",
-            Id = new Guid("F47C6E6E-C230-4F55-835B-D3802F334D08"),
-            Courses = new List<Course>
-            {
-                courses[0],
-                courses[1],
-                courses[2],
-                courses[3],
-                courses[4]
-            }
-        });
     }
 
     [BetterPages]
+    [Route("/Lessen")]
     public IActionResult Index()
     {
-        if (capitals.Count == 0)
+        if (courses.Count == 0)
             init();
 
-        return PartialView(capitals);
+        return PartialView(courses);
     }
     
     [BetterPages]
-    [Route("/Courses/{courseId}/video")]
-    public IActionResult Course(string courseId)
+    [Route("/Lessen/{courseId}")]
+    public IActionResult Les(string courseId)
     {
         if (courses.Count == 0)
             init();
@@ -194,37 +114,19 @@ public class CoursesController : Controller
             }
         }
         
-        return NotFound("Course not found.");
+        return NotFound("Les not found.");
     }
     
     private string VideoPath => Environment.GetEnvironmentVariable("VIDEO_PATH") ?? "/app/videos";
     
     [BetterPages]
-    [Route("/Courses/{courseId}/test")]
-    public IActionResult Test(string courseId)
+    [Route("/Lessen/{courseId}/LesInhoud")]
+    public IActionResult LesInhoud(string courseId)
     {
-        var path = Path.Combine(VideoPath, courseId, "opdrachten.json");
-        string JSON = System.IO.File.ReadAllText(path);
-        Form form = new Form().DeserializeFromJSON(JSON);
-        return PartialView(form);
-    }
-    
-    [BetterPages]
-    [Route("/Capital/{capitalId}/")]
-    public IActionResult Captial(string capitalId)
-    {
-        if (courses.Count == 0)
-            init();
-
-        foreach (var capital in capitals)
-        {
-            if (capital.Id.ToString() == capitalId)
-            {
-                return PartialView(capital);
-            }
-        }
-        
-        return NotFound("Capital not found.");
+        // var path = Path.Combine(VideoPath, courseId, "opdrachten.json");
+        // string JSON = System.IO.File.ReadAllText(path);
+        // Form form = new Form().DeserializeFromJSON(JSON);
+        return PartialView(null);
     }
 }
 
@@ -238,13 +140,4 @@ public class Course
     public int length { get; set; }
     public string Duration => TimeUtils.SecondsToTime(length);
     public int Difficulty { get; set; }
-}
-
-public class Capital
-{
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string Banner { get; set; }
-    public Guid Id { get; set; }
-    public List<Course> Courses { get; set; }
 }

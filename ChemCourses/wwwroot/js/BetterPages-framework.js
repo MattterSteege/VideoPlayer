@@ -2,7 +2,7 @@
     mainBeforeLoad: function(callback) {},
     mainAfterLoad: function(callback) {},
     mainBeforeUnload: function(callback) {},
-    loadingScreenDelay: 250
+    loadingScreenDelay: 0
 };
 
 let main;
@@ -75,7 +75,8 @@ function ReplacePage(url) {
     //urldecode the url
     url = decodeURIComponent(url);
 
-    content.style.opacity = 1;
+    if (content !== null)
+        content.style.opacity = 1;
     
     // Make an HTTP request
     isRunning = true;
@@ -164,7 +165,8 @@ function ReplacePage(url) {
 
                 isRunning = false;
 
-                content.style.opacity = 0;
+                if (content !== null)
+                    content.style.opacity = 0;
                 
                 setTimeout(() => {
                     //add an delay arround here if you want to show a loading screen
