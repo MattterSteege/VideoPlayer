@@ -2,30 +2,7 @@
     display: grid;
     grid-template-columns: 400px 1fr;
     gap: 20px;
-}
-
-.search {
-    background-color: #fff;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.search input,
-.search select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em;
-}
-
-.search input:focus,
-.search select:focus {
-    border-color: #007bff;
-    outline: none;
 }
 
 .courses-container-sub {
@@ -34,6 +11,56 @@
     gap: 20px;
 }
 
+/*SEARCH*/
+/*<div id="search" contenteditable="true">Zoek voor een les...</div>*/
+.search {
+    position: relative;
+    display: flex;
+    width: 100%;
+    padding: 0 10px;
+    flex-direction: column;
+}
+
+#search {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    position: relative;
+    display: block;
+    height: 20px;
+    padding: 10px;
+    font-size: 1em;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.2s;
+}
+
+#search::before {
+    content: attr(data-placeholder);
+    color: #999;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+}
+
+#search:not(.empty)::after {
+    content: "✖";
+    color: #999;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    opacity: 1;
+}
+
+#search.empty::before {
+    display: block;
+    opacity: 1;
+}
+
+/*CARDS*/
 .card {
     background-color: #fff;
     border-radius: 8px;
@@ -48,9 +75,15 @@
     transform: translateY(-5px);
 }
 
+.card-body {
+    height: calc(100% - 200px);
+    display: flex;
+    flex-direction: column;
+}
+
 .card img.top {
     width: 100%;
-    height: auto;
+    height: 200px;
     display: block;
 }
 
@@ -81,7 +114,8 @@
 .card-body .start {
     border-top: 1px solid var(--border-color);
     display: flex;
-    padding: 20px ;
+    padding: 20px;
+    margin-top: auto;
 }
 
 .card-body .start p {

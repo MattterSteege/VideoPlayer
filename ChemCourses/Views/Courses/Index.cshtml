@@ -4,39 +4,18 @@
 
 <div class="courses-container" style="grid-template-columns: 400px 1fr;">
     <div class="search">
-        <input type="text" id="search-input" placeholder="Search for courses...">
-        <select id="date-filter">
-            <option value="all">All dates</option>
-            <option value="today">Today</option>
-            <option value="this-week">This week</option>
-            <option value="this-month">This month</option>
-        </select>
-        <select id="difficulty-filter">
-            <option value="all">All difficulties</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-        </select>
-        <select id="category-filter">
-            <option value="all">All categories</option>
-            <option value="chemistry">Chemistry</option>
-            <option value="biology">Biology</option>
-            <option value="physics">Physics</option>
-        </select>
+        <div id="search" class="empty" contenteditable="true" data-placeholder="🔍 Zoek voor een les..."></div>
     </div>
 
     <div class="courses-container-sub">
         @foreach (var capital in Model)
         {
-            <div class="card">
+            <div class="card" data-id="@capital.Id" data-name="@capital.Name" data-description="@capital.Description">
                 <img src="https://demo.themeum.com/tutor/wp-content/plugins/tutor/assets/images/placeholder.svg" alt="" class="top">
                 <div class="card-body">
                     <div class="desc">
                         <h3>@capital.Name</h3>
                         <p>@capital.Description</p>
-                    </div>
-                    <div class="info">
-                        Lorum
                     </div>
                     <div class="start">
                         <p onclick="ReplacePage('/Lessen/@capital.Id')">Start met leren</p>
@@ -48,30 +27,35 @@
 </div>
 
 <script minimize>
+    var search = document.getElementById('search');
+    var cards = Array.from(document.getElementsByClassName('card'));
+    search.addEventListener('input', function () {
 
-document.getElementById('search-input').addEventListener('input', function() {
-    const searchQuery = this.value.toLowerCase();
-    // Add your search logic here
-    console.log('Search query:', searchQuery);
-});
-
-document.getElementById('date-filter').addEventListener('change', function() {
-    const selectedDate = this.value;
-    // Add your date filter logic here
-    console.log('Selected date:', selectedDate);
-});
-
-document.getElementById('difficulty-filter').addEventListener('change', function() {
-    const selectedDifficulty = this.value;
-    // Add your difficulty filter logic here
-    console.log('Selected difficulty:', selectedDifficulty);
-});
-
-document.getElementById('category-filter').addEventListener('change', function() {
-    const selectedCategory = this.value;
-    // Add your category filter logic here
-    console.log('Selected category:', selectedCategory);
-});
-
-
+        if (search.innerHTML.trim() === '') {
+            search.classList.add('empty');
+            cards.forEach(function (card) {
+                card.style.display = 'block';
+            });
+            return;            
+        } else {
+            search.classList.remove('empty');
+        }
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var name = card.getAttribute('data-name').toLowerCase();
+            var description = card.getAttribute('data-description').toLowerCase();
+            var searchValue = search.innerText.toLowerCase();
+            if (name.includes(searchValue) || description.includes(searchValue) || searchValue === '') {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        }
+    });
+    
+    //when clicked on the ::after of #seach, delete the text in the search bar and call the input event
+    search.addEventListener('click', function () {
+        search.innerHTML = '';
+        search.dispatchEvent(new Event('input'));
+    });
 </script>
