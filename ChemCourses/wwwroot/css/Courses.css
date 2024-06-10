@@ -206,3 +206,62 @@
     background-color: var(--tertiary-color);
     color: #fff;
 }
+
+/*les.cshtml*/
+.lesson-info-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.lesson-info {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.description {
+    margin-bottom: 20px;
+}
+
+.learn ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.learn li {
+    margin-bottom: 5px;
+}
+
+.accordion {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+accordion-title {
+    background-color: #f1f1f1;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+accordion-content {
+    display: none;
+    padding: 10px;
+}
+
+.item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.item i {
+    margin-right: 5px;
+}

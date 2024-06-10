@@ -42,10 +42,14 @@ public class CoursesController : Controller
     [Route("/Lessen/{courseId}")]
     public IActionResult Les(string courseId)
     {
-        // var path = Path.Combine(VideoPath, courseId, "opdrachten.json");
-        // string JSON = System.IO.File.ReadAllText(path);
-        // Form form = new Form().DeserializeFromJSON(JSON);
-        return PartialView(null);
+        if (courses.Count == 0)
+            init();
+
+        var course = courses.FirstOrDefault(c => c.Id == Guid.Parse(courseId));
+        if (course == null)
+            return NotFound();
+
+        return PartialView(course);
     }
     
     private string VideoPath => Environment.GetEnvironmentVariable("VIDEO_PATH") ?? "/app/videos";

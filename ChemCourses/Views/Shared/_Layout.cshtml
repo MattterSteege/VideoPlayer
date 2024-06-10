@@ -21,7 +21,7 @@
 <header class="header-default">
     <nav class="navbar">
         <div class="navbar-brand">
-            <a href="https://demo.themeum.com/tutor/">
+            <a onclick="@Url.BetterPagesAction("Dashboard", "Home")">
                 <span>Scheikunde</span>
                 <span>Snappen</span>
                 <span>.nl</span>
@@ -31,7 +31,7 @@
             <span class="toggle-icon"></span>
         </button>
         <ul class="navbar-nav">
-            <li><a href="https://demo.themeum.com/tutor/overview/">Dashboard</a></li>
+            <li><a onclick="@Url.BetterPagesAction("Dashboard", "Home")">Dashboard</a></li>
             <li><a onclick="@Url.BetterPagesAction("Index", "Courses")">Lesmateriaal</a></li>
             <li><a href="https://demo.themeum.com/tutor/courses/lights-camera-action/lesson/get-started/">Toetsen</a></li>
             <li><a href="https://demo.themeum.com/tutor/dashboard/settings/">Instellingen</a></li>

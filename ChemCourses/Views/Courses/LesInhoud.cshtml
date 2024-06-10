@@ -1,0 +1,87 @@
+﻿@model ChemCourses.Controllers.Course
+
+<link rel="stylesheet" href="/css/toets.css">
+
+<!-- __________________________ -->
+<!-- |400px x 60px| 1fr x 60px| -->
+<!-- |400px x 1fr| 1fr x 1fr  | -->
+
+<div class="lesson-content-container">
+    <div class="left-header">Les inhoud</div>
+
+    <div class="content-viewer">
+
+        <div class="accordion">Let's Begin</div>
+        <div class="panel">
+            <div class="item">
+                <i class="fas fa-file"></i>
+                Let's Begin
+            </div>
+        </div>
+
+        <div class="accordion">Workflow in photography</div>
+        <div class="panel">
+            <div class="item">
+                <i class="fab fa-youtube"></i>
+                What is Workflow in Digital Photography?
+            </div>
+            <div class="item">
+                <i class="fas fa-file"></i>
+                Understanding of photography
+            </div>
+            <div class="item">
+                <i class="fas fa-square-question"></i>
+                All About Image Editing
+            </div>
+        </div>
+
+        <div class="accordion">Understanding of photography</div>
+        <div class="panel">
+            <div class="item">
+                <i class="fas fa-file"></i>
+                Three Basic Elements of Photography
+            </div>
+            <div class="item">
+                <i class="fas fa-square-question"></i>
+                All About Image Editing
+            </div>
+            <div class="item">
+                <i class="fas fa-square-question"></i>
+                Basics of photography elements
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="right-header"></div>
+
+    <div class="content"></div>
+</div>
+
+<script>
+    var acc = Array.from(document.getElementsByClassName("accordion"));
+    acc.forEach(function (el) {
+        el.addEventListener("click", function () {
+            var accordianContent = this.querySelector(".accordian-content");
+            if (accordianContent.style.display === "block") {
+                accordianContent.style.display = "none";
+            } else {
+                accordianContent.style.display = "block";
+            }
+        });
+    })
+</script>
+
+@* <script> *@
+@* var videoPlayer = undefined; *@
+@* BetterPages.mainAfterLoad = () => { *@
+@*     setTimeout(function() { *@
+@*         videoPlayer = new VideoPlayer('@Model.Id'); *@
+@*         videoPlayer.startup(); *@
+@*         videoPlayer.play(); *@
+@*     }, 1000); *@
+@* } *@
+@* </script> *@
