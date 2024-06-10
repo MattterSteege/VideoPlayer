@@ -4,7 +4,24 @@
 
 <div class="courses-container" style="grid-template-columns: 400px 1fr;">
     <div class="search">
+        <div class="title">Zoeken</div>
         <div id="search" class="empty" contenteditable="true" data-placeholder="🔍 Zoek voor een les..."></div>
+        <div class="title">Categorieën</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Analytische chemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Anorganische chemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Organische chemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Industriële chemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Fysische chemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Biochemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Milieuchemie</div>
+        <div class="category" data-cat="cat"><div class="check"></div>Theoretische chemie</div>
+
+        <div class="title">Moeilijkheid</div>
+        <div class="category" data-cat="level"><div class="check"></div>Beginner</div>
+        <div class="category" data-cat="level"><div class="check"></div>Gevorderd</div>
+        <div class="category" data-cat="level"><div class="check"></div>Expert</div>
+        
+        <div class="clear">Clear</div>
     </div>
 
     <div class="courses-container-sub">
@@ -27,6 +44,7 @@
 </div>
 
 <script minimize>
+    //SEARCH
     var search = document.getElementById('search');
     var cards = Array.from(document.getElementsByClassName('card'));
     search.addEventListener('input', function () {
@@ -57,5 +75,29 @@
     search.addEventListener('click', function () {
         search.innerHTML = '';
         search.dispatchEvent(new Event('input'));
+    });
+    
+    //CATEGORY / LEVEL
+    var categories = Array.from(document.getElementsByClassName('category'));
+    categories.forEach(function (category) {
+        category.addEventListener('click', function () {
+            category.classList.toggle('active');
+            
+            //untoggle all other categories with the same data-cat
+            var dataCat = category.getAttribute('data-cat');
+            categories.forEach(function (otherCategory) {
+                if (otherCategory.getAttribute('data-cat') === dataCat && otherCategory !== category) {
+                    otherCategory.classList.remove('active');
+                }
+            });
+        });
+    });
+    
+    //CLEAR
+    var clear = document.querySelector('.clear');
+    clear.addEventListener('click', function () {
+        categories.forEach(function (category) {
+            category.classList.remove('active');
+        });
     });
 </script>

@@ -7,18 +7,23 @@
 
 .courses-container-sub {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    height: fit-content;
 }
 
-/*SEARCH*/
-/*<div id="search" contenteditable="true">Zoek voor een les...</div>*/
+/*FILTER*/
 .search {
     position: relative;
     display: flex;
-    width: 100%;
+    width: calc(100% - 20px);
     padding: 0 10px;
     flex-direction: column;
+}
+
+.title {
+    font-size: 1.5em;
+    margin: 20px 0 10px;
 }
 
 #search {
@@ -60,6 +65,72 @@
     opacity: 1;
 }
 
+.category {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.category .check {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: background-color 0.2s;
+}
+
+.category:hover .check {
+    background-color: var(--tertiary-color);
+}
+
+.category.active .check {
+    background-color: var(--tertiary-color);
+}
+
+.category.active .check::after {
+    content: "✔";
+    color: #fff;
+    position: relative;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    top: 10px;
+    left: 10px;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+}
+
+.category.active {
+    background-color: var(--tertiary-color);
+    color: #fff;
+}
+
+.category.active .check {
+    border-color: #fff;
+}
+
+.clear {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+
+.clear:hover {
+    background-color: var(--tertiary-color);
+    color: #fff;
+}
+
 /*CARDS*/
 .card {
     background-color: #fff;
@@ -69,6 +140,7 @@
     transition: transform 0.2s;
     border: 1px solid var(--border-color);
     z-index: 1;
+    /* max-height: 550px; */
 }
 
 .card:hover {
@@ -119,11 +191,18 @@
 }
 
 .card-body .start p {
-    color: #007bff;
+    color: var(--tertiary-color);
     width: 100%;
     text-align: center;
     margin: 0;
     padding: 10px;
-    border: 1px solid #007bff;
+    border: 1px solid var(--tertiary-color);
     border-radius: 8px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+.card-body .start p:hover {
+    background-color: var(--tertiary-color);
+    color: #fff;
 }
