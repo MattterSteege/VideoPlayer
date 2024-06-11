@@ -1,61 +1,91 @@
 ﻿@model ChemCourses.Controllers.Course
 
-<link rel="stylesheet" href="/css/Courses.css" asp-append-version="true">
+<link rel="stylesheet" href="/css/courses.css" asp-append-version="true">
 
 <div class="lesson-info-container">
-    <div class="center">
+    <div class="left">
         <div class="lesson-info">
-            <div class="title">Lights, Camera, Action</div>
+            <h1 class="title">@Model.Name</h1>
+
+            <img src="https://img.youtube.com/vi/MT0ByfN3tKw/mqdefault.jpg">
             
-            <p>Beschrijving</p>
+            <h2>Beschrijving</h2>
             <div class="description">
-                You will be taught the full process of filmmaking starting from planning, filming, and editing. Not only that but you will learn how to make films that look way more expensive than they are without spending a whole lot of time or money on them. In this course, we’ll focus on a few different forms of films from video ads, to movie trailers to travel vlogs, you name it.
-
-                In addition to that, we’ll also go over Adobe Premiere Pro in detail so that you get an idea of all that you need to know to become an editing genius. And, if you feel like you’re stuck at any point then you can always ask for guidance and I’ll reply as soon as possible.
-
-                With this course, you also have access to a whole lot of resources not only for reference but also free media like aerial video shots, background music, fonts, and more. These all come with proper licensing so you can use them in your production worry free.
+                @Model.Description
             </div>
             
-            <p>Wat je gaat leren</p>
+            <h2>Wat je gaat leren?</h2>
             <div class="learn">
                 <ul>
-                    <li>Planning</li>
-                    <li>Filming</li>
-                    <li>Editing</li>
-                    <li>Adobe Premiere Pro</li>
-                    <li>Resources</li>
+                    @foreach(var item in Model.InThisCourse)
+                    {
+                        <li>@item</li>
+                    }
                 </ul>
             </div>
             
-            <p>Wat zit er in de les</p>
+            <h2>Wat zit er in de les?</h2>
             
-            <div class="accordion">
-                <p class="accordion-title">Get Started!</p>
-                <div class="accordion-content">
-                    <div class="item">
-                        <i class="fas fa-file"></i>
-                        Get Started!
+            @foreach (var sectionItem in Model.Sections)
+            {
+                <div class="accordion">
+                    <p class="accordion-title">@sectionItem.Name</p>
+                    <div class="accordion-content">
+                        @foreach (var item in sectionItem.Items)
+                        {
+                            <div class="item">
+                                @if (item.Type == "video")
+                                {
+                                    <i class="fab fa-youtube"></i>
+                                }
+                                else if (item.Type == "text")
+                                {
+                                    <i class="fas fa-file"></i>
+                                }
+                                else if (item.Type == "question")
+                                {
+                                    <i class="fas fa-square-question"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-question"></i>
+                                }
+                                @item.Name
+                            </div>
+                        }
                     </div>
                 </div>
+            }
+        </div>
+    </div>
+    <div class="right">
+        <div class="lesson-start">
+            <h2>Start de les</h2>
+            <div onclick="ReplacePage('./LesInhoud')" class="start-lesson">Start</div>
+        </div>
+        <div class="lesson-details">
+            <h3>Lesdetails</h3>
+            <div class="detail">
+                <i class="fas fa-clock"></i>
+                <span>Duur: @Model.Duration</span>
             </div>
-            
-            <div class="accordion">
-                <p class="accordion-title">Workflow in photography</p>
-                <div class="accordion-content">
-                    <div class="item">
-                        <i class="fab fa-youtube"></i>
-                        What is Workflow in Digital Photography?
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-file"></i>
-                        Understanding of photography
-                    </div>
-                    <div class="item">
-                        <i class="fas fa-square-question"></i>
-                        All About Image Editing
-                    </div>
-                </div>
+            <div class="detail">
+                <i class="fas fa-level-up-alt"></i>
+                <span>Niveau: @Model.Difficulty</span>
             </div>
+            <div class="detail">
+                <i class="fas fa-tag"></i>
+                <span>Categorieën: @string.Join(", ", Model.Categories)</span>
+            </div>
+        </div>
+        <div class="lesson-requirements">
+            <h3>Vereisten</h3>
+            <ul>
+                @foreach (var requirement in Model.Requirements)
+                {
+                <li>@requirement</li>
+                }
+            </ul>
         </div>
     </div>
 </div>
@@ -65,6 +95,7 @@
     acc.forEach(function (el) {
         el.addEventListener("click", function () {
             el.getElementsByClassName("accordion-content")[0].style.display = el.getElementsByClassName("accordion-content")[0].style.display === "block" ? "none" : "block";
+            el.classList.toggle("active");
         });
     })
 </script>

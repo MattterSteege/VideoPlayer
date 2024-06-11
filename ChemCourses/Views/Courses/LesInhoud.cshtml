@@ -11,45 +11,36 @@
 
     <div class="content-viewer">
 
-        <div class="accordion">Let's Begin</div>
-        <div class="panel">
-            <div class="item">
-                <i class="fas fa-file"></i>
-                Let's Begin
+        @foreach (var sectionItem in Model.Sections)
+        {
+        <div class="accordion">
+            <p class="accordion-title">@sectionItem.Name</p>
+            <div class="accordion-content">
+                @foreach (var item in sectionItem.Items)
+                {
+                <div class="item">
+                    @if (item.Type == "video")
+                    {
+                    <i class="fab fa-youtube"></i>
+                    }
+                    else if (item.Type == "text")
+                    {
+                    <i class="fas fa-file"></i>
+                    }
+                    else if (item.Type == "question")
+                    {
+                    <i class="fas fa-square-question"></i>
+                    }
+                    else
+                    {
+                    <i class="fas fa-question"></i>
+                    }
+                    @item.Name
+                </div>
+                }
             </div>
         </div>
-
-        <div class="accordion">Workflow in photography</div>
-        <div class="panel">
-            <div class="item">
-                <i class="fab fa-youtube"></i>
-                What is Workflow in Digital Photography?
-            </div>
-            <div class="item">
-                <i class="fas fa-file"></i>
-                Understanding of photography
-            </div>
-            <div class="item">
-                <i class="fas fa-square-question"></i>
-                All About Image Editing
-            </div>
-        </div>
-
-        <div class="accordion">Understanding of photography</div>
-        <div class="panel">
-            <div class="item">
-                <i class="fas fa-file"></i>
-                Three Basic Elements of Photography
-            </div>
-            <div class="item">
-                <i class="fas fa-square-question"></i>
-                All About Image Editing
-            </div>
-            <div class="item">
-                <i class="fas fa-square-question"></i>
-                Basics of photography elements
-            </div>
-        </div>
+        }
 
     </div>
 
@@ -61,16 +52,12 @@
     <div class="content"></div>
 </div>
 
-<script>
+<script minimize>
     var acc = Array.from(document.getElementsByClassName("accordion"));
     acc.forEach(function (el) {
         el.addEventListener("click", function () {
-            var accordianContent = this.querySelector(".accordian-content");
-            if (accordianContent.style.display === "block") {
-                accordianContent.style.display = "none";
-            } else {
-                accordianContent.style.display = "block";
-            }
+            el.getElementsByClassName("accordion-content")[0].style.display = el.getElementsByClassName("accordion-content")[0].style.display === "block" ? "none" : "block";
+            el.classList.toggle("active");
         });
     })
 </script>

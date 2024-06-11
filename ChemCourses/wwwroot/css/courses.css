@@ -31,7 +31,7 @@
     border-radius: 8px;
     position: relative;
     display: block;
-    height: 20px;
+    height: 42px;
     padding: 10px;
     font-size: 1em;
     color: #333;
@@ -47,6 +47,7 @@
     left: 10px;
     pointer-events: none;
     user-select: none;
+    height: 20px;
     opacity: 0;
 }
 
@@ -157,6 +158,7 @@
     width: 100%;
     height: 200px;
     display: block;
+    object-fit: cover;
 }
 
 .card-body .desc {
@@ -209,15 +211,34 @@
 
 /*les.cshtml*/
 .lesson-info-container {
-    width: 80%;
+    display: grid;
+    grid-template-columns: 800px 400px;
+    gap: 20px;
     margin: 0 auto;
+    width: 1200px;
+    padding-top: 50px;
 }
 
 .lesson-info {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-info img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.lesson-info h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.lesson-info h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
 }
 
 .title {
@@ -231,12 +252,18 @@
 }
 
 .learn ul {
-    list-style-type: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .learn li {
     margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+.learn li::marker {
+    color: var(--tertiary-color);
 }
 
 .accordion {
@@ -245,14 +272,25 @@
     margin-bottom: 10px;
 }
 
-accordion-title {
-    background-color: #f1f1f1;
+.accordion-title {
+    background: #f1f1f1;
     padding: 10px;
     cursor: pointer;
     font-weight: bold;
 }
 
-accordion-content {
+.accordion-title::after {
+    content: "►";
+    font-size: 13px;
+    float: right;
+    color: var(--tertiary-color);
+}
+
+.active .accordion-title::after {
+    content: "▼";
+}
+
+.accordion-content {
     display: none;
     padding: 10px;
 }
@@ -264,4 +302,88 @@ accordion-content {
 
 .item i {
     margin-right: 5px;
+}
+
+.right, .left {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.lesson-start {
+    margin-bottom: 20px;
+}
+
+.lesson-start h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.start-lesson {
+    padding: 10px 20px;
+    background-color: var(--tertiary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.start-lesson:hover {
+    background-color: var(--secondary-color);
+}
+
+.lesson-details {
+    margin-bottom: 20px;
+}
+
+.lesson-details h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.detail i {
+    font-size: 20px;
+    color: var(--tertiary-color);
+    margin-right: 10px;
+}
+
+.detail span {
+    font-size: 16px;
+}
+
+.lesson-requirements {
+    margin-bottom: 20px;
+}
+
+.lesson-requirements h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.lesson-requirements ul {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.lesson-requirements li {
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+.lesson-requirements li::marker {
+    color: var(--tertiary-color);
 }

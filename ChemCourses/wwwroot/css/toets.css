@@ -54,21 +54,37 @@
 }
 
 .accordion {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
+    border-bottom: 1px solid #ddd;
 }
 
-.panel {
-    padding: 0 18px;
+.accordion-title {
+    background: #f1f1f1;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.accordion-title::after {
+    content: "►";
+    font-size: 13px;
+    float: right;
+    color: var(--tertiary-color);
+}
+
+.active .accordion-title::after {
+    content: "▼";
+}
+
+.accordion-content {
     display: none;
-    background-color: white;
-    overflow: hidden;
+    padding: 10px;
+}
+
+.item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.item i {
+    margin-right: 5px;
 }

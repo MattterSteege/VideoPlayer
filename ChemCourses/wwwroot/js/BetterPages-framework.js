@@ -2,7 +2,7 @@
     mainBeforeLoad: function(callback) {},
     mainAfterLoad: function(callback) {},
     mainBeforeUnload: function(callback) {},
-    loadingScreenDelay: 0
+    loadingScreenDelay: 100
 };
 
 let main;
@@ -27,6 +27,11 @@ function ReplacePage(url) {
     //check if the url is the same as the current url
     if (url === window.location.pathname) {
         return;
+    }
+    
+    if (url.startsWith("./")){
+        //get the current hash and append the url to it
+        url = window.location.hash.replace("#", "") + url.slice(1);
     }
 
     BetterPages.mainBeforeUnload();
