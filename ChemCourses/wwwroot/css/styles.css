@@ -132,7 +132,7 @@ a {
 
 .navbar-nav a {
     text-decoration: none;
-    padding: 0.5rem 1rem;
+    /* padding: 0.5rem 1rem; */
     position: relative;
     font-weight: bold;
     color: var(--secondary-color);
@@ -307,11 +307,15 @@ main#main {
         border: 1px solid var(--border-color);
         z-index: 10;
         transition: right 0.3s;
+        padding-top: 20px;
+        gap: 20px;
+        align-items: flex-end;
+        padding-right: 60px;
     }
 
     .navbar-nav li {
         margin: 0;
-        border-bottom: 1px solid var(--border-color);
+        /* border-bottom: 1px solid var(--border-color); */
     }
 
     .navbar-nav li:last-child {
@@ -319,7 +323,7 @@ main#main {
     }
 
     .navbar-nav a {
-        padding: 1rem;
+        margin: 1rem;
     }
 
     .navbar-utils {
