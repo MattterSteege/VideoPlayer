@@ -10,15 +10,18 @@
 
 <!-- __________________________ -->
 <!-- |400px x 60px| 1fr x 60px| -->
-<!-- |400px x 1fr| 1fr x 1fr  | -->
+<!-- |400px x 1fr| 1fr x (1fr or 100% - 120px)  | -->
+<!-- |400px x 1fr| 1fr x 60px  | -->
 
 */
 
 .lesson-content-container {
     display: grid;
     grid-template-columns: 400px 1fr;
-    grid-template-rows: 60px 1fr;
-    height: 100vh;
+    grid-template-rows: 60px 1fr 60px;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    position: relative;
 }
 
 .left-header {
@@ -49,8 +52,52 @@
 
 .content {
     grid-column: 2 / 3;
-    grid-row: 2 / 3;
+    grid-row: 1 / 3;
     background-color: #f8f9fa;
+    padding: 0 15%;
+    padding-top: 60px;
+}
+
+.content .item h1 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--tertiary-color);
+}
+
+.content .item p {
+    margin-bottom: 10px;
+}
+
+/*make as wide as the .content element and make it stick to the bottom of the screen or the bottom of the page, whichever is lower*/
+.buttons {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.buttons .prev, .buttons .next {
+    padding: 10px 20px;
+    background-color: var(--tertiary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.shadow-button {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+    background-color: #f8f9fa;
+    border-right: 1px solid #e9ecef;
 }
 
 .accordion {

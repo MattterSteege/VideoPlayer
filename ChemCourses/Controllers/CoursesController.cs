@@ -34,14 +34,16 @@ public class CoursesController : Controller
                             Name = "Wat is een BOE-schema?",
                             Description = "In deze video wordt uitgelegd wat een BOE-schema is.",
                             Video = $"{VideoPath}/BOE-schema/1.mp4",
-                            Type = "video"
+                            Type = "video",
+                            Id = 1
                         },
                         new SectionItems
                         {
                             Name = "Hoe gebruik je een BOE-schema?",
                             Description = "In deze video wordt uitgelegd hoe je een BOE-schema gebruikt.",
                             Video = $"{VideoPath}/BOE-schema/2.mp4",
-                            Type = "video"
+                            Type = "video",
+                            Id = 2
                         }
                     }
                 },
@@ -56,14 +58,16 @@ public class CoursesController : Controller
                             Name = "Oefening 1",
                             Description = "Maak deze oefening om te kijken of je de stof begrijpt.",
                             Video = $"{VideoPath}/BOE-schema/3.mp4",
-                            Type = "text"
+                            Type = "text",
+                            Id = 3
                         },
                         new SectionItems
                         {
                             Name = "Oefening 2",
                             Description = "Maak deze oefening om te kijken of je de stof begrijpt.",
                             Video = $"{VideoPath}/BOE-schema/4.mp4",
-                            Type = "question"
+                            Type = "question",
+                            Id = 4
                         }
                     }
                 },
@@ -78,7 +82,8 @@ public class CoursesController : Controller
                             Name = "Toets",
                             Description = "Maak deze toets om te kijken of je de stof begrijpt.",
                             Video = $"{VideoPath}/BOE-schema/5.mp4",
-                            Type = "question"
+                            Type = "question",
+                            Id = 5
                         }
                     }
                 }
@@ -134,6 +139,24 @@ public class CoursesController : Controller
         var course = courses.FirstOrDefault(c => c.Id == Guid.Parse(courseId));
         if (course == null)
             return NotFound();
+        
+        course.selectedSectionItem = course.Sections.SelectMany(s => s.Items).FirstOrDefault()?.Id ?? 0;
+        
+        return PartialView(course);
+    }
+    
+    [BetterPages]
+    [Route("/Lessen/{courseId}/LesInhoud/{sectionItemId}")]
+    public IActionResult LesInhoud(string courseId, int sectionItemId)
+    {
+        if (courses.Count == 0)
+            Init();
+
+        var course = courses.FirstOrDefault(c => c.Id == Guid.Parse(courseId));
+        if (course == null)
+            return NotFound();
+        
+        course.selectedSectionItem = sectionItemId;
 
         return PartialView(course);
     }
@@ -154,6 +177,7 @@ public class SectionItems
     public string Description { get; set; }
     public string Video { get; set; }
     public string Type { get; set; }
+    public int Id { get; set; }
 }
 
 public class Course
@@ -169,4 +193,5 @@ public class Course
     public int Difficulty { get; set; }
     public List<string> Categories { get; set; }
     public List<string> Requirements { get; set; }
+    public int selectedSectionItem { get; set; }
 }
