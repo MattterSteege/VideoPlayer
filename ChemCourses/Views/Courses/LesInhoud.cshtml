@@ -1,6 +1,10 @@
-﻿@model ChemCourses.Controllers.Course
+﻿@model ChemCourses.Models.Course
 
 <link rel="stylesheet" href="/css/toets.css">
+<script src="js/VideoPlayer.js"></script>
+@{
+    bool firstShows = false;
+}
 
 <!-- __________________________ -->
 <!-- |400px x 60px| 1fr x 60px| -->
@@ -14,23 +18,19 @@
         @foreach (var sectionItem in Model.Sections)
         {
             //if has item with Id == Model.SelectedSection
-        <div class="accordion @(sectionItem.Items.Any(i => i.Id == Model.selectedSectionItem) ? "active" : "")">
+        <div class="accordion">
             <p class="accordion-title">@sectionItem.Name</p>
             <div class="accordion-content" style="@(sectionItem.Items.Any(i => i.Id == Model.selectedSectionItem) ? "display: block;" : "display: none;")">
                 @foreach (var item in sectionItem.Items)
                 {
-                <div class="item">
-                    @if (item.Type == "video")
+                <div class="item @((item.Id == Model.selectedSectionItem) ? "active" : "")" onclick="goToSection(event, @item.Id)">
+                    @if (item.Type == typeof(VideoExplanation))
                     {
-                    <i class="fab fa-youtube"></i>
+                    <i class="fas fa-video"></i>
                     }
-                    else if (item.Type == "text")
+                    else if (item.Type == typeof(TextExplanation))
                     {
                     <i class="fas fa-file"></i>
-                    }
-                    else if (item.Type == "question")
-                    {
-                    <i class="fas fa-square-question"></i>
                     }
                     else
                     {
@@ -47,10 +47,13 @@
     
     <div class="content">
         
-        <div class="item" data-type="text">
-            <h1>Wat is een Boe-Schema?</h1>
-            <p>Boe-Schema is een manier om de elektronenverdeling in een molecuul te beschrijven. Het is een schematische weergave van de elektronenverdeling in een molecuul. Het is een manier om de elektronenverdeling in een molecuul te beschrijven. Het is een schematische weergave van de elektronenverdeling in een molecuul.</p>
-        </div>
+        @foreach (Section section in Model.Sections)
+        {
+            @foreach (SectionItem sectionItems in section.Items)
+            {
+                @Html.Raw(sectionItems.RenderToHTML())
+            }
+        }
         
     </div>
     
@@ -70,15 +73,70 @@
             el.classList.toggle("active");
         });
     })
-</script>
 
-@* <script> *@
-@* var videoPlayer = undefined; *@
-@* BetterPages.mainAfterLoad = () => { *@
-@*     setTimeout(function() { *@
-@*         videoPlayer = new VideoPlayer('@Model.Id'); *@
-@*         videoPlayer.startup(); *@
-@*         videoPlayer.play(); *@
-@*     }, 1000); *@
-@* } *@
-@* </script> *@
+    var prev = document.querySelector(".prev");
+    var next = document.querySelector(".next");
+    var current = 0;
+    var Content = document.querySelector(".content");
+    var ContentItems = Array.from(Content.children);
+    var navItems = Array.from(document.querySelectorAll(".item"));
+    var videoPlayer = undefined;
+
+    prev.addEventListener("click", function(e) {
+        if (current > 0) {
+            ContentItems[current].style.display = "none";
+            navItems[current].parentElement.style.display = "none";
+            navItems[current].classList.remove("active");
+            
+            current--;
+            
+            ContentItems[current].style.display = "block";
+            navItems[current].parentElement.style.display = "block";
+            navItems[current].classList.add("active");
+            
+            checkForVideo();
+            videoPlayer.pause();
+        }
+    });
+
+    next.addEventListener("click", function() {
+        if (current < ContentItems.length - 1) {
+            ContentItems[current].style.display = "none";
+            navItems[current].parentElement.style.display = "none";
+            navItems[current].classList.remove("active");
+            
+            current++;
+            
+            ContentItems[current].style.display = "block";
+            navItems[current].parentElement.style.display = "block";
+            navItems[current].classList.add("active");
+            
+            checkForVideo();
+            videoPlayer?.pause();
+        }
+    });
+
+    function checkForVideo() {
+        if (ContentItems[current].querySelector("video")) {
+            if (videoPlayer) {
+                console.log("destroying video player");
+                videoPlayer.destroy();
+            }
+            
+            var element = ContentItems[current].querySelector('video');
+            var id = element.dataset.videoId
+            console.log("video found with id: " + id);            
+            videoPlayer = new VideoPlayer(element, id);
+            videoPlayer?.startup();
+        }
+    }
+    
+    function goToSection(event, sectionId) {
+        event.stopPropagation()
+        ContentItems[current].style.display = "none";
+        current = sectionId - 1;
+        ContentItems[current].style.display = "block";
+        checkForVideo();
+    }
+    
+</script>

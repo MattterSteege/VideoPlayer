@@ -1,4 +1,4 @@
-﻿@model ChemCourses.Controllers.Course
+﻿@model ChemCourses.Models.Course
 
 <link rel="stylesheet" href="/css/courses.css" asp-append-version="true">
 
@@ -34,21 +34,17 @@
                         @foreach (var item in sectionItem.Items)
                         {
                             <div class="item">
-                                @if (item.Type == "video")
+                                @if (item.Type == typeof(VideoExplanation))
                                 {
-                                    <i class="fab fa-youtube"></i>
+                                <i class="fas fa-video"></i>
                                 }
-                                else if (item.Type == "text")
+                                else if (item.Type == typeof(TextExplanation))
                                 {
-                                    <i class="fas fa-file"></i>
-                                }
-                                else if (item.Type == "question")
-                                {
-                                    <i class="fas fa-square-question"></i>
+                                <i class="fas fa-file"></i>
                                 }
                                 else
                                 {
-                                    <i class="fas fa-question"></i>
+                                <i class="fas fa-question"></i>
                                 }
                                 @item.Name
                             </div>

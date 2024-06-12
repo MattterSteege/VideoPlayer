@@ -10,8 +10,9 @@
 
 class VideoPlayer {
     
-    constructor(video_id) {
+    constructor(element, video_id) {
         //set by user - shallow
+        this.video = element;
         this.videoId = video_id;
         this.minBuffer = 5; //seconds
         this.AutoBuffer = true;
@@ -92,7 +93,6 @@ class VideoPlayer {
                 this.sourceOpen(evt);
             }, false);
             
-            this.video = document.querySelector('video');
             this.video.src = URL.createObjectURL(this.mediaSource);
             this.video.ontimeupdate = () => this.checkBuffer();
             this.video.onseeking  = (evt) => this.Seeking(evt);
@@ -429,7 +429,18 @@ class VideoPlayer {
         });
 
         return model;
-    }     
+    }   
+    
+    destroy() {
+        this.mediaSource.endOfStream();
+        this.mediaSource = null;
+        this.sourceBuffer_audio = null;
+        this.sourceBuffer_video = null;
+        this.loadedSegments_audio = null;
+        this.loadedSegments_video = null;
+        this.manifest = null;
+        this.video = null;
+    }
 }
 
 function waitForObjectState(check, interval = 100) {
