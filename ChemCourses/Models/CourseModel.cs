@@ -88,3 +88,60 @@ public class VideoExplanation : SectionItem
     }
 }
 #endregion
+
+
+#region questionneer
+public class Questionneer : SectionItem
+{
+    public List<Question> Questions { get; set; }
+
+    public override string RenderToHTML()
+    {
+        var html = "<div class=\"content-item\" data-type=\"questionneer\" id=\"item-" + Id + "\" style=\"z-index: " + (10000 - Id) + "; display: " + (Id == 1 ? "block" : "none") + "\">" +
+                   $"    <h1>{Name}</h1>" +
+                   "    <div class=\"questionneer-container\">";
+        foreach (var question in Questions)
+        {
+            html += question.RenderToHTML();
+        }
+        html += "    </div>" +
+                "</div>";
+        return html;
+    }
+}
+
+public class Question
+{
+    public string Text { get; set; }
+    public List<Answer> Answers { get; set; }
+
+    public string RenderToHTML()
+    {
+        var html = "<div class=\"question\">" +
+                   $"    <p>{Text}</p>" +
+                   "    <div class=\"answers\">";
+        foreach (var answer in Answers)
+        {
+            html += answer.RenderToHTML();
+        }
+        html += "    </div>" +
+                "</div>";
+        return html;
+    }
+}
+
+public class Answer
+{
+    public string Text { get; set; }
+    public bool IsCorrect { get; set; }
+
+    public string RenderToHTML()
+    {
+        return "<div class=\"answer\">" +
+               $"    <input type=\"radio\" name=\"answer\" value=\"{IsCorrect}\" data-correct=\"{IsCorrect}\">" +
+               $"    <label>{Text}</label>" +
+               "</div>";
+    }
+}
+
+#endregion

@@ -132,7 +132,7 @@ a {
 
 .navbar-nav a {
     text-decoration: none;
-    /* padding: 0.5rem 1rem; */
+    padding: 0.5rem 1rem; 
     position: relative;
     font-weight: bold;
     color: var(--secondary-color);
