@@ -1,0 +1,502 @@
+{
+  "Period": {
+    "AdaptationSet": [
+      {
+        "SegmentTemplate": {
+          "SegmentTimeline": [
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 259000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 235000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 232000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 206000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 268000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 235000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 220000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 270000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 221000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 228000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 287000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 209000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 257000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 218000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 242000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 227000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 279000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 226000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 260000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 250000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 220000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 225000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 220000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 273000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 239000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 216000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 228000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 265000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 2
+            },
+            {
+              "Duration": 251000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 228000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 257000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 226000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 227000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 270000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 221000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 259000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 196000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 275000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 239000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 236000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 240000,
+              "RepeatAfter": 6
+            },
+            {
+              "Duration": 238000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 265000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 132000,
+              "RepeatAfter": 0
+            }
+          ],
+          "Initialization": "$RepresentationID$/init.mp4",
+          "Media": "$RepresentationID$/seg-$Number$.m4s",
+          "StartNumber": 1,
+          "Timescale": 24000
+        },
+        "Representation": {
+          "AudioChannelConfiguration": null,
+          "Bandwidth": 2260340,
+          "Codecs": "avc1.64001F",
+          "FrameRate": "24",
+          "Height": 720,
+          "Id": "video/avc1",
+          "ScanType": "progressive",
+          "Width": 1280,
+          "AudioSamplingRate": 0
+        },
+        "MaxHeight": "720",
+        "MaxWidth": "1280",
+        "MimeType": "video/mp4",
+        "SegmentAlignment": true,
+        "StartWithSAP": 1
+      },
+      {
+        "SegmentTemplate": {
+          "SegmentTimeline": [
+            {
+              "Duration": 441344,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 475136,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 432128,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 425984,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 377856,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 492544,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 432128,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 404480,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 440320,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 496640,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 406528,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 440320,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 418816,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 527360,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 384000,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 473088,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 400384,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 444416,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 416768,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 513024,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 414720,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 478208,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 458752,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 404480,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 413696,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 404480,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 500736,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 439296,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 397312,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 418816,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 487424,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 440320,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 1
+            },
+            {
+              "Duration": 460800,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 418816,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 472064,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 415744,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 416768,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 495616,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 406528,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 476160,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 359424,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 505856,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 439296,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 433152,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 1
+            },
+            {
+              "Duration": 440320,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 1
+            },
+            {
+              "Duration": 440320,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 441344,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 437248,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 486400,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 242688,
+              "RepeatAfter": 0
+            },
+            {
+              "Duration": 1024,
+              "RepeatAfter": 0
+            }
+          ],
+          "Initialization": "$RepresentationID$/init.mp4",
+          "Media": "$RepresentationID$/seg-$Number$.m4s",
+          "StartNumber": 1,
+          "Timescale": 44100
+        },
+        "Representation": {
+          "AudioChannelConfiguration": null,
+          "Bandwidth": 126529,
+          "Codecs": "mp4a.40.2",
+          "FrameRate": null,
+          "Height": 0,
+          "Id": "audio/und/mp4a.40.2",
+          "ScanType": null,
+          "Width": 0,
+          "AudioSamplingRate": 44100
+        },
+        "MaxHeight": null,
+        "MaxWidth": null,
+        "MimeType": "audio/mp4",
+        "SegmentAlignment": true,
+        "StartWithSAP": 1
+      }
+    ]
+  },
+  "MediaPresentationDuration": "PT9M56.458S",
+  "MinBufferTime": "PT10.00S",
+  "Profiles": "urn:mpeg:dash:profile:isoff-live:2011",
+  "Type": "static"
+}

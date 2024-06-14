@@ -1,0 +1,57 @@
+﻿@model dynamic
+
+<style>
+    .audio_loaded, .video_loaded{
+        width: 100%;
+        height: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .audio_loaded div, .video_loaded div{
+        background: red;
+        width: 100%;
+        height: 100%;
+    }
+    
+</style>
+
+<script src="js/VideoPlayer.js"></script>
+
+<video controls></video>
+
+<div class="audio_loaded"></div>
+<div class="video_loaded"></div>
+
+<script>
+    var element = document.querySelector('video');
+    var id = "0f15b5e8-89f4-4211-875b-5ef3082a294c";
+          
+    videoPlayer = new VideoPlayer(element, id);
+    videoPlayer.startup();
+
+    videoPlayer.on('loaded_manifest', function (data) {
+        var audioLoaded = document.querySelector('.audio_loaded');
+        for (var i = 0; i < videoPlayer.loadedSegments_audio.length; i++) {
+            var audioLoading = document.createElement('div');
+            audioLoaded.appendChild(audioLoading);
+        }
+        
+        var videoLoaded = document.querySelector('.video_loaded');
+        for (var i = 0; i < videoPlayer.loadedSegments_video.length; i++) {
+            var videoLoading = document.createElement('div');
+            videoLoaded.appendChild(videoLoading);
+        }
+    });
+    
+    videoPlayer.on('audio_loaded', function (data) {
+        var audioLoaded = document.querySelector('.audio_loaded');
+        audioLoaded.children[data].style.backgroundColor = 'green';
+    });
+    
+    videoPlayer.on('video_loaded', function (data) {
+        var videoLoaded = document.querySelector('.video_loaded');
+        videoLoaded.children[data].style.backgroundColor = 'green';
+    });
+</script>

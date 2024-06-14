@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+<MPD mediaPresentationDuration="PT9M56.458S" minBufferTime="PT10.00S" profiles="urn:mpeg:dash:profile:isoff-live:2011" type="static" xmlns="urn:mpeg:dash:schema:mpd:2011">
+  <!-- Created with Bento4 mp4-dash.py, VERSION=2.0.0-641 -->
+  <Period>
+    <!-- Video -->
+    <AdaptationSet maxHeight="720" maxWidth="1280" mimeType="video/mp4" segmentAlignment="true" startWithSAP="1">
+      <SegmentTemplate initialization="$RepresentationID$/init.mp4" media="$RepresentationID$/seg-$Number$.m4s" startNumber="1" timescale="24000">
+        <SegmentTimeline>
+          <S d="240000"/>
+          <S d="259000"/>
+          <S d="235000"/>
+          <S d="240000"/>
+          <S d="232000"/>
+          <S d="240000"/>
+          <S d="206000"/>
+          <S d="268000"/>
+          <S d="235000"/>
+          <S d="220000"/>
+          <S d="240000"/>
+          <S d="270000"/>
+          <S d="221000"/>
+          <S d="240000"/>
+          <S d="228000"/>
+          <S d="287000"/>
+          <S d="209000"/>
+          <S d="257000"/>
+          <S d="218000"/>
+          <S d="242000"/>
+          <S d="227000"/>
+          <S d="279000"/>
+          <S d="226000"/>
+          <S d="240000"/>
+          <S d="260000"/>
+          <S d="250000"/>
+          <S d="220000"/>
+          <S d="225000"/>
+          <S d="220000"/>
+          <S d="273000"/>
+          <S d="239000"/>
+          <S d="216000"/>
+          <S d="228000"/>
+          <S d="265000"/>
+          <S d="240000" r="2"/>
+          <S d="251000"/>
+          <S d="240000"/>
+          <S d="228000"/>
+          <S d="257000"/>
+          <S d="226000"/>
+          <S d="227000"/>
+          <S d="270000"/>
+          <S d="221000"/>
+          <S d="259000"/>
+          <S d="196000"/>
+          <S d="275000"/>
+          <S d="239000"/>
+          <S d="236000"/>
+          <S d="240000" r="6"/>
+          <S d="238000"/>
+          <S d="265000"/>
+          <S d="132000"/>
+        </SegmentTimeline>
+      </SegmentTemplate>
+      <Representation bandwidth="2260340" codecs="avc1.64001F" frameRate="24" height="720" id="video/avc1" scanType="progressive" width="1280"/>
+    </AdaptationSet>
+    <!-- Audio -->
+    <AdaptationSet mimeType="audio/mp4" segmentAlignment="true" startWithSAP="1">
+      <SegmentTemplate initialization="$RepresentationID$/init.mp4" media="$RepresentationID$/seg-$Number$.m4s" startNumber="1" timescale="44100">
+        <SegmentTimeline>
+          <S d="441344"/>
+          <S d="475136"/>
+          <S d="432128"/>
+          <S d="441344"/>
+          <S d="425984"/>
+          <S d="441344"/>
+          <S d="377856"/>
+          <S d="492544"/>
+          <S d="432128"/>
+          <S d="404480"/>
+          <S d="440320"/>
+          <S d="496640"/>
+          <S d="406528"/>
+          <S d="440320"/>
+          <S d="418816"/>
+          <S d="527360"/>
+          <S d="384000"/>
+          <S d="473088"/>
+          <S d="400384"/>
+          <S d="444416"/>
+          <S d="416768"/>
+          <S d="513024"/>
+          <S d="414720"/>
+          <S d="441344"/>
+          <S d="478208"/>
+          <S d="458752"/>
+          <S d="404480"/>
+          <S d="413696"/>
+          <S d="404480"/>
+          <S d="500736"/>
+          <S d="439296"/>
+          <S d="397312"/>
+          <S d="418816"/>
+          <S d="487424"/>
+          <S d="440320"/>
+          <S d="441344" r="1"/>
+          <S d="460800"/>
+          <S d="441344"/>
+          <S d="418816"/>
+          <S d="472064"/>
+          <S d="415744"/>
+          <S d="416768"/>
+          <S d="495616"/>
+          <S d="406528"/>
+          <S d="476160"/>
+          <S d="359424"/>
+          <S d="505856"/>
+          <S d="439296"/>
+          <S d="433152"/>
+          <S d="441344" r="1"/>
+          <S d="440320"/>
+          <S d="441344" r="1"/>
+          <S d="440320"/>
+          <S d="441344"/>
+          <S d="437248"/>
+          <S d="486400"/>
+          <S d="242688"/>
+          <S d="1024"/>
+        </SegmentTimeline>
+      </SegmentTemplate>
+      <Representation audioSamplingRate="44100" bandwidth="126529" codecs="mp4a.40.2" id="audio/und/mp4a.40.2">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:mpegB:cicp:ChannelConfiguration" value="2"/>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

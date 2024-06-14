@@ -1,0 +1,150 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <RootNamespace>ChemCourses</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\LICENSE" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="Views\Video\Upload.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\test_1.mp4" />
+      <_ContentIncludedByDefault Remove="Views\Home\BestelGeschiedenis.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Dashboard.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Toetsen.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Toets\CreateForm.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\courses.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\Home.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\orderHistory.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\styles.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\toets.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\init.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-1.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-10.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-11.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-12.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-13.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-14.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-15.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-16.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-17.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-18.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-19.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-2.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-20.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-21.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-22.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-23.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-24.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-25.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-26.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-27.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-28.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-3.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-4.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-5.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-6.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-7.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-8.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\audio\und\mp4a.40.2\seg-9.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\manifest.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\opdrachten.json" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\init.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-1.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-10.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-11.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-12.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-13.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-14.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-15.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-16.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-17.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-18.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-19.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-2.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-20.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-21.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-22.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-23.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-24.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-25.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-26.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-27.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-3.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-4.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-5.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-6.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-7.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-8.m4s" />
+      <_ContentIncludedByDefault Remove="wwwroot\videos\3fe9fcab-a021-42a4-a6c7-328b2f6eed8e\video\avc1\seg-9.m4s" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediaToolkit" Version="1.1.0.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+      <PackageReference Include="System.Drawing.Common" Version="9.0.0-preview.4.24267.1" />
+      <PackageReference Include="ZXing.Net" Version="0.16.9" />
+    </ItemGroup>
+
+</Project>
