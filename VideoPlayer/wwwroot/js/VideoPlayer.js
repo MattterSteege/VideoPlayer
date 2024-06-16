@@ -381,6 +381,8 @@ class VideoPlayer {
         if (currentTime >= this.timeBeforeSegment(segmentToLoad, "audio") - this.minBuffer) {
             this.loadSpecificSegment(segmentToLoad);
         }
+
+        this.callRegisteredCallback('seeked', currentTime);
     }
 
     parseManifest(jsonObj) {
