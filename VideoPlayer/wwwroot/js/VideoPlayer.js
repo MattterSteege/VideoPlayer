@@ -17,53 +17,75 @@ class VideoPlayer {
         this.minBuffer = 5; //seconds
         this.AutoBuffer = true;
         this.triggerSeekedEnded = 250; //ms
-        
+
         logLevel = 0b00000001; // 0b00000001 - Log, 0b00000010 - Debug, 0b00000100 - Error
-        
+
         //set by user - deep
         this.mimeCodec_audio = "audio/mp4; codecs = mp4a.40.2";
         this.mimeCodec_video = "video/mp4; codecs = avc1.4D401F";
-        
+
         //set / changed internally
         this.mediaSource;
-        
+
         this.sourceBuffer_audio;
         this.maxSegNum_audio = 0;
         this.loadedSegments_audio = [];
-        
+
         this.sourceBuffer_video;
         this.maxSegNum_video = 0;
         this.loadedSegments_video = [];
-        
+
         this.registeredCallbacks = [];
-        
+
         this.manifest = null;
+
+        this.canPlay = false;
 
         //MANIFEST
         fetch("api/Video/" + this.videoId + "/manifest")
-        .then(response => response.json())
-        .then(data => {
+            .then(response => response.json())
+            .then(data => {
 
-            this.manifest = this.parseManifest(data);
-            
-            //calc the amount of video segments
-            this.manifest.period.adaptationSet[0].segmentTemplate.segmentTimeline.forEach(segment => {
-                this.maxSegNum_video += segment.repeatAfter + 1;
-                this.loadedSegments_video = new Array(this.maxSegNum_video).fill(false);
-            });
-            
-            //calc the amount of audio segments
-            this.manifest.period.adaptationSet[1].segmentTemplate.segmentTimeline.forEach(segment => {
-                this.maxSegNum_audio += segment.repeatAfter + 1;
-                this.loadedSegments_audio = new Array(this.maxSegNum_audio).fill(false);
-            });
+                this.manifest = this.parseManifest(data);
 
-            VideoDebug("Loaded manifest file:", data);
-            this.callRegisteredCallback('loaded_manifest', data);
-            this.canPlay = true;
-        });
+                //calc the amount of video segments
+                this.manifest.period.adaptationSet[0].segmentTemplate.segmentTimeline.forEach(segment => {
+                    this.maxSegNum_video += segment.repeatAfter + 1;
+                    this.loadedSegments_video = new Array(this.maxSegNum_video).fill(false);
+                });
+
+                //calc the amount of audio segments
+                this.manifest.period.adaptationSet[1].segmentTemplate.segmentTimeline.forEach(segment => {
+                    this.maxSegNum_audio += segment.repeatAfter + 1;
+                    this.loadedSegments_audio = new Array(this.maxSegNum_audio).fill(false);
+                });
+
+                VideoDebug("Loaded manifest file:", data);
+                this.callRegisteredCallback('loadedmanifest', data);
+                this.canPlay = true;
+            });
         
-        this.canPlay = false;
+        var video = document.createElement('video');
+        video.id = Math.random().toString(36).substring(7);
+        video.width = 1920;
+        video.height = 1080;
+
+        var canvas = document.createElement('canvas');
+        canvas.width = 1920;
+        canvas.height = 1080;
+
+        var parentVideo = document.createElement('div');
+        parentVideo.classList.add('video-player');
+
+        parentVideo.appendChild(video);
+        parentVideo.appendChild(canvas);
+
+        var attributes = this.video.attributes;
+        
+        this.videoParent = parentVideo;
+        this.video.outerHTML = this.videoParent.outerHTML;
+        
+        this.video = document.querySelector('#' + video.id);
         
         VideoLog("VideoPlayer is created with next settings:\n                 -   videoId: " + this.videoId + ",\n                 -   minBuffer: " + this.minBuffer + ",\n                 -   AutoBuffer: " + this.AutoBuffer + ",\n                 -   mimeCodec_audio: " + this.mimeCodec_audio + ",\n                 -   mimeCodec_video: " + this.mimeCodec_video);
     }
@@ -100,6 +122,11 @@ class VideoPlayer {
             this.video.ontimeupdate = () => this.checkBuffer();
             this.video.onseeking  = (evt) => this.Seeking(evt);
             
+            //turn <video [attributes]></video> into:
+            // <div [attributes]>
+            //   <video></video>
+            //   <canvas></canvas>
+            // </div>
         } else {
             VideoError('Unsupported MIME type or codec: ', this.mimeCodec_video);
         }
@@ -121,14 +148,14 @@ class VideoPlayer {
         this.fetch("api/Video/" + this.videoId + "/video/init.mp4", function (buf) {
             self.sourceBuffer_video.appendBuffer(buf);
             self.loadedSegments_video[0] = true;
-            self.callRegisteredCallback('video_loaded', 0);
+            self.callRegisteredCallback('videoloaded', 0);
             init++;
         });
 
         this.fetch("api/Video/" + this.videoId + "/audio/init.mp4", function (buf) {
             self.sourceBuffer_audio.appendBuffer(buf);
             self.loadedSegments_audio[0] = true;
-            self.callRegisteredCallback('audio_loaded', 0);
+            self.callRegisteredCallback('audioloaded', 0);
             init++;
         });
 
@@ -184,7 +211,7 @@ class VideoPlayer {
                 self.sourceBuffer_video.appendWindowEnd = self.timeBeforeSegment(segNum, "video") + self.manifest.period.adaptationSet[0].segmentTemplate.betterTimeline[segNum - 1].duration;
                 self.sourceBuffer_video.appendBuffer(buf);
                 self.loadedSegments_video[segNum] = true;
-                self.callRegisteredCallback('video_loaded', segNum);
+                self.callRegisteredCallback('videoloaded', segNum);
             });
         });
     }
@@ -214,7 +241,7 @@ class VideoPlayer {
                 self.sourceBuffer_audio.appendWindowEnd = self.timeBeforeSegment(segNum, "audio") + self.manifest.period.adaptationSet[1].segmentTemplate.betterTimeline[segNum - 1].duration;
                 self.sourceBuffer_audio.appendBuffer(buf);
                 self.loadedSegments_audio[segNum] = true;
-                self.callRegisteredCallback('audio_loaded', segNum);
+                self.callRegisteredCallback('audioloaded', segNum);
             });
         });
     }
@@ -260,6 +287,8 @@ class VideoPlayer {
     checkBuffer(forced = false) {
         
         if (!this.AutoBuffer && forced === false) return;
+        
+        this.callRegisteredCallback('timeupdate', this.video.currentTime);
         
         //AUTO BUFFER VIDEO
         var currentTime = this.video.currentTime;
